@@ -25,20 +25,6 @@ export default function Home() {
         markers: true,
       },
     });
-
-    ScrollTrigger.create({
-      trigger: "#opening",
-      start: "top top",
-      end: "bottom top",
-      pin: true,
-      pinSpacing: false,
-      onToggle: ({ isActive }) => {
-        gsap.to("#opening", {
-          autoAlpha: isActive ? 1 : 0.8,
-          duration: 0.3,
-        });
-      },
-    });
   }, []);
 
   {
@@ -63,7 +49,7 @@ export default function Home() {
 
       {/* Wrapper - изначально под Hero */}
       <div id="wrapper" className=" bg-white absolute w-full">
-        <div id="opening" className="z-20">
+        <div id="opening" className="">
           <Opening />
         </div>
         <div id="gallery">
