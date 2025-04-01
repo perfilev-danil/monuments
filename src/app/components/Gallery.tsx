@@ -104,7 +104,7 @@ export default function Gallery() {
   };
 
   return (
-    <div className="w-full h-screen bg-[#485863] flex gap-12 items-center justify-center">
+    <div className="w-full h-screen bg-[var(--darkcyan)] flex gap-12 items-center justify-center">
       <button className="relative w-12 h-12 rounded-full border-white border-2 cursor-pointer">
         <Image src="/images/icons/arrow.png" alt="" className="p-2" fill />
       </button>

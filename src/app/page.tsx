@@ -27,6 +27,23 @@ export default function Home() {
     });
 
     ScrollTrigger.create({
+      trigger: "#opening",
+      start: "top top",
+      end: "bottom top",
+      pin: true,
+      pinSpacing: false,
+      onToggle: ({ isActive }) => {
+        gsap.to("#opening", {
+          autoAlpha: isActive ? 1 : 0.8,
+          duration: 0.3,
+        });
+      },
+    });
+  }, []);
+
+  {
+    /*
+      ScrollTrigger.create({
       trigger: "#wrapper",
       start: "top top",
       end: "+=100%", // Фиксировать на 100% высоты viewport
@@ -34,7 +51,8 @@ export default function Home() {
       pinSpacing: false, // Отключаем автоматические отступы
       markers: true,
     });
-  }, []);
+  */
+  }
 
   return (
     <div className="relative">
@@ -45,7 +63,7 @@ export default function Home() {
 
       {/* Wrapper - изначально под Hero */}
       <div id="wrapper" className=" bg-white absolute w-full">
-        <div id="opening">
+        <div id="opening" className="z-20">
           <Opening />
         </div>
         <div id="gallery">

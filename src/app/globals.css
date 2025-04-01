@@ -19,7 +19,12 @@
   --font-nunito: "Nunito-ExtraLight", sans-serif;
   --font-nunito-italic: "Nunito-ExtraLightItalic", sans-serif;
   --font-girlo: "GirloSP", sans-serif;
+
+  --darkcyan: #485863;
 }
+
+/* 26282C
+  */
 
 .font-nunito {
   font-family: var(--font-nunito);
