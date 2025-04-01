@@ -1,0 +1,190 @@
+
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+//Памятник
+model E24_Monument {
+  id                String    @id @default(uuid())
+  name              String    // E41 - Название
+  period           String?    // E4 - Период
+  description       String?    // E33 - Описание
+  inscription      String?   // E34 - Надпись
+  memorialMeaning   String?   // E28 - Мемориальное значение
+
+  placeId String @unique
+  place E53_Place @relation(fields: [placeId], references: [id])
+
+  registryNameId String @unique
+  registryName E41_Registry_Name @relation(fields: [registryNameId], references: [id])
+
+  personality     E21_Personality[] @relation("P1_Monument_Personality")  // E21 - Личности 
+  material         E57_Material[]    @relation("P45_Monument_Material")      // E57 - Материалы 
+  color           E55_Color[]       @relation("P2_Monument_Color")         // E55 - Цвета 
+  document E31_Document[] @relation("P70_Monument_Document") // E31 - Документы
+  dimension E54_Dimension[] @relation("P43_Monument_Dimension") // E54 - Размеры
+  event E5_Event[] @relation("P12_Monument_Event") // E5 - События
+  img E36_Monument_Img[] @relation("P138_Monument_Img")
+}
+
+model E21_Personality {
+  id   String @id @default(uuid())
+
+  nameId String @unique
+  name E41_Personality_Name @relation(fields: [nameId], references: [id])
+
+  roleId String @unique
+  role E55_Personality_Role @relation(fields: [roleId], references: [id])
+
+  bioId String @unique
+  bio E33_Personality_BIO @relation(fields: [bioId], references: [id])
+
+  timespanId String @unique
+  timespan E52_Time_Span @relation(fields: [timespanId], references: [id])
+  
+  img E36_Personality_Img[] @relation("P138_Monument_Personality_Img")
+  monument E24_Monument[] @relation("P1_Monument_Personality") // Связь с памятниками
+}
+// Время
+model E52_Time_Span { 
+  id    String @id @default(uuid())
+  start String
+  end String
+  event E5_Event?
+  personality E21_Personality?
+}
+
+model E41_Personality_Name {
+  id   String @id @default(uuid())
+  name String
+  personality E21_Personality?
+}
+
+model E55_Personality_Role {
+  id   String @id @default(uuid())
+  name String
+  personality E21_Personality?
+}
+
+model E33_Personality_BIO {
+  id   String @id @default(uuid())
+  bio String
+  personality E21_Personality?
+}
+
+model E36_Personality_Img {
+  id   String @id @default(uuid())
+  url String
+  monument E21_Personality[] @relation("P138_Monument_Personality_Img") // Связь с памятниками
+}
+
+model E36_Monument_Img {
+  id   String @id @default(uuid())
+  url String
+  monument E24_Monument[] @relation("P138_Monument_Img") // Связь с памятниками
+}
+
+
+model E57_Material {
+  id   String @id @default(uuid())
+  name String // Материал (E57)
+  monument E24_Monument[] @relation("P45_Monument_Material") // Связь с памятниками
+}
+
+model E55_Color {
+  id   String @id @default(uuid())
+  name String // Цвет (E55)
+  monument E24_Monument[] @relation("P2_Monument_Color") // Связь с памятниками
+}
+
+model E31_Document {
+  id String @id @default(uuid())
+  name String
+  link String
+  monument E24_Monument[] @relation("P70_Monument_Document") // Связь с памятниками
+}
+
+model E54_Dimension { // ?
+  id String @id @default(uuid())
+  name String
+  type E55_Dimension_Type[] @relation("P2_Dimension_Dimension_Type")
+  monument E24_Monument[] @relation("P43_Monument_Dimension") // Связь с размерами
+}
+
+model E55_Dimension_Type{ // ?
+  id        String @id @default(uuid())
+  name      String
+  dimension E54_Dimension[] @relation("P2_Dimension_Dimension_Type") // Связь с типами размеров
+}
+
+model E53_Place {
+  id       String @id @default(uuid())
+
+  nameId   String @unique // Связь с названием места (E41)
+  name     E41_Place_Name @relation(fields: [nameId], references: [id]) // One-to-One
+
+  mapId    String @unique
+  map      E94_Map @relation(fields: [mapId], references: [id])
+
+  monument E24_Monument?
+}
+
+model E41_Place_Name {
+  id    String @id @default(uuid())
+  name  String
+  place E53_Place? 
+}
+
+model E94_Map {
+  id    String @id @default(uuid())
+  map   String
+  place E53_Place?
+}
+
+model E5_Event {
+  id    String @id @default(uuid())
+
+  nameId String @unique
+  name E41_Event_Name @relation(fields: [nameId], references: [id])
+
+  descriptionId String @unique
+  description E33_Event_Description @relation(fields: [descriptionId], references: [id])
+
+  timespanId String @unique
+  timespan E52_Time_Span @relation(fields: [timespanId], references: [id])
+
+  monument E24_Monument[] @relation("P12_Monument_Event")
+}
+
+model E41_Event_Name {
+  id    String @id @default(uuid())
+  name String
+  event E5_Event?
+}
+
+model E33_Event_Description {
+  id    String @id @default(uuid())
+  description String
+  event E5_Event?
+}
+
+model E41_Registry_Name {
+  id    String @id @default(uuid())
+  name String
+  monument E24_Monument?
+}
+
+
+
+
+
+
+
+
+
