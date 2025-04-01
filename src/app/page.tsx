@@ -29,7 +29,7 @@ export default function Home() {
     ScrollTrigger.create({
       trigger: "#wrapper",
       start: "top top",
-      end: "+=150%", // Фиксировать на 100% высоты viewport
+      end: "+=100%", // Фиксировать на 100% высоты viewport
       pin: true,
       pinSpacing: false, // Отключаем автоматические отступы
       markers: true,
