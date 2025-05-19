@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 
 import Image from "next/image";
@@ -242,157 +242,159 @@ export default function Collection() {
       <Header />
       <div className="min-h-0 h-full max-h-full w-full flex gap-8">
         {/* Filter */}
-        <div className="w-1/3 flex flex-col gap-8 p-8 border-black border-1 overflow-y-auto overflow-x-hidden scroll-smooth">
-          {/* Periods */}
-          <div>
-            <h3 className="text-lg mb-2">Периоды</h3>
-            <div className="h-28 space-y-2 overflow-x-hidden overflow-y-auto">
-              {periods.map((period) => (
-                <div key={period.id} className="flex items-center">
-                  <input
-                    type="checkbox"
-                    id={`period-${period.id}`}
-                    checked={selectedPeriods.includes(period.id)}
-                    onChange={() => handlePeriodChange(period.id)}
-                    className=" h-8 w-8 "
-                  />
-                  <label
-                    htmlFor={`period-${period.id}`}
-                    className="ml-2 text-sm text-gray-700"
-                  >
-                    {period.value}
-                  </label>
-                </div>
-              ))}
+        <Suspense fallback={<div>Loading...</div>}>
+          <div className="w-1/3 flex flex-col gap-8 p-8 border-black border-1 overflow-y-auto overflow-x-hidden scroll-smooth">
+            {/* Periods */}
+            <div>
+              <h3 className="text-lg mb-2">Периоды</h3>
+              <div className="h-28 space-y-2 overflow-x-hidden overflow-y-auto">
+                {periods.map((period) => (
+                  <div key={period.id} className="flex items-center">
+                    <input
+                      type="checkbox"
+                      id={`period-${period.id}`}
+                      checked={selectedPeriods.includes(period.id)}
+                      onChange={() => handlePeriodChange(period.id)}
+                      className=" h-8 w-8 "
+                    />
+                    <label
+                      htmlFor={`period-${period.id}`}
+                      className="ml-2 text-sm text-gray-700"
+                    >
+                      {period.value}
+                    </label>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
-          {/* Materials */}
-          <div>
-            <h3 className="text-lg mb-2">Материалы</h3>
-            <div className="h-28 space-y-2 overflow-x-hidden overflow-y-auto">
-              {materials.map((material) => (
-                <div key={material.id} className="flex items-center">
-                  <input
-                    type="checkbox"
-                    id={`material-${material.id}`}
-                    checked={selectedMaterials.includes(material.id)}
-                    onChange={() => handleMaterialChange(material.id)}
-                    className=" h-8 w-8 "
-                  />
-                  <label
-                    htmlFor={`material-${material.id}`}
-                    className="ml-2 text-sm text-gray-700"
-                  >
-                    {material.value}
-                  </label>
-                </div>
-              ))}
+            {/* Materials */}
+            <div>
+              <h3 className="text-lg mb-2">Материалы</h3>
+              <div className="h-28 space-y-2 overflow-x-hidden overflow-y-auto">
+                {materials.map((material) => (
+                  <div key={material.id} className="flex items-center">
+                    <input
+                      type="checkbox"
+                      id={`material-${material.id}`}
+                      checked={selectedMaterials.includes(material.id)}
+                      onChange={() => handleMaterialChange(material.id)}
+                      className=" h-8 w-8 "
+                    />
+                    <label
+                      htmlFor={`material-${material.id}`}
+                      className="ml-2 text-sm text-gray-700"
+                    >
+                      {material.value}
+                    </label>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
-          {/* Colors */}
-          <div>
-            <h3 className="text-lg mb-2">Цвета</h3>
-            <div className="h-28 space-y-2 overflow-x-hidden overflow-y-auto">
-              {colors.map((color) => (
-                <div key={color.id} className="flex items-center">
-                  <input
-                    type="checkbox"
-                    id={`color-${color.id}`}
-                    checked={selectedColors.includes(color.id)}
-                    onChange={() => handleColorChange(color.id)}
-                    className=" h-8 w-8"
-                  />
-                  <label
-                    htmlFor={`color-${color.id}`}
-                    className="ml-2 text-sm text-gray-700"
-                  >
-                    <div className="flex gap-2 items-center">
-                      <span
-                        style={{ backgroundColor: `#${color.code}` }}
-                        className="w-4 h-4 rounded-full"
-                      ></span>
-                      {color.value}
-                    </div>
-                  </label>
-                </div>
-              ))}
+            {/* Colors */}
+            <div>
+              <h3 className="text-lg mb-2">Цвета</h3>
+              <div className="h-28 space-y-2 overflow-x-hidden overflow-y-auto">
+                {colors.map((color) => (
+                  <div key={color.id} className="flex items-center">
+                    <input
+                      type="checkbox"
+                      id={`color-${color.id}`}
+                      checked={selectedColors.includes(color.id)}
+                      onChange={() => handleColorChange(color.id)}
+                      className=" h-8 w-8"
+                    />
+                    <label
+                      htmlFor={`color-${color.id}`}
+                      className="ml-2 text-sm text-gray-700"
+                    >
+                      <div className="flex gap-2 items-center">
+                        <span
+                          style={{ backgroundColor: `#${color.code}` }}
+                          className="w-4 h-4 rounded-full"
+                        ></span>
+                        {color.value}
+                      </div>
+                    </label>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
 
-          {/* Techniques */}
-          <div>
-            <h3 className="text-lg mb-2">Техники</h3>
-            <div className="h-28 space-y-2 overflow-x-hidden overflow-y-auto">
-              {techniques.map((technique) => (
-                <div key={technique.id} className="flex items-center">
-                  <input
-                    type="checkbox"
-                    id={`technique-${technique.id}`}
-                    checked={selectedTechniques.includes(technique.id)}
-                    onChange={() => handleTechniqueChange(technique.id)}
-                    className=" h-8 w-8 "
-                  />
-                  <label
-                    htmlFor={`technique-${technique.id}`}
-                    className="ml-2 text-sm text-gray-700"
-                  >
-                    {technique.value}
-                  </label>
-                </div>
-              ))}
+            {/* Techniques */}
+            <div>
+              <h3 className="text-lg mb-2">Техники</h3>
+              <div className="h-28 space-y-2 overflow-x-hidden overflow-y-auto">
+                {techniques.map((technique) => (
+                  <div key={technique.id} className="flex items-center">
+                    <input
+                      type="checkbox"
+                      id={`technique-${technique.id}`}
+                      checked={selectedTechniques.includes(technique.id)}
+                      onChange={() => handleTechniqueChange(technique.id)}
+                      className=" h-8 w-8 "
+                    />
+                    <label
+                      htmlFor={`technique-${technique.id}`}
+                      className="ml-2 text-sm text-gray-700"
+                    >
+                      {technique.value}
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Places */}
+            <div>
+              <h3 className="text-lg mb-2">Населённые пункты</h3>
+              <div className="h-28 space-y-2 overflow-x-hidden overflow-y-auto">
+                {places.map((place) => (
+                  <div key={place.id} className="flex items-center">
+                    <input
+                      type="checkbox"
+                      id={`place-${place.id}`}
+                      checked={selectedPlaces.includes(place.id)}
+                      onChange={() => handlePlaceChange(place.id)}
+                      className=" h-8 w-8 "
+                    />
+                    <label
+                      htmlFor={`place-${place.id}`}
+                      className="ml-2 text-sm text-gray-700"
+                    >
+                      {place.value}
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Personalities */}
+            <div>
+              <h3 className="text-lg mb-2">Личности</h3>
+              <div className="h-28 space-y-2 overflow-x-hidden overflow-y-auto">
+                {personalities.map((person) => (
+                  <div key={person.id} className="flex items-center">
+                    <input
+                      type="checkbox"
+                      id={`person-${person.id}`}
+                      checked={selectedPersonalities.includes(person.id)}
+                      onChange={() => handlePersonChange(person.id)}
+                      className=" h-8 w-8 "
+                    />
+                    <label
+                      htmlFor={`person-${person.id}`}
+                      className="ml-2 text-sm text-gray-700"
+                    >
+                      {person.value}
+                    </label>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
+        </Suspense>
 
-          {/* Places */}
-          <div>
-            <h3 className="text-lg mb-2">Населённые пункты</h3>
-            <div className="h-28 space-y-2 overflow-x-hidden overflow-y-auto">
-              {places.map((place) => (
-                <div key={place.id} className="flex items-center">
-                  <input
-                    type="checkbox"
-                    id={`place-${place.id}`}
-                    checked={selectedPlaces.includes(place.id)}
-                    onChange={() => handlePlaceChange(place.id)}
-                    className=" h-8 w-8 "
-                  />
-                  <label
-                    htmlFor={`place-${place.id}`}
-                    className="ml-2 text-sm text-gray-700"
-                  >
-                    {place.value}
-                  </label>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Personalities */}
-          <div>
-            <h3 className="text-lg mb-2">Личности</h3>
-            <div className="h-28 space-y-2 overflow-x-hidden overflow-y-auto">
-              {personalities.map((person) => (
-                <div key={person.id} className="flex items-center">
-                  <input
-                    type="checkbox"
-                    id={`person-${person.id}`}
-                    checked={selectedPersonalities.includes(person.id)}
-                    onChange={() => handlePersonChange(person.id)}
-                    className=" h-8 w-8 "
-                  />
-                  <label
-                    htmlFor={`person-${person.id}`}
-                    className="ml-2 text-sm text-gray-700"
-                  >
-                    {person.value}
-                  </label>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* FILTER */}
+        {/* Right */}
         <div className="h-full w-full flex flex-col gap-8">
           <div className="flex w-full gap-8">
             <button className="h-10 border-black border-1 rounded-full p-2 cursor-pointer">
