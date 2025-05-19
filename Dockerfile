@@ -68,7 +68,7 @@ USER nextjs
 # Открываем порт
 EXPOSE 3000
 
-# Запуск Next.js сервера напрямую (без pnpm в продакшн)
+
 CMD ["sh", "-c", "pnpm db:deploy && pnpm start"]
 
 
