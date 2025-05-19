@@ -19,6 +19,9 @@ services:
     volumes:
       - ensib_next_cache:/app/.next/cache
     restart: always
+    depends_on:
+      postgres:
+        condition: service_healthy
 
   postgres:
     container_name: ensib-postgres
@@ -32,6 +35,11 @@ services:
     ports:
       - "5432:5432"
     restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d postgres"]
+      interval: 5s
+      timeout: 2s
+      retries: 20
 
 volumes:
   ensib_next_cache:

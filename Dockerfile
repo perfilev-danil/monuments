@@ -25,16 +25,13 @@ RUN pnpm install
 COPY . .
 
 # Генерация Prisma клиента
-RUN pnpm exec prisma generate
+#RUN pnpm exec prisma generate
 
 # Установка переменных окружения (если нужно)
 ARG NEXT_PUBLIC_URL
 ARG DATABASE_URL
 ENV NEXT_PUBLIC_URL=${NEXT_PUBLIC_URL}
 ENV DATABASE_URL=${DATABASE_URL}
-
-# Применяем миграции Prisma
-RUN pnpm exec prisma migrate deploy
 
 # Сборка проекта
 RUN pnpm build
@@ -72,4 +69,6 @@ USER nextjs
 EXPOSE 3000
 
 # Запуск Next.js сервера напрямую (без pnpm в продакшн)
-CMD ["node", "node_modules/next/dist/bin/next", "start"]
+CMD ["sh", "-c", "pnpm db:deploy && pnpm start"]
+
+

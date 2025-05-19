@@ -6,10 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "db:deploy": "npx prisma migrate deploy && npx prisma generate"
   },
   "dependencies": {
     "@prisma/client": "^6.4.1",
+    "mongoose": "^8.13.2",
     "next": "15.2.1",
     "prisma": "^6.4.1",
     "ra-data-simple-prisma": "^5.5.0",
