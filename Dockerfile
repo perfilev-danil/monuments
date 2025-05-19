@@ -33,6 +33,9 @@ ARG DATABASE_URL
 ENV NEXT_PUBLIC_URL=${NEXT_PUBLIC_URL}
 ENV DATABASE_URL=${DATABASE_URL}
 
+# Применяем миграции Prisma
+RUN pnpm exec prisma migrate deploy
+
 # Сборка проекта
 RUN pnpm build
 
