@@ -33,22 +33,22 @@ services:
       - "5432:5432"
     restart: always
 
-migrate:
-  build:
-    context: .
-    dockerfile: Dockerfile
-    target: builder
-    args:
+  migrate:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: builder
+      args:
+        DATABASE_URL: ${DATABASE_URL}
+    environment:
       DATABASE_URL: ${DATABASE_URL}
-  environment:
-    DATABASE_URL: ${DATABASE_URL}
-  depends_on:
-    - postgres
-  networks:
-    - ensib-network
-  command: pnpm exec prisma migrate deploy
-  stdin_open: true
-  tty: true
+    depends_on:
+      - postgres
+    networks:
+      - ensib-network
+    command: pnpm exec prisma migrate deploy
+    stdin_open: true
+    tty: true
 
 volumes:
   ensib_next_cache:
