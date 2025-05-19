@@ -11,12 +11,16 @@ WORKDIR /app
 # Копируем package.json и lock-файл для кеширования зависимостей
 COPY package.json pnpm-lock.yaml ./
 
+COPY prisma ./prisma
+
 RUN npm install -g pnpm
 
 # Устанавливаем кэш pnpm
 RUN pnpm config set store-dir /root/.pnpm-store
 
+# Устанавливаем зависимости и генерируем Prisma Client
 RUN pnpm install
+RUN pnpm exec prisma generate
 
 COPY . .
 
