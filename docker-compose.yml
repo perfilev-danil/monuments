@@ -2,6 +2,7 @@ version: "3.8"
 
 services:
   ensib-monuments:
+    container_name: ensib-monuments
     build:
       context: .
       dockerfile: Dockerfile
@@ -20,6 +21,7 @@ services:
     restart: always
 
   postgres:
+    container_name: ensib-postgres
     image: postgres:15
     environment:
       POSTGRES_USER: admin
@@ -33,4 +35,10 @@ services:
 
 volumes:
   ensib_next_cache:
+    name: ensib-next-cache-volume
   pgdata:
+    name: ensib-pgdata-volume
+
+networks:
+  ensib-network:
+    name: ensib-network
