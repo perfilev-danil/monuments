@@ -14,8 +14,6 @@ services:
       DATABASE_URL: ${DATABASE_URL}
     ports:
       - "3000:3000"
-    depends_on:
-      - postgres
     volumes:
       - ensib_next_cache:/app/.next/cache
     restart: always
