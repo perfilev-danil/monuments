@@ -48,6 +48,8 @@ ENV NODE_ENV=production
 RUN addgroup --system --gid 1001 nodejs \
  && adduser --system --uid 1001 nextjs
 
+RUN npm install -g pnpm
+
 # Копируем нужные директории из билдера
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
