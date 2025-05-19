@@ -5,20 +5,10 @@ import Link from "next/link";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
 
-interface Monument {
-  id: number;
-  appellation: { value: string } | null;
-  description: { value: string } | null;
-}
-
-export async function generateStaticParams() {
-  return []; // Пустой массив, если ID неизвестны заранее
-}
-
 export default async function MonumentPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
 
@@ -329,51 +319,3 @@ export default async function MonumentPage({
     </div>
   );
 }
-
-/*
-
-        <div className="flex gap-8">
-          <p>Год:</p>
-          <p>{monument.year?.value}</p>
-        </div>
-
-include: {
-        appellation: true,
-        description: true,
-        year: true,
-        materials: true,
-        colors: true,
-        periods: true,
-        images: true,
-        appellation_registry: true,
-        inscription: true,
-        conceptual_object: true,
-        documents: true,
-        dimensions: {
-          include: {
-            dimension_type: true,
-          },
-        },
-        personalities: {
-          include: {
-            appellation: true,
-            description: true,
-            time_span: true,
-            role: true,
-          },
-        },
-        place: {
-          include: {
-            coordinates: true,
-          },
-        },
-        events: {
-          include: {
-            appellation: true,
-            description: true,
-            time_span: true,
-          },
-        },
-      },
-      
-*/
