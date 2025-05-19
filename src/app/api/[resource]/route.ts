@@ -1,5 +1,5 @@
 import { defaultHandler } from "ra-data-simple-prisma";
-import prisma from "../../../../lib/db";
+import { prisma } from "../../../../lib/prisma";
 import { NextResponse } from "next/server";
 const handler = async (req: Request) => {
   let body: any;
