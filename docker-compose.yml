@@ -22,7 +22,7 @@ services:
 
   postgres:
     container_name: ensib-postgres
-    image: postgres
+    image: postgres:15
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin
