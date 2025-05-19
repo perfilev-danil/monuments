@@ -7,7 +7,7 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
-    const { id } = await Promise.resolve(params);
+    const { id } = await params;
     const monumentId = parseInt(id);
 
     if (isNaN(monumentId)) {

@@ -20,7 +20,7 @@ export default async function MonumentPage({
 }: {
   params: { id: string };
 }) {
-  const { id } = await Promise.resolve(params);
+  const { id } = await params;
 
   let monument: any = null;
 

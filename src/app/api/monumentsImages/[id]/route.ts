@@ -9,7 +9,8 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
-    const { id } = await Promise.resolve(params);
+    //const { id } = await Promise.resolve(params);
+    const { id } = await params;
 
     if (!id) {
       return new NextResponse("ID изображения не указан", { status: 400 });
