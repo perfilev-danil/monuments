@@ -1,0 +1,38 @@
+version: "3.8"
+
+services:
+  ensib-monuments:
+    container_name: ensib-monuments
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_URL: ${NEXT_PUBLIC_URL}
+        DATABASE_URL: ${DATABASE_URL}
+    environment:
+      NEXT_PUBLIC_URL: ${NEXT_PUBLIC_URL}
+      DATABASE_URL: ${DATABASE_URL}
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+    volumes:
+      - ensib_next_cache:/app/.next/cache
+    restart: always
+
+  postgres:
+    image: postgres:15
+    container_name: ensib-postgres
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: monuments
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    restart: always
+
+volumes:
+  ensib_next_cache:
+  pgdata:

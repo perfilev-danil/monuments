@@ -11,16 +11,33 @@
 }
 
 @font-face {
-  font-family: "GirloSP";
-  src: url("/fonts/GirloSP.otf") format("opentype");
+  font-family: "Leotaro";
+  src: url("/fonts/Leotaro.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Futurespore";
+  src: url("/fonts/Futurespore.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Alethia";
+  src: url("/fonts/Alethia.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Gogol";
+  src: url("/fonts/Gogol.ttf") format("truetype");
 }
 
 :root {
   --font-nunito: "Nunito-ExtraLight", sans-serif;
   --font-nunito-italic: "Nunito-ExtraLightItalic", sans-serif;
-  --font-girlo: "GirloSP", sans-serif;
+  --font-leotaro: "Leotaro", sans-serif;
+  --font-futurespore: "Futurespore", sans-serif;
+  --font-gogol: "Gogol", sans-serif;
 
-  --darkcyan: #485863;
+  --darkcyan: #26282c;
 }
 
 /* 26282C
@@ -30,10 +47,18 @@
   font-family: var(--font-nunito);
 }
 
-.font-nunito-light {
+.font-nunito-italic {
   font-family: var(--font-nunito-italic);
 }
 
-.font-girlo {
-  font-family: var(--font-girlo);
+.font-leotaro {
+  font-family: var(--font-leotaro);
+}
+
+.font-futurespore {
+  font-family: var(--font-futurespore);
+}
+
+.font-gogol {
+  font-family: var(--font-gogol);
 }

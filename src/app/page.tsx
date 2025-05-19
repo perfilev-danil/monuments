@@ -1,63 +1,53 @@
 "use client";
 
-import { useEffect } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
 import Hero from "./components/Hero";
 import Opening from "./components/Opening";
 import Gallery from "./components/Gallery";
 import Info from "./components/Info";
 import Footer from "./components/Footer";
 
+import { useEffect } from "react";
+
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Home() {
   useEffect(() => {
     gsap.to("#wrapper", {
-      //y: "-100vh",
-      top: 0,
+      top: "0",
+      ease: "none",
       scrollTrigger: {
         trigger: "#wrapper",
-        start: "top bottom", // Начинаем когда верх wrapper появится внизу экрана
-        end: "top top", // Заканчиваем когда верх wrapper достигнет верха
-        scrub: 1,
-        markers: true,
+        start: "top bottom",
+        end: "top top",
+        scrub: true,
       },
     });
   }, []);
 
-  {
-    /*
-      ScrollTrigger.create({
-      trigger: "#wrapper",
-      start: "top top",
-      end: "+=100%", // Фиксировать на 100% высоты viewport
-      pin: true,
-      pinSpacing: false, // Отключаем автоматические отступы
-      markers: true,
-    });
-  */
-  }
-
   return (
     <div className="relative">
-      {/* Hero - первый экран */}
-      <div className="">
+      <div className="h-screen">
         <Hero />
       </div>
 
-      {/* Wrapper - изначально под Hero */}
-      <div id="wrapper" className=" bg-white absolute w-full">
-        <div id="opening" className="">
-          <Opening />
+      <div id="wrapper" className="absolute top-[100vh] left-0 w-full z-20">
+        <div className="relative h-[200vh]">
+          <div className="sticky top-0">
+            <Opening />
+          </div>
         </div>
-        <div id="gallery">
-          <Gallery />
+
+        <div className="relative h-[140vh]">
+          <div className="sticky top-0">
+            <Gallery />
+          </div>
         </div>
-        <div id="info">
-          <Info />
-        </div>
+
+        <Info />
+
         <Footer />
       </div>
     </div>
