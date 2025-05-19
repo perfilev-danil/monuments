@@ -5,44 +5,6 @@ import { useState, useRef, useEffect } from "react";
 
 import Image from "next/image";
 
-const cards = [
-  {
-    id: 0,
-    title: "Горный пейзаж",
-    imageUrl: "/images/tests/1.jpg",
-  },
-  {
-    id: 1,
-    title: "Морской берег",
-    imageUrl: "/images/tests/2.jpg",
-  },
-  {
-    id: 2,
-    title: "Лесная тропа",
-    imageUrl: "/images/tests/3.jpg",
-  },
-  {
-    id: 3,
-    title: "Городской вид",
-    imageUrl: "/images/tests/4.jpg",
-  },
-  {
-    id: 4,
-    title: "Пустынный оазис",
-    imageUrl: "/images/tests/5.jpg",
-  },
-  {
-    id: 5,
-    title: "Зимний лес",
-    imageUrl: "/images/tests/6.jpg",
-  },
-  {
-    id: 6,
-    title: "Водопад",
-    imageUrl: "/images/tests/7.jpg",
-  },
-];
-
 export default function Gallery() {
   const [isIndexed, setIndex] = useState<null | Number>(null);
   const [isClicked, setClicked] = useState<boolean>(false);

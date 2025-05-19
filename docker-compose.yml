@@ -2,7 +2,6 @@ version: "3.8"
 
 services:
   ensib-monuments:
-    container_name: ensib-monuments
     build:
       context: .
       dockerfile: Dockerfile
@@ -22,7 +21,6 @@ services:
 
   postgres:
     image: postgres:15
-    container_name: ensib-postgres
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin
