@@ -1,62 +1,72 @@
-# Используем Node Alpine с нужными пакетами
+# === БАЗОВЫЙ ОБРАЗ ДЛЯ СБОРКИ ===
 FROM node:18-alpine AS base
 
+# Устанавливаем необходимые зависимости
 RUN apk add --no-cache libc6-compat python3 g++ make
 
-# Сборка проекта
+# === СБОРКА ПРОЕКТА ===
 FROM base AS builder
 
 WORKDIR /app
 
-# Копируем package.json и lock-файл для кеширования зависимостей
+# Копируем package.json и lock-файл
 COPY package.json pnpm-lock.yaml ./
 
-COPY prisma ./prisma
-
+# Устанавливаем pnpm
 RUN npm install -g pnpm
 
-# Устанавливаем кэш pnpm
+# Настройка кэша для pnpm
 RUN pnpm config set store-dir /root/.pnpm-store
 
-# Устанавливаем зависимости и генерируем Prisma Client
+# Установка зависимостей
 RUN pnpm install
-RUN pnpm exec prisma generate
 
+# Копируем оставшийся код проекта
 COPY . .
 
-# Аргументы для переменных окружения (для Next.js)
-ARG NEXT_PUBLIC_URL
-ENV NEXT_PUBLIC_URL=${NEXT_PUBLIC_URL}
+# Генерация Prisma клиента
+RUN pnpm exec prisma generate
 
+# Установка переменных окружения (если нужно)
+ARG NEXT_PUBLIC_URL
 ARG DATABASE_URL
+ENV NEXT_PUBLIC_URL=${NEXT_PUBLIC_URL}
 ENV DATABASE_URL=${DATABASE_URL}
 
+# Сборка проекта
 RUN pnpm build
 
-# Финальный продакшн-образ
+# === ФИНАЛЬНЫЙ ОБРАЗ ДЛЯ ПРОДАКШНА ===
 FROM base AS runner
 
 WORKDIR /app
 
+# Production mode
 ENV NODE_ENV=production
 
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
+# Добавляем пользователя без root-доступа
+RUN addgroup --system --gid 1001 nodejs \
+ && adduser --system --uid 1001 nextjs
 
-# Копируем все из билдера
+# Копируем нужные директории из билдера
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/prisma ./prisma
 
+# Копируем переменные окружения (если передаются через ARG)
 ENV NEXT_PUBLIC_URL=${NEXT_PUBLIC_URL}
 ENV DATABASE_URL=${DATABASE_URL}
 
+# Назначаем права пользователю
 RUN chown -R nextjs:nodejs /app
 
+# Используем непривилегированного пользователя
 USER nextjs
 
+# Открываем порт
 EXPOSE 3000
 
-CMD ["pnpm", "start"]
+# Запуск Next.js сервера напрямую (без pnpm в продакшн)
+CMD ["node", "node_modules/next/dist/bin/next", "start"]
