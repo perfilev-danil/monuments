@@ -22,7 +22,7 @@ services:
 
   postgres:
     container_name: ensib-postgres
-    image: postgres:15
+    image: postgres
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin
@@ -47,6 +47,8 @@ migrate:
   networks:
     - ensib-network
   command: pnpm exec prisma migrate deploy
+  stdin_open: true
+  tty: true
 
 volumes:
   ensib_next_cache:
