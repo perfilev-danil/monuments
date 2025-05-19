@@ -25,7 +25,7 @@ RUN pnpm install
 COPY . .
 
 # Генерация Prisma клиента
-#RUN pnpm exec prisma generate
+RUN pnpm exec prisma generate
 
 # Установка переменных окружения (если нужно)
 ARG NEXT_PUBLIC_URL
