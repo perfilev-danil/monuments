@@ -12,7 +12,7 @@ export default function Header() {
           Енисейской Сибири
         </h1>
         <button className="relative w-10 h-10 rounded-full border-black border-1 cursor-pointer shrink-0">
-          <Image src="/images/icons/search.png" alt="" className="p-2" fill />
+          <Image src="/images/icons/search-b.png" alt="" className="p-2" fill />
         </button>
       </nav>
     </header>

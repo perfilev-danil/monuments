@@ -401,13 +401,10 @@ export default function CollectionContent() {
             <button className="h-10 border-black border-1 rounded-full p-2 cursor-pointer">
               Карта
             </button>
-            <button className="h-10 border-black border-1 rounded-full p-2 cursor-pointer">
-              Схема
-            </button>
             <input className="w-full h-10 border-black border-1 rounded-full px-4 py-2"></input>
             <button className="relative w-10 h-10 rounded-full border-black border-1 cursor-pointer shrink-0">
               <Image
-                src="/images/icons/search.png"
+                src="/images/icons/search-b.png"
                 alt=""
                 className="p-2"
                 fill

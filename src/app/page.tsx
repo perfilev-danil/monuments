@@ -2,7 +2,11 @@
 
 import Hero from "./components/Hero";
 import Opening from "./components/Opening";
+
 import Gallery from "./components/Gallery";
+
+import CardsMaze from "./components/CardsMaze";
+
 import Info from "./components/Info";
 import Footer from "./components/Footer";
 
@@ -40,9 +44,13 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="relative h-[140vh]">
+        <div className="relative h-[200vh]">
           <div className="sticky top-0">
+            {/*
             <Gallery />
+            */}
+
+            <CardsMaze />
           </div>
         </div>
 
