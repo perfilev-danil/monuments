@@ -5,7 +5,7 @@ export default function Header() {
     <header className="w-full">
       <nav className="w-full flex justify-between items-center">
         <div className="relative w-10 h-10 cursor-pointer">
-          <Image src="/images/icons/logo.png" alt="" className="" fill />
+          <Image src="/images/icons/logo-b.png" alt="" className="" fill />
         </div>
         <h1 className="font-gogol text-center text-sm">
           монументальное искусство <br />
