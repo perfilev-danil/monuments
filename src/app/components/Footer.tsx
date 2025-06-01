@@ -11,11 +11,11 @@ export default function Footer() {
         </p>
       </div>
       <div className="w-1/3 flex flex-col justify-between items-center">
-        <p className="font-gogol text-center text-sm">ensib-monuments</p>
+        <p className="font-american text-lg text-center">ensib-monuments</p>
         <div className="relative w-10 h-10 cursor-pointer">
           <Image src="/images/icons/logo-w.png" alt="" className="" fill />
         </div>
-        <p className="text-center font-gogol text-sm">
+        <p className="font-american leading-5 text-lg text-center">
           монументальное искусство <br /> Енисейской Сибири
         </p>
       </div>

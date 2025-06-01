@@ -26,6 +26,7 @@ export async function GET(
         materials: true,
         colors: true,
         techniques: true,
+        marks: true,
         period: true,
         images: true,
         appellation_registry: {
@@ -35,7 +36,11 @@ export async function GET(
         },
         inscription: true,
         conceptual_object: true,
-        information_object_okn: true,
+        appellation_info: {
+          include: {
+            information_object_info: true,
+          },
+        },
         documents: {
           include: {
             information_object_document: true,

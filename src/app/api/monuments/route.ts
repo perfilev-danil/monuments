@@ -10,6 +10,7 @@ export async function GET(request: NextRequest) {
     const materialIds = searchParams.getAll("materialId");
     const colorIds = searchParams.getAll("colorId");
     const techniqueIds = searchParams.getAll("techniqueId");
+    const markIds = searchParams.getAll("markId");
     const placeIds = searchParams.getAll("placeId");
     const personalityIds = searchParams.getAll("personId");
 
@@ -51,6 +52,16 @@ export async function GET(request: NextRequest) {
       };
     }
 
+    if (markIds.length > 0) {
+      where.marks = {
+        some: {
+          id: {
+            in: markIds.map((id) => parseInt(id)),
+          },
+        },
+      };
+    }
+
     if (placeIds.length > 0) {
       where.place = {
         appellation_place: {
@@ -77,29 +88,12 @@ export async function GET(request: NextRequest) {
       where,
       include: {
         appellation_monument: true,
-        description_monument: true,
         year: true,
         materials: true,
         colors: true,
         techniques: true,
+        marks: true,
         period: true,
-        appellation_registry: {
-          include: {
-            information_object_registry: true,
-          },
-        },
-        inscription: true,
-        conceptual_object: true,
-        documents: {
-          include: {
-            information_object_document: true,
-          },
-        },
-        dimensions: {
-          include: {
-            dimension_type: true,
-          },
-        },
         personalities: {
           include: {
             appellation_personality: true,
@@ -119,13 +113,6 @@ export async function GET(request: NextRequest) {
           },
         },
         images: true,
-        events: {
-          include: {
-            appellation_event: true,
-            time_span: true,
-            information_object_event: true,
-          },
-        },
       },
     });
 

@@ -6,6 +6,7 @@ export async function GET() {
     const monuments = await prisma.e24_Monument.findMany({
       include: {
         appellation_monument: true,
+        year: true,
         images: true,
       },
     });

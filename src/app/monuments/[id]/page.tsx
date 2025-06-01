@@ -35,283 +35,258 @@ export default async function MonumentPage({
 
   return (
     <div>
-      <div className="p-8 flex flex-col gap-8">
+      <div className="p-4 lg:p-8 flex flex-col gap-8">
         <Header />
 
-        <div className="grid gap-y-4 border-1 border-black p-8">
-          <div className="grid grid-cols-10 items-baseline">
-            <p>Название:</p>
-            <h1 className="col-span-9">
-              {" "}
-              {monument?.appellation_monument?.value}
-            </h1>
+        {/* Info */}
+        <div className="flex flex-col gap-8">
+          <div className="flex items-center justify-between">
+            <button className="relative w-10 h-10 border-1 border-black rounded-full">
+              <Image
+                src="/images/icons/arrow-b.png"
+                alt=""
+                className="p-2"
+                fill
+              />
+            </button>
+            <h1 className="text-xl">{monument?.appellation_monument?.value}</h1>
           </div>
 
-          <div className="grid grid-cols-10 items-baseline">
-            <p>Год:</p>
-            <p className="col-span-9">{monument?.year?.value}</p>
-          </div>
-
-          <div className="grid grid-cols-10 items-baseline">
-            <p>Период:</p>
-            <p className="col-span-9">{monument?.period?.value}</p>
-          </div>
-
-          <div className="grid grid-cols-10 items-baseline">
-            <p>Материалы:</p>
-            <div className="flex flex-col col-span-9">
-              {monument?.materials?.map((material: any) => (
-                <p key={material?.id}>{material?.value}</p>
-              ))}
-            </div>
-          </div>
-
-          <div className="grid grid-cols-10 items-baseline">
-            <p>Цвета: </p>
-            <div className="flex gap-4 col-span-9">
-              {monument?.colors?.map((color: any) => (
-                <span
-                  key={color?.id}
-                  style={{ backgroundColor: `#${color.code}` }}
-                  className="w-4 h-4 rounded-full"
-                ></span>
-              ))}
-            </div>
-          </div>
-
-          <div className="grid grid-cols-10 items-baseline">
-            <p>Размеры: </p>
-            <div className="flex flex-col col-span-9">
-              {monument?.dimensions?.map((dimension: any) => (
-                <p key={dimension?.id}>
-                  {dimension?.dimension_type?.value} – {dimension?.value}
+          <div className="w-full flex flex-col lg:flex-row lg:gap-8">
+            {/* 1st col */}
+            <div className="lg:w-1/2 border-1 border-black p-4 lg:p-8 flex flex-col gap-4">
+              <div className="grid grid-cols-6">
+                <span className="col-span-2 lg:col-span-1">Год</span>
+                <p className="col-span-4 lg:col-span-5">
+                  {monument?.year?.value}
                 </p>
-              ))}
-            </div>
-          </div>
-
-          <div className="grid grid-cols-10 items-baseline">
-            <p>Техника: </p>
-            <div className="flex flex-col col-span-9">
-              {monument?.techniques?.map((technique: any) => (
-                <p key={technique?.id}>{technique?.value}</p>
-              ))}
-            </div>
-          </div>
-
-          <div className="grid grid-cols-10 items-end">
-            <p>Мемориальное значение:</p>
-            <p className="col-span-9">{monument?.conceptual_object?.value}</p>
-          </div>
-
-          <div className="grid grid-cols-10 items-end">
-            <p>Надпись на табличке:</p>
-            <p className="col-span-9">{monument?.inscription?.value}</p>
-          </div>
-
-          <div className="grid grid-cols-10 items-baseline">
-            <p>Город:</p>
-            <p className="col-span-9">
-              {monument?.place?.appellation_place?.value}
-            </p>
-          </div>
-          <div className="grid grid-cols-10 items-baseline">
-            <p>Адрес:</p>
-            <div className="flex items-center gap-2">
-              <p className="col-span-9">
-                {monument?.place?.appellation_address?.value}
-              </p>
-              {monument?.place?.information_object_place?.value ? (
-                <Link
-                  href={monument?.place?.information_object_place?.value}
-                  className="relative w-4 h-4 cursor-pointer shrink-0"
-                >
-                  <Image src="/images/icons/link.png" alt="" fill />
-                </Link>
-              ) : (
-                ""
-              )}
-            </div>
-          </div>
-          <div className="grid grid-cols-10 items-baseline">
-            <p>Координаты:</p>
-            <p className="col-span-9">
-              {monument?.place?.appellation_address?.coordinates?.value}
-            </p>
-          </div>
-
-          <div className="grid grid-cols-10 items-baseline">
-            <p>Личности: </p>
-            <div className="flex flex-col col-span-9">
-              {monument?.personalities?.map((personality: any) => (
-                <div key={personality?.id} className="flex items-center gap-2">
-                  <p>
-                    {personality?.role?.value} –{" "}
-                    {personality?.appellation_personality?.value}
+              </div>
+              <div className="grid grid-cols-6">
+                <span className="col-span-2 lg:col-span-1">Период</span>
+                <p className="col-span-4 lg:col-span-5">
+                  {monument?.period?.value}
+                </p>
+              </div>
+              <div className="grid grid-cols-6">
+                <span className="col-span-2 lg:col-span-1">Цвета</span>
+                <div className="col-span-4 lg:col-span-5 flex items-center gap-4">
+                  {monument?.colors?.map((color: any) => (
+                    <span
+                      key={color?.id}
+                      style={{ backgroundColor: `#${color.code}` }}
+                      className="w-4 h-4 rounded-full"
+                    ></span>
+                  ))}
+                </div>
+              </div>
+              <div className="grid grid-cols-6">
+                <span className="col-span-2 lg:col-span-1">Материалы</span>
+                <div className="col-span-4 lg:col-span-5">
+                  {monument?.materials?.map((material: any) => (
+                    <p key={material?.id}>{material?.value}</p>
+                  ))}
+                </div>
+              </div>
+              <div className="grid grid-cols-6">
+                <span className="col-span-2 lg:col-span-1">Техники</span>
+                <div className="col-span-4 lg:col-span-5">
+                  {monument?.techniques?.map((technique: any) => (
+                    <p key={technique?.id}>{technique?.value}</p>
+                  ))}
+                </div>
+              </div>
+              <div className="grid grid-cols-6">
+                <span className="col-span-2 lg:col-span-1">Символы</span>
+                <div className="col-span-4 lg:col-span-5">
+                  {monument?.marks?.map((mark: any) => (
+                    <p key={mark?.id}>{mark?.value}</p>
+                  ))}
+                </div>
+              </div>
+              <div className="grid grid-cols-6">
+                <span className="col-span-2 lg:col-span-1">Размеры</span>
+                <div className="col-span-4 lg:col-span-5">
+                  {monument?.dimensions?.map((dimension: any) => (
+                    <p key={dimension?.id}>
+                      {dimension?.dimension_type?.value} - {dimension?.value}
+                    </p>
+                  ))}
+                </div>
+              </div>
+              <div className="grid grid-cols-6 items-end">
+                <span className="col-span-2 lg:col-span-1">
+                  Населённый пункт
+                </span>
+                <p className="col-span-4 lg:col-span-5">
+                  {monument?.place?.appellation_place?.value}
+                </p>
+              </div>
+              <div className="grid grid-cols-6">
+                <span className="col-span-2 lg:col-span-1">Адрес</span>
+                <div className="flex items-center gap-2">
+                  <p className="col-span-4 lg:col-span-5 items-end">
+                    {monument?.place?.appellation_address?.value}
                   </p>
-                  {personality?.information_object_personality?.value ? (
+                  {monument?.place?.information_object_place?.value && (
                     <Link
-                      href={personality?.information_object_personality?.value}
+                      href={monument?.place?.information_object_place?.value}
                       className="relative w-4 h-4 cursor-pointer shrink-0"
                     >
                       <Image src="/images/icons/link.png" alt="" fill />
                     </Link>
-                  ) : (
-                    ""
                   )}
                 </div>
-              ))}
+              </div>
+              <div className="grid grid-cols-6">
+                <span className="col-span-2 lg:col-span-1">Личности</span>
+                <div className="col-span-4 lg:col-span-5">
+                  {monument?.personalities?.map((personality: any) => (
+                    <div
+                      key={personality?.id}
+                      className="flex items-center gap-2"
+                    >
+                      <p>
+                        {personality?.appellation_personality?.value} -{" "}
+                        {personality?.role?.value}
+                      </p>
+                      {personality?.information_object_personality?.value && (
+                        <Link
+                          href={
+                            personality?.information_object_personality?.value
+                          }
+                          className="relative w-4 h-4 cursor-pointer shrink-0"
+                        >
+                          <Image src="/images/icons/link.png" alt="" fill />
+                        </Link>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
-          </div>
-
-          <div className="grid grid-cols-10 items-baseline">
-            <p>События: </p>
-            <div className="flex flex-col col-span-9">
-              {monument?.events?.map((event: any) => (
-                <div key={event?.id} className="flex items-center gap-2">
-                  <p>
-                    {event?.time_span?.beginning}
-                    {event?.time_span?.end
-                      ? " – " + event?.time_span?.end + " "
-                      : " "}
-                    – {event?.appellation_event?.value}
+            {/* 2nd col */}
+            <div className="lg:w-1/2 border-1 border-black p-4 lg:p-8 flex flex-col gap-4">
+              <div className="grid grid-cols-6">
+                <span className="col-span-2 lg:col-span-1">Описание</span>
+                <p className="col-span-4 lg:col-span-5 text-justify">
+                  {monument?.description_monument?.value}
+                </p>
+              </div>
+              <div className="grid grid-cols-6">
+                <span className="col-span-2 lg:col-span-1">Надпись</span>
+                <p className="col-span-4 lg:col-span-5 text-justify">
+                  {monument?.inscription?.value}
+                </p>
+              </div>
+              <div className="grid grid-cols-6">
+                <span className="col-span-2 lg:col-span-1">Мемориал</span>
+                <p className="col-span-4 lg:col-span-5 text-justify">
+                  {monument?.conceptual_object?.value}
+                </p>
+              </div>
+              <div className="grid grid-cols-6 items-end">
+                <span className="col-span-2 lg:col-span-1">Источник</span>
+                <div className="flex items-center gap-2">
+                  <p className="col-span-4 lg:col-span-5 text-justify">
+                    {monument?.appellation_info?.value}
                   </p>
-
-                  {event?.information_object_event?.value ? (
+                  {monument?.appellation_info?.information_object_info
+                    ?.value && (
                     <Link
-                      href={event?.information_object_event?.value}
+                      href={
+                        monument?.appellation_info?.information_object_info
+                          ?.value
+                      }
                       className="relative w-4 h-4 cursor-pointer shrink-0"
                     >
                       <Image src="/images/icons/link.png" alt="" fill />
                     </Link>
-                  ) : (
-                    ""
                   )}
                 </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="grid grid-cols-10 items-end">
-            <p>
-              Номер <br /> в реестре:
-            </p>
-            <div className="flex items-center gap-2">
-              <p className="col-span-9">
-                {monument?.appellation_registry?.value}
-              </p>
-              {monument?.appellation_registry?.information_object_registry
-                ?.value ? (
-                <Link
-                  href={
-                    monument?.appellation_registry?.information_object_registry
-                      ?.value
-                  }
-                  className="relative w-4 h-4 cursor-pointer shrink-0"
-                >
-                  <Image src="/images/icons/link.png" alt="" fill />
-                </Link>
-              ) : (
-                ""
-              )}
-            </div>
-          </div>
-
-          <div className="grid grid-cols-10 items-end">
-            <p>Служба по гос. охране ОКН</p>
-            <div className="flex items-center gap-2">
-              <p className="col-span-9">Ссылка</p>
-              {monument?.information_object_okn?.value ? (
-                <Link
-                  href={monument?.information_object_okn?.value}
-                  className="relative w-4 h-4 cursor-pointer shrink-0"
-                >
-                  <Image src="/images/icons/link.png" alt="" fill />
-                </Link>
-              ) : (
-                ""
-              )}
-            </div>
-          </div>
-
-          <div className="grid grid-cols-10 items-baseline">
-            <p>Документы: </p>
-            <div className="flex flex-col col-span-9">
-              {monument?.documents?.map((document: any) => (
-                <div key={document?.id} className="flex items-center gap-2">
-                  <p>{document?.value}</p>
-                  {document?.information_object_document?.value ? (
+              </div>
+              <div className="grid grid-cols-6 items-end">
+                <span className="col-span-2 lg:col-span-1">Гос. реестр</span>
+                <div className="flex items-center gap-2">
+                  <p className="col-span-4 lg:col-span-5 text-justify">
+                    {monument?.appellation_registry?.value}
+                  </p>
+                  {monument?.appellation_registry?.information_object_registry
+                    ?.value && (
                     <Link
-                      href={document?.information_object_document?.value}
+                      href={
+                        monument?.appellation_registry
+                          ?.information_object_registry?.value
+                      }
                       className="relative w-4 h-4 cursor-pointer shrink-0"
                     >
                       <Image src="/images/icons/link.png" alt="" fill />
                     </Link>
-                  ) : (
-                    ""
                   )}
                 </div>
-              ))}
+              </div>
+              <div className="grid grid-cols-6">
+                <span className="col-span-2 lg:col-span-1">Документы</span>
+                <div className="col-span-4 lg:col-span-5">
+                  {monument?.documents?.map((document: any) => (
+                    <div key={document?.id} className="flex items-center gap-2">
+                      <p>{document?.value}</p>
+                      {document?.information_object_document?.value && (
+                        <Link
+                          href={document?.information_object_document?.value}
+                          className="relative w-4 h-4 cursor-pointer shrink-0"
+                        >
+                          <Image src="/images/icons/link.png" alt="" fill />
+                        </Link>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="grid grid-cols-6">
+                <span className="col-span-2 lg:col-span-1">События</span>
+                <div className="col-span-4 lg:col-span-5">
+                  {monument?.events?.map((event: any) => (
+                    <div key={event?.id} className="flex items-center gap-2">
+                      <div className="flex items-center gap-2">
+                        <p>
+                          {event?.time_span?.beginning} -{" "}
+                          {event?.time_span?.end}
+                        </p>
+                        <p>{event?.appellation_event.value}</p>
+                      </div>
+                      {event?.information_object_event?.value && (
+                        <Link
+                          href={event.information_object_event.value}
+                          className="relative w-4 h-4 cursor-pointer shrink-0"
+                        >
+                          <Image src="/images/icons/link.png" alt="" fill />
+                        </Link>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
-          </div>
-
-          <div className="grid grid-cols-10 items-baseline">
-            <p>Описание:</p>
-            <p className="col-span-9">
-              {monument?.description_monument?.value}
-            </p>
           </div>
         </div>
-
-        {monument.images.length === 0 ? (
-          ""
-        ) : (
-          <div
-            className="w-full
-            flex items-center justify-center gap-4"
-          >
-            <button
-              className={`relative w-12 h-12 rounded-full border-black border-1 cursor-pointer shrink-0`}
-            >
-              <Image
-                src="/images/icons/arrow.png"
-                alt=""
-                className="p-2"
-                fill
-              />
-            </button>
-            <div
-              className="w-full h-96 
-                          touch-pan-x snap-x snap-mandatory
-                          flex items-center 
-                          overflow-x-auto scroll-smooth"
-            >
-              {monument.images.map((image: any, index: any) => (
-                <div
-                  key={monument?.id}
-                  className={`card snap-center basis-1/1 lg:basis-1/5 flex-shrink-0 px-4`}
-                >
-                  <div className="relative h-64 border-1 border-black">
-                    <Image
-                      src={`/api/monumentsImages/${image?.id}`}
-                      alt=""
-                      fill
-                      className="image object-cover"
-                    />
-                  </div>
+        {/* Images */}
+        {monument.images.length !== 0 && (
+          <div className="overflow-x-auto no-scrollbar w-full flex items-center gap-8 snap-x snap-mandatory">
+            {monument?.images?.map((image: any) => (
+              <div
+                key={image?.id}
+                className="snap-end w-[calc(50%-16px)] shrink-0"
+              >
+                <div className="relative border border-black h-64 ">
+                  <Image
+                    src={`/api/images/${image?.id}`}
+                    alt=""
+                    fill
+                    className="object-cover"
+                  />
                 </div>
-              ))}
-            </div>
-            <button
-              className={`relative w-12 h-12 rounded-full border-black border-1 cursor-pointer shrink-0`}
-            >
-              <Image
-                src="/images/icons/arrow.png"
-                alt=""
-                className="p-2"
-                fill
-              />
-            </button>
+              </div>
+            ))}
           </div>
         )}
       </div>

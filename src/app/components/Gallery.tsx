@@ -126,7 +126,7 @@ export default function Gallery() {
               >
                 {monument?.images?.[0] ? (
                   <Image
-                    src={`/api/monumentsImages/${monument?.images[0]?.id}`}
+                    src={`/api/images/${monument?.images[0]?.id}`}
                     alt=""
                     fill
                     className="image object-cover"

@@ -30,12 +30,18 @@
   src: url("/fonts/Gogol.ttf") format("truetype");
 }
 
+@font-face {
+  font-family: "American";
+  src: url("/fonts/American.otf") format("opentype");
+}
+
 :root {
   --font-nunito: "Nunito-ExtraLight", sans-serif;
   --font-nunito-italic: "Nunito-ExtraLightItalic", sans-serif;
   --font-leotaro: "Leotaro", sans-serif;
   --font-futurespore: "Futurespore", sans-serif;
   --font-gogol: "Gogol", sans-serif;
+  --font-american: "American", sans-serif;
 
   --darkcyan: #26282c;
 }
@@ -61,6 +67,10 @@
 
 .font-gogol {
   font-family: var(--font-gogol);
+}
+
+.font-american {
+  font-family: var(--font-american);
 }
 
 /* scrollbar */

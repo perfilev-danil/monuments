@@ -27,7 +27,7 @@ export default function Opening() {
       </div>
       <div className="relative flex items-end justify-between z-20 text-sm">
         <span>ensib</span>
-        <span className="absolute left-0 right-0 font-gogol text-center text-sm">
+        <span className="absolute left-0 right-0 font-american text-lg text-center">
           ensib-monuments
         </span>
         <div>

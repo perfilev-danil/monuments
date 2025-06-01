@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, Suspense } from "react";
+import { useState, useEffect } from "react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 
 import Image from "next/image";
@@ -16,15 +16,12 @@ export default function CollectionContent() {
 
   const [monuments, setMonuments] = useState<any[]>([]);
 
-  // Periods
   const [periods, setPeriods] = useState<any[]>([]);
   const [selectedPeriods, setSelectedPeriods] = useState<number[]>([]);
 
-  // Materials
   const [materials, setMaterials] = useState<any[]>([]);
   const [selectedMaterials, setSelectedMaterials] = useState<number[]>([]);
 
-  // Colors
   const [colors, setColors] = useState<any[]>([]);
   const [selectedColors, setSelectedColors] = useState<number[]>([]);
 
@@ -34,12 +31,14 @@ export default function CollectionContent() {
   const [techniques, setTechniques] = useState<any[]>([]);
   const [selectedTechniques, setSelectedTechniques] = useState<number[]>([]);
 
+  const [marks, setMarks] = useState<any[]>([]);
+  const [selectedMarks, setSelectedMarks] = useState<number[]>([]);
+
   const [personalities, setPersonalities] = useState<any[]>([]);
   const [selectedPersonalities, setSelectedPersonalities] = useState<number[]>(
     []
   );
 
-  // Инициализация из URL
   useEffect(() => {
     setSelectedPeriods(
       searchParams
@@ -56,6 +55,8 @@ export default function CollectionContent() {
       searchParams.getAll("techniqueId").map((id) => parseInt(id))
     );
 
+    setSelectedMarks(searchParams.getAll("markId").map((id) => parseInt(id)));
+
     setSelectedPlaces(searchParams.getAll("placeId").map((id) => parseInt(id)));
 
     setSelectedPersonalities(
@@ -71,6 +72,7 @@ export default function CollectionContent() {
           materialsRes,
           colorsRes,
           techniquesRes,
+          marksRes,
           placesRes,
           personalitiesRes,
         ] = await Promise.all([
@@ -78,6 +80,7 @@ export default function CollectionContent() {
           fetch("/api/materials"),
           fetch("/api/colors"),
           fetch("api/techniques"),
+          fetch("api/marks"),
           fetch("api/places"),
           fetch("api/personalities"),
         ]);
@@ -87,6 +90,7 @@ export default function CollectionContent() {
           materialsData,
           colorsData,
           techniquesData,
+          marksData,
           placesData,
           personalitiesData,
         ] = await Promise.all([
@@ -94,6 +98,7 @@ export default function CollectionContent() {
           materialsRes.json(),
           colorsRes.json(),
           techniquesRes.json(),
+          marksRes.json(),
           placesRes.json(),
           personalitiesRes.json(),
         ]);
@@ -102,6 +107,7 @@ export default function CollectionContent() {
         setMaterials(materialsData);
         setColors(colorsData);
         setTechniques(techniquesData);
+        setMarks(marksData);
         setPlaces(placesData);
         setPersonalities(personalitiesData);
       } catch (error) {
@@ -112,7 +118,6 @@ export default function CollectionContent() {
     fetchFilters();
   }, []);
 
-  // Загрузка данных с фильтрами
   useEffect(() => {
     const fetchMonuments = async () => {
       try {
@@ -132,6 +137,8 @@ export default function CollectionContent() {
         selectedTechniques.forEach((id) =>
           params.append("techniqueId", id.toString())
         );
+
+        selectedMarks.forEach((id) => params.append("markId", id.toString()));
 
         selectedPlaces.forEach((id) => params.append("placeId", id.toString()));
 
@@ -154,29 +161,28 @@ export default function CollectionContent() {
     selectedPeriods,
     selectedMaterials,
     selectedColors,
-    selectedPersonalities,
+    selectedTechniques,
+    selectedMarks,
     selectedPlaces,
     selectedPersonalities,
   ]);
 
-  // Обновляем URL при изменении фильтров
   useEffect(() => {
     const params = new URLSearchParams();
 
-    // Период
     selectedPeriods.forEach((id) => params.append("periodId", id.toString()));
 
-    // Материалы
     selectedMaterials.forEach((id) =>
       params.append("materialId", id.toString())
     );
 
-    // Цвета
     selectedColors.forEach((id) => params.append("colorId", id.toString()));
 
     selectedTechniques.forEach((id) =>
       params.append("techniqueId", id.toString())
     );
+
+    selectedMarks.forEach((id) => params.append("markId", id.toString()));
 
     selectedPlaces.forEach((id) => params.append("placeId", id.toString()));
 
@@ -190,13 +196,13 @@ export default function CollectionContent() {
     selectedMaterials,
     selectedColors,
     selectedTechniques,
+    selectedMarks,
     selectedPlaces,
     selectedPersonalities,
     pathname,
     router,
   ]);
 
-  // Обработчики изменения фильтров
   const handlePeriodChange = (id: number) => {
     setSelectedPeriods((prev) =>
       prev.includes(id) ? prev.filter((itemId) => itemId !== id) : [...prev, id]
@@ -221,6 +227,12 @@ export default function CollectionContent() {
     );
   };
 
+  const handleMarkChange = (id: number) => {
+    setSelectedMarks((prev) =>
+      prev.includes(id) ? prev.filter((itemId) => itemId !== id) : [...prev, id]
+    );
+  };
+
   const handlePlaceChange = (id: number) => {
     setSelectedPlaces((prev) =>
       prev.includes(id) ? prev.filter((itemId) => itemId !== id) : [...prev, id]
@@ -234,7 +246,7 @@ export default function CollectionContent() {
   };
 
   const getImageUrl = (imageId: number) => {
-    return `/api/monumentsImages/${imageId}`;
+    return `/api/images/${imageId}`;
   };
 
   return (
@@ -343,6 +355,30 @@ export default function CollectionContent() {
             </div>
           </div>
 
+          {/* Marks */}
+          <div>
+            <h3 className="text-lg mb-2">Символы</h3>
+            <div className="h-28 space-y-2 overflow-x-hidden overflow-y-auto">
+              {marks.map((mark) => (
+                <div key={mark.id} className="flex items-center">
+                  <input
+                    type="checkbox"
+                    id={`mark-${mark.id}`}
+                    checked={selectedMarks.includes(mark.id)}
+                    onChange={() => handleMarkChange(mark.id)}
+                    className=" h-8 w-8 "
+                  />
+                  <label
+                    htmlFor={`mark-${mark.id}`}
+                    className="ml-2 text-sm text-gray-700"
+                  >
+                    {mark.value}
+                  </label>
+                </div>
+              ))}
+            </div>
+          </div>
+
           {/* Places */}
           <div>
             <h3 className="text-lg mb-2">Населённые пункты</h3>
@@ -419,20 +455,34 @@ export default function CollectionContent() {
               monuments.map((monument) => (
                 <div
                   key={monument.id}
-                  className="relative h-64 w-[calc(25%-32px)] border-1"
-                  onClick={() => router.push(`/monuments/${monument.id}`)}
+                  className="relative overflow-hidden h-[calc(50%-16px)] w-[calc(50%-32px)] border-1"
                 >
                   {monument.images?.[0] && (
                     <Image
                       src={getImageUrl(monument?.images[0]?.id)}
                       alt=""
                       fill
-                      className="image object-cover"
-                      unoptimized // Важно для кастомных URL изображений
+                      objectFit="cover"
+                      className="hover:scale-110 transition-transform object-top duration-500"
+                      unoptimized
                     />
                   )}
-                  <div className="absolute bottom-0 left-0 right-0 bg-[var(--darkcyan)] bg-opacity-50 text-white text-center p-2">
-                    {monument?.appellation_monument?.value}
+                  <div className="absolute bottom-0 left-0 right-0 w-full bg-[var(--darkcyan)] flex justify-between p-2">
+                    <div className=" bg-opacity-50 text-white text-center p-2">
+                      {monument?.appellation_monument?.value} (
+                      {monument?.year?.value})
+                    </div>
+                    <button
+                      onClick={() => router.push(`/monuments/${monument.id}`)}
+                      className="relative w-10 h-10 shrink-0 border-1 border-white rounded-full cursor-pointer"
+                    >
+                      <Image
+                        src="/images/icons/arrow.png"
+                        alt=""
+                        className="p-2 rotate-180"
+                        fill
+                      />
+                    </button>
                   </div>
                 </div>
               ))

@@ -1,10 +1,10 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 
 interface Card {
-  id: number;
   height?: number;
   name?: string;
   url?: string | undefined;
@@ -15,55 +15,48 @@ interface CardsInColumn {
   cards: Card[];
 }
 
-const images = [
-  "/images/tests/1.jpg",
-  "/images/tests/2.jpg",
-  "/images/tests/3.jpg",
-  "/images/tests/4.jpg",
-  "/images/tests/5.jpg",
-  "/images/tests/6.jpg",
-];
-
-const libs: Card[] = [
-  { id: 0, name: "Памятник памятник", url: "/images/tests/1.jpg" },
-  {
-    id: 1,
-    name: "Памятник памятник Памятник памятник",
-    url: "/images/tests/2.jpg",
-  },
-  { id: 2, name: "Памятник памятник", url: "/images/tests/3.jpg" },
-  {
-    id: 3,
-    name: "Памятник памятник Памятник памятник",
-    url: "/images/tests/4.jpg",
-  },
-  { id: 4, name: "Памятник памятник", url: "/images/tests/5.jpg" },
-  {
-    id: 5,
-    name: "Памятник памятник Памятник памятник Памятник памятник",
-    url: "/images/tests/6.jpg",
-  },
-  { id: 6, name: "Памятник памятник", url: "/images/tests/7.jpg" },
-  //{ id: 8, name: "Пусто" },
-];
-
 export default function CardsMaze() {
-  const cardsCount = 7;
+  const router = useRouter();
+
+  const [monuments, setMonuments] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
   const [cardsCollection, setCardsCollection] = useState<CardsInColumn[]>([]);
 
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-
   const [isAtStart, setIsAtStart] = useState(true);
   const [isAtEnd, setIsAtEnd] = useState(false);
 
   useEffect(() => {
+    const fetchMonuments = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch("/api/monumentsCards");
+        if (!response.ok) {
+          throw new Error("Ошибка при загрузке памятников");
+        }
+        const data = await response.json();
+        setMonuments(data);
+      } catch (err) {
+        console.error(err);
+        setError(err instanceof Error ? err.message : "Неизвестная ошибка");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchMonuments();
+  }, []);
+
+  useEffect(() => {
     let columnId = 0;
-    let cardsAmount = cardsCount;
+    let cardsAmount = monuments.length;
     const generatedCardsInColumn: CardsInColumn[] = [];
 
     let index = 0;
     while (cardsAmount > 0) {
-      let cardsHolder: Card[] = [];
+      let cardsHolder: any[] = [];
 
       let cardsInColumn = Math.ceil(Math.random() * 2) + 1;
 
@@ -72,9 +65,6 @@ export default function CardsMaze() {
       } else if (cardsAmount - cardsInColumn === -2) {
         cardsInColumn = 1;
       }
-
-      console.log(cardsAmount);
-      console.log(cardsInColumn);
 
       const maxHeight = 100;
       let sumHeight = 0;
@@ -88,10 +78,11 @@ export default function CardsMaze() {
           sumHeight += height;
         }
         cardsHolder.push({
-          id: index,
           height: height,
-          name: libs[index]?.name,
-          url: libs[index]?.url,
+          id: monuments[index]?.id,
+          appellation_monument: monuments[index]?.appellation_monument?.value,
+          year: monuments[index]?.year?.value,
+          src: monuments[index]?.images[0]?.id,
         });
         index += 1;
       }
@@ -109,7 +100,7 @@ export default function CardsMaze() {
     }
 
     setCardsCollection(generatedCardsInColumn);
-  }, []);
+  }, [monuments]);
 
   useEffect(() => {
     const container = scrollContainerRef.current;
@@ -167,6 +158,10 @@ export default function CardsMaze() {
     };
   }, []);
 
+  const getImageUrl = (imageId: number) => {
+    return `/api/images/${imageId}`;
+  };
+
   return (
     <div className="relative bg-[var(--darkcyan)] h-screen">
       {isAtStart && (
@@ -179,27 +174,29 @@ export default function CardsMaze() {
       >
         {cardsCollection.map((column) => (
           <div
-            key={column.id}
+            key={column?.id}
             className="flex-shrink-0 basis-1/3
           card snap-center"
           >
-            {column.cards.map((card: Card) => (
+            {column?.cards.map((monument: any) => (
               <div
-                key={card.id}
+                key={monument?.id}
                 className="p-4"
-                style={{ height: `${card.height}%` }}
+                style={{ height: `${monument.height}%` }}
               >
                 <div className="relative overflow-hidden border-1 border-white h-full group">
                   <div className="">
                     <div className="absolute bottom-0 right-0 z-10 bg-white w-full p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      {/*
-                        {card.id}
-                        */}
                       <div className="flex items-center justify-between">
                         <p className="w-full text-left truncate">
-                          {card?.name}
+                          {monument?.appellation_monument} ({monument?.year})
                         </p>
-                        <button className="relative w-10 h-10 shrink-0 border-1 border-black rounded-full cursor-pointer">
+                        <button
+                          onClick={() =>
+                            router.push(`/monuments/${monument.id}`)
+                          }
+                          className="relative w-10 h-10 shrink-0 border-1 border-black rounded-full cursor-pointer"
+                        >
                           <Image
                             src="/images/icons/arrow-b.png"
                             alt=""
@@ -209,15 +206,15 @@ export default function CardsMaze() {
                         </button>
                       </div>
                     </div>
-                    {card?.url ? (
+                    {monument?.src && (
                       <Image
-                        src={card?.url}
+                        src={getImageUrl(monument?.src)}
                         alt=""
                         fill
                         objectFit="cover"
                         className="group-hover:scale-110 transition-transform object-top duration-500"
                       />
-                    ) : null}
+                    )}
                   </div>
                 </div>
               </div>

@@ -20,12 +20,12 @@ export default function Hero() {
         flex flex-col items-center justify-between"
       >
         {/* <div className="w-32 h-[1px] bg-white "></div> */}
-        <p className="font-gogol text-center text-sm">ensib-monuments</p>
+        <p className="font-american text-lg text-center">ensib-monuments</p>
         <div className="w-full flex items-end justify-between">
           <div className="relative w-10 h-10 cursor-pointer">
             <Image src="/images/icons/logo-w.png" alt="" className="" fill />
           </div>
-          <h1 className="font-gogol text-center text-sm">
+          <h1 className="font-american text-lg leading-5 text-center">
             монументальное искусство <br />
             Енисейской Сибири
           </h1>

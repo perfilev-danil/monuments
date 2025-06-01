@@ -35,14 +35,14 @@ model E24_Monument {
   conceptual_object E28_Conceptual_object? @relation(fields: [conceptual_objectId], references: [id], onDelete: Cascade, onUpdate: Cascade) // N:1
   conceptual_objectId Int?
 
-  appellation_registry E41_Appellation_registry? @relation(fields: [appellation_registryId], references: [id], onDelete: Cascade, onUpdate: Cascade) // 1:1
-  appellation_registryId Int? @unique
-
   inscription E34_Inscription? @relation(fields: [inscriptionId], references: [id], onDelete: Cascade, onUpdate: Cascade) // 1:1
   inscriptionId Int? @unique
 
-  information_object_okn E73_Information_object_okn? @relation(fields: [information_object_oknId], references: [id], onDelete: Cascade, onUpdate: Cascade) // 1:1
-  information_object_oknId Int? @unique
+  appellation_registry E41_Appellation_registry? @relation(fields: [appellation_registryId], references: [id], onDelete: Cascade, onUpdate: Cascade) // 1:1
+  appellation_registryId Int? @unique
+
+  appellation_info E41_Appellation_info ? @relation(fields: [appellation_infoId], references: [id], onDelete: Cascade, onUpdate: Cascade) // 1:1
+  appellation_infoId Int? @unique
 
   documents  E31_Document[] // 1:N
 
@@ -51,11 +51,11 @@ model E24_Monument {
   place E53_Place? @relation(fields: [placeId], references: [id], onDelete: Cascade, onUpdate: Cascade) // 1:1
   placeId Int? @unique
 
-  images E36_Img_monument[] // 1:N
-
   personalities E21_Personality[] // M:N
 
   events E5_Event[] // 1:N
+
+  images E36_Img_monument[] // 1:N
 }
 
 model E41_Appellation_monument {
@@ -146,11 +146,22 @@ model E28_Conceptual_object {
   e24_Monument E24_Monument[]
 }
 
-model E73_Information_object_okn{
+
+model E41_Appellation_info {
+  id Int @id @default(autoincrement())
+  value String
+
+  information_object_info E73_Information_object_info? @relation(fields: [information_object_infoId], references: [id], onDelete: Cascade, onUpdate: Cascade) // 1:1
+  information_object_infoId Int? @unique
+
+  e24_Monument E24_Monument? 
+}
+
+model E73_Information_object_info{
   id           Int              @id @default(autoincrement())
   value String
 
-  e24_Monument E24_Monument?
+  e41_Appellation_info  E41_Appellation_info ?
 }
 
 model E31_Document {
@@ -230,7 +241,8 @@ model E73_Information_object_place{
 
 model E94_Coordinates {
   id           Int              @id @default(autoincrement())
-  value String
+  lon Float?
+  lat Float?
 
   e41_Appellation_address E41_Appellation_address?
 }
@@ -248,8 +260,6 @@ model E36_Img_monument {
 model E21_Personality {
   id           Int              @id @default(autoincrement()) 
 
-  monuments E24_Monument[]
-
   role E55_Role_personality? @relation(fields: [roleId], references: [id], onDelete: Cascade, onUpdate: Cascade) // 1:1
   roleId Int? @unique
 
@@ -258,6 +268,8 @@ model E21_Personality {
 
   information_object_personality E73_Information_object_personality? @relation(fields: [information_object_personalityId], references: [id], onDelete: Cascade, onUpdate: Cascade) // 1:1
   information_object_personalityId Int? @unique
+
+  monuments E24_Monument[]
 }
 
 model E41_Appellation_personality {

@@ -7,7 +7,7 @@ export default function Header() {
         <div className="relative w-10 h-10 cursor-pointer">
           <Image src="/images/icons/logo-b.png" alt="" className="" fill />
         </div>
-        <h1 className="font-gogol text-center text-sm">
+        <h1 className="font-american text-lg leading-5 text-center">
           монументальное искусство <br />
           Енисейской Сибири
         </h1>
