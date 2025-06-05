@@ -1,16 +1,37 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 
 import Image from "next/image";
-
 import Header from "../components/Header";
+
+import Collection from "./Collection";
+import MapView from "./MapView";
+
+type Monument = {
+  name: string;
+  url: string;
+  coords: [number, number]; // [lon, lat]
+};
+
+const mon: Monument[] = [
+  //{ name: "Памятник Победы", coords: [37.618423, 55.751244] },
+  //{ name: "Медный всадник", coords: [30.3086, 59.9375] },
+  //{ name: "Родина-мать зовёт!", coords: [44.5168, 48.7347] },
+  {
+    name: "Памятник В.И. Ленину",
+    url: "/images/contents/hero.jpg",
+    coords: [92.877789, 56.015342],
+  },
+];
 
 export default function CollectionContent() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+
+  const [isFirst, setFirst] = useState(true);
 
   const [loading, setLoading] = useState(true);
 
@@ -38,6 +59,13 @@ export default function CollectionContent() {
   const [selectedPersonalities, setSelectedPersonalities] = useState<number[]>(
     []
   );
+
+  const [toFilter, setToFilter] = useState(false);
+
+  const [searchQuery, setSearchQuery] = useState("");
+  const [activeSearchQuery, setActiveSearchQuery] = useState("");
+
+  const filtersContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setSelectedPeriods(
@@ -124,27 +152,29 @@ export default function CollectionContent() {
         setLoading(true);
         const params = new URLSearchParams();
 
-        selectedPeriods.forEach((id) =>
-          params.append("periodId", id.toString())
-        );
-
-        selectedMaterials.forEach((id) =>
-          params.append("materialId", id.toString())
-        );
-
-        selectedColors.forEach((id) => params.append("colorId", id.toString()));
-
-        selectedTechniques.forEach((id) =>
-          params.append("techniqueId", id.toString())
-        );
-
-        selectedMarks.forEach((id) => params.append("markId", id.toString()));
-
-        selectedPlaces.forEach((id) => params.append("placeId", id.toString()));
-
-        selectedPersonalities.forEach((id) =>
-          params.append("personId", id.toString())
-        );
+        if (activeSearchQuery) {
+          params.append("search", activeSearchQuery);
+        } else {
+          selectedPeriods.forEach((id) =>
+            params.append("periodId", id.toString())
+          );
+          selectedMaterials.forEach((id) =>
+            params.append("materialId", id.toString())
+          );
+          selectedColors.forEach((id) =>
+            params.append("colorId", id.toString())
+          );
+          selectedTechniques.forEach((id) =>
+            params.append("techniqueId", id.toString())
+          );
+          selectedMarks.forEach((id) => params.append("markId", id.toString()));
+          selectedPlaces.forEach((id) =>
+            params.append("placeId", id.toString())
+          );
+          selectedPersonalities.forEach((id) =>
+            params.append("personId", id.toString())
+          );
+        }
 
         const res = await fetch(`/api/monuments?${params.toString()}`);
         const data = await res.json();
@@ -157,38 +187,35 @@ export default function CollectionContent() {
     };
 
     fetchMonuments();
-  }, [
-    selectedPeriods,
-    selectedMaterials,
-    selectedColors,
-    selectedTechniques,
-    selectedMarks,
-    selectedPlaces,
-    selectedPersonalities,
-  ]);
+  }, [toFilter, activeSearchQuery]);
 
+  //if router gets changed
   useEffect(() => {
     const params = new URLSearchParams();
 
-    selectedPeriods.forEach((id) => params.append("periodId", id.toString()));
+    if (activeSearchQuery) {
+      params.append("search", activeSearchQuery);
+    } else {
+      selectedPeriods.forEach((id) => params.append("periodId", id.toString()));
 
-    selectedMaterials.forEach((id) =>
-      params.append("materialId", id.toString())
-    );
+      selectedMaterials.forEach((id) =>
+        params.append("materialId", id.toString())
+      );
 
-    selectedColors.forEach((id) => params.append("colorId", id.toString()));
+      selectedColors.forEach((id) => params.append("colorId", id.toString()));
 
-    selectedTechniques.forEach((id) =>
-      params.append("techniqueId", id.toString())
-    );
+      selectedTechniques.forEach((id) =>
+        params.append("techniqueId", id.toString())
+      );
 
-    selectedMarks.forEach((id) => params.append("markId", id.toString()));
+      selectedMarks.forEach((id) => params.append("markId", id.toString()));
 
-    selectedPlaces.forEach((id) => params.append("placeId", id.toString()));
+      selectedPlaces.forEach((id) => params.append("placeId", id.toString()));
 
-    selectedPersonalities.forEach((id) =>
-      params.append("personId", id.toString())
-    );
+      selectedPersonalities.forEach((id) =>
+        params.append("personId", id.toString())
+      );
+    }
 
     router.replace(`${pathname}?${params.toString()}`);
   }, [
@@ -199,54 +226,69 @@ export default function CollectionContent() {
     selectedMarks,
     selectedPlaces,
     selectedPersonalities,
+    activeSearchQuery,
+    //searchQuery,
     pathname,
     router,
   ]);
 
-  const handlePeriodChange = (id: number) => {
-    setSelectedPeriods((prev) =>
+  const handleFilterChange = (
+    id: number,
+    setSelectedItems: React.Dispatch<React.SetStateAction<number[]>>
+  ) => {
+    setSelectedItems((prev) =>
       prev.includes(id) ? prev.filter((itemId) => itemId !== id) : [...prev, id]
     );
+    setToFilter(false);
+    setActiveSearchQuery(""); // Сбрасываем поиск при изменении фильтров
   };
 
-  const handleMaterialChange = (id: number) => {
-    setSelectedMaterials((prev) =>
-      prev.includes(id) ? prev.filter((itemId) => itemId !== id) : [...prev, id]
-    );
+  const ResetFilters = () => {
+    // Сброс всех состояний фильтров
+    setSelectedPeriods([]);
+    setSelectedMaterials([]);
+    setSelectedColors([]);
+    setSelectedTechniques([]);
+    setSelectedMarks([]);
+    setSelectedPlaces([]);
+    setSelectedPersonalities([]);
+
+    // Сброс поиска
+    setSearchQuery("");
+    setActiveSearchQuery("");
+    setToFilter(false);
+    router.replace(pathname, undefined);
   };
 
-  const handleColorChange = (id: number) => {
-    setSelectedColors((prev) =>
-      prev.includes(id) ? prev.filter((itemId) => itemId !== id) : [...prev, id]
-    );
+  const ResetInput = () => {
+    setSearchQuery("");
+    setActiveSearchQuery("");
   };
 
-  const handleTechniqueChange = (id: number) => {
-    setSelectedTechniques((prev) =>
-      prev.includes(id) ? prev.filter((itemId) => itemId !== id) : [...prev, id]
-    );
+  const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
   };
 
-  const handleMarkChange = (id: number) => {
-    setSelectedMarks((prev) =>
-      prev.includes(id) ? prev.filter((itemId) => itemId !== id) : [...prev, id]
-    );
+  const handleSearchSubmit = () => {
+    if (searchQuery.trim()) {
+      setActiveSearchQuery(searchQuery.trim());
+      setSelectedPeriods([]);
+    } else {
+      setActiveSearchQuery("");
+    }
   };
 
-  const handlePlaceChange = (id: number) => {
-    setSelectedPlaces((prev) =>
-      prev.includes(id) ? prev.filter((itemId) => itemId !== id) : [...prev, id]
-    );
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      handleSearchSubmit();
+    }
   };
 
-  const handlePersonChange = (id: number) => {
-    setSelectedPersonalities((prev) =>
-      prev.includes(id) ? prev.filter((itemId) => itemId !== id) : [...prev, id]
-    );
-  };
-
-  const getImageUrl = (imageId: number) => {
-    return `/api/images/${imageId}`;
+  const handleScrollUp = () => {
+    filtersContainerRef.current?.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   };
 
   return (
@@ -254,176 +296,254 @@ export default function CollectionContent() {
       <Header />
       <div className="min-h-0 h-full max-h-full w-full flex gap-8">
         {/* Filter */}
-        <div className="w-1/3 flex flex-col gap-8 p-8 border-black border-1 overflow-y-auto overflow-x-hidden scroll-smooth">
-          {/* Periods */}
-          <div>
-            <h3 className="text-lg mb-2">Периоды</h3>
-            <div className="h-28 space-y-2 overflow-x-hidden overflow-y-auto">
-              {periods.map((period) => (
-                <div key={period.id} className="flex items-center">
-                  <input
-                    type="checkbox"
-                    id={`period-${period.id}`}
-                    checked={selectedPeriods.includes(period.id)}
-                    onChange={() => handlePeriodChange(period.id)}
-                    className=" h-8 w-8 "
-                  />
-                  <label
-                    htmlFor={`period-${period.id}`}
-                    className="ml-2 text-sm text-gray-700"
-                  >
-                    {period.value}
-                  </label>
-                </div>
-              ))}
-            </div>
-          </div>
-          {/* Materials */}
-          <div>
-            <h3 className="text-lg mb-2">Материалы</h3>
-            <div className="h-28 space-y-2 overflow-x-hidden overflow-y-auto">
-              {materials.map((material) => (
-                <div key={material.id} className="flex items-center">
-                  <input
-                    type="checkbox"
-                    id={`material-${material.id}`}
-                    checked={selectedMaterials.includes(material.id)}
-                    onChange={() => handleMaterialChange(material.id)}
-                    className=" h-8 w-8 "
-                  />
-                  <label
-                    htmlFor={`material-${material.id}`}
-                    className="ml-2 text-sm text-gray-700"
-                  >
-                    {material.value}
-                  </label>
-                </div>
-              ))}
-            </div>
-          </div>
-          {/* Colors */}
-          <div>
-            <h3 className="text-lg mb-2">Цвета</h3>
-            <div className="h-28 space-y-2 overflow-x-hidden overflow-y-auto">
-              {colors.map((color) => (
-                <div key={color.id} className="flex items-center">
-                  <input
-                    type="checkbox"
-                    id={`color-${color.id}`}
-                    checked={selectedColors.includes(color.id)}
-                    onChange={() => handleColorChange(color.id)}
-                    className=" h-8 w-8"
-                  />
-                  <label
-                    htmlFor={`color-${color.id}`}
-                    className="ml-2 text-sm text-gray-700"
-                  >
-                    <div className="flex gap-2 items-center">
-                      <span
-                        style={{ backgroundColor: `#${color.code}` }}
-                        className="w-4 h-4 rounded-full"
-                      ></span>
-                      {color.value}
-                    </div>
-                  </label>
-                </div>
-              ))}
-            </div>
-          </div>
+        <div className="w-1/3 p-8 border-black border-1 flex flex-col gap-8">
+          <div
+            ref={filtersContainerRef}
+            className="w-full h-full flex flex-col gap-8 pr-8 overflow-x-hidden overflow-y-auto scroll-smooth pretty-scrollbar "
+          >
+            {/* Periods */}
+            <div>
+              <h3 className="mb-2">Периоды</h3>
+              <div className="h-20 space-y-2 overflow-x-hidden overflow-y-auto pretty-scrollbar">
+                {periods.map((period) => (
+                  <div key={period.id} className="flex items-center">
+                    <input
+                      type="checkbox"
+                      id={`period-${period.id}`}
+                      checked={selectedPeriods.includes(period.id)}
+                      onChange={() =>
+                        handleFilterChange(
+                          period.id,
 
-          {/* Techniques */}
-          <div>
-            <h3 className="text-lg mb-2">Техники</h3>
-            <div className="h-28 space-y-2 overflow-x-hidden overflow-y-auto">
-              {techniques.map((technique) => (
-                <div key={technique.id} className="flex items-center">
-                  <input
-                    type="checkbox"
-                    id={`technique-${technique.id}`}
-                    checked={selectedTechniques.includes(technique.id)}
-                    onChange={() => handleTechniqueChange(technique.id)}
-                    className=" h-8 w-8 "
-                  />
-                  <label
-                    htmlFor={`technique-${technique.id}`}
-                    className="ml-2 text-sm text-gray-700"
-                  >
-                    {technique.value}
-                  </label>
-                </div>
-              ))}
+                          setSelectedPeriods
+                        )
+                      }
+                      className=" h-8 w-8 "
+                    />
+                    <label
+                      htmlFor={`period-${period.id}`}
+                      className="ml-2 text-sm text-gray-700"
+                    >
+                      {period.value}
+                    </label>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
 
-          {/* Marks */}
-          <div>
-            <h3 className="text-lg mb-2">Символы</h3>
-            <div className="h-28 space-y-2 overflow-x-hidden overflow-y-auto">
-              {marks.map((mark) => (
-                <div key={mark.id} className="flex items-center">
-                  <input
-                    type="checkbox"
-                    id={`mark-${mark.id}`}
-                    checked={selectedMarks.includes(mark.id)}
-                    onChange={() => handleMarkChange(mark.id)}
-                    className=" h-8 w-8 "
-                  />
-                  <label
-                    htmlFor={`mark-${mark.id}`}
-                    className="ml-2 text-sm text-gray-700"
-                  >
-                    {mark.value}
-                  </label>
-                </div>
-              ))}
+            {/* Materials */}
+            <div>
+              <h3 className="mb-2">Материалы</h3>
+              <div className="h-20 space-y-2 overflow-x-hidden overflow-y-auto pretty-scrollbar">
+                {materials.map((material) => (
+                  <div key={material.id} className="flex items-center">
+                    <input
+                      type="checkbox"
+                      id={`material-${material.id}`}
+                      checked={selectedMaterials.includes(material.id)}
+                      onChange={() =>
+                        handleFilterChange(
+                          material.id,
+
+                          setSelectedMaterials
+                        )
+                      }
+                      className=" h-8 w-8 "
+                    />
+                    <label
+                      htmlFor={`material-${material.id}`}
+                      className="ml-2 text-sm text-gray-700"
+                    >
+                      {material.value}
+                    </label>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
 
-          {/* Places */}
-          <div>
-            <h3 className="text-lg mb-2">Населённые пункты</h3>
-            <div className="h-28 space-y-2 overflow-x-hidden overflow-y-auto">
-              {places.map((place) => (
-                <div key={place.id} className="flex items-center">
-                  <input
-                    type="checkbox"
-                    id={`place-${place.id}`}
-                    checked={selectedPlaces.includes(place.id)}
-                    onChange={() => handlePlaceChange(place.id)}
-                    className=" h-8 w-8 "
-                  />
-                  <label
-                    htmlFor={`place-${place.id}`}
-                    className="ml-2 text-sm text-gray-700"
-                  >
-                    {place.value}
-                  </label>
-                </div>
-              ))}
+            {/* Colors */}
+            <div>
+              <h3 className="mb-2">Цвета</h3>
+              <div className="h-20 space-y-2 overflow-x-hidden overflow-y-auto pretty-scrollbar">
+                {colors.map((color) => (
+                  <div key={color.id} className="flex items-center">
+                    <input
+                      type="checkbox"
+                      id={`color-${color.id}`}
+                      checked={selectedColors.includes(color.id)}
+                      onChange={() =>
+                        handleFilterChange(
+                          color.id,
+
+                          setSelectedColors
+                        )
+                      }
+                      className=" h-8 w-8"
+                    />
+                    <label
+                      htmlFor={`color-${color.id}`}
+                      className="ml-2 text-sm text-gray-700"
+                    >
+                      <div className="flex gap-2 items-center">
+                        <span
+                          style={{ backgroundColor: `#${color.code}` }}
+                          className="w-4 h-4 rounded-full"
+                        ></span>
+                        {color.value}
+                      </div>
+                    </label>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
 
-          {/* Personalities */}
-          <div>
-            <h3 className="text-lg mb-2">Личности</h3>
-            <div className="h-28 space-y-2 overflow-x-hidden overflow-y-auto">
-              {personalities.map((person) => (
-                <div key={person.id} className="flex items-center">
-                  <input
-                    type="checkbox"
-                    id={`person-${person.id}`}
-                    checked={selectedPersonalities.includes(person.id)}
-                    onChange={() => handlePersonChange(person.id)}
-                    className=" h-8 w-8 "
-                  />
-                  <label
-                    htmlFor={`person-${person.id}`}
-                    className="ml-2 text-sm text-gray-700"
-                  >
-                    {person.value}
-                  </label>
-                </div>
-              ))}
+            {/* Techniques */}
+            <div>
+              <h3 className="mb-2">Техники</h3>
+              <div className="h-20 space-y-2 overflow-x-hidden overflow-y-auto pretty-scrollbar">
+                {techniques.map((technique) => (
+                  <div key={technique.id} className="flex items-center">
+                    <input
+                      type="checkbox"
+                      id={`technique-${technique.id}`}
+                      checked={selectedTechniques.includes(technique.id)}
+                      onChange={() =>
+                        handleFilterChange(
+                          technique.id,
+
+                          setSelectedTechniques
+                        )
+                      }
+                      className=" h-8 w-8 "
+                    />
+                    <label
+                      htmlFor={`technique-${technique.id}`}
+                      className="ml-2 text-sm text-gray-700"
+                    >
+                      {technique.value}
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Marks */}
+            <div>
+              <h3 className="mb-2">Символы</h3>
+              <div className="h-20 space-y-2 overflow-x-hidden overflow-y-auto pretty-scrollbar">
+                {marks.map((mark) => (
+                  <div key={mark.id} className="flex items-center">
+                    <input
+                      type="checkbox"
+                      id={`mark-${mark.id}`}
+                      checked={selectedMarks.includes(mark.id)}
+                      onChange={() =>
+                        handleFilterChange(
+                          mark.id,
+
+                          setSelectedMarks
+                        )
+                      }
+                      className=" h-8 w-8 "
+                    />
+                    <label
+                      htmlFor={`mark-${mark.id}`}
+                      className="ml-2 text-sm text-gray-700"
+                    >
+                      {mark.value}
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Places */}
+            <div>
+              <h3 className="mb-2">Населённые пункты</h3>
+              <div className="h-20 space-y-2 overflow-x-hidden overflow-y-auto pretty-scrollbar">
+                {places.map((place) => (
+                  <div key={place.id} className="flex items-center">
+                    <input
+                      type="checkbox"
+                      id={`place-${place.id}`}
+                      checked={selectedPlaces.includes(place.id)}
+                      onChange={() =>
+                        handleFilterChange(
+                          place.id,
+
+                          setSelectedPlaces
+                        )
+                      }
+                      className=" h-8 w-8 "
+                    />
+                    <label
+                      htmlFor={`place-${place.id}`}
+                      className="ml-2 text-sm text-gray-700"
+                    >
+                      {place.value}
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Personalities */}
+            <div>
+              <h3 className="mb-2">Личности</h3>
+              <div className="h-20 space-y-2 overflow-x-hidden overflow-y-auto pretty-scrollbar">
+                {personalities.map((person) => (
+                  <div key={person.id} className="flex items-center">
+                    <input
+                      type="checkbox"
+                      id={`person-${person.id}`}
+                      checked={selectedPersonalities.includes(person.id)}
+                      onChange={() =>
+                        handleFilterChange(
+                          person.id,
+
+                          setSelectedPersonalities
+                        )
+                      }
+                      className=" h-8 w-8 "
+                    />
+                    <label
+                      htmlFor={`person-${person.id}`}
+                      className="ml-2 text-sm text-gray-700"
+                    >
+                      {person.value}
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="w-full relative flex items-center gap-8 px-2 pb-2">
+              <button
+                onClick={handleScrollUp}
+                className="relative w-10 h-10 border-1 broder-black rounded-full hover:scale-110 transition-transform duration-300"
+              >
+                <Image
+                  src="/images/icons/arrow-b.png"
+                  alt=""
+                  className="p-2 rotate-90"
+                  fill
+                />
+              </button>
+              <button
+                onClick={() => ResetFilters()}
+                className="p-2 truncate border-1 broder-black rounded-full hover:scale-110 transition-transform duration-300"
+              >
+                Сбросить
+              </button>
+              <button
+                onClick={() => setToFilter(true)}
+                className={`p-2 truncate border-1 rounded-full shrink-0 hover:scale-110 transition-transform duration-300 ${
+                  toFilter
+                    ? `border-white text-white bg-[var(--dark)]`
+                    : `border-black text-black`
+                }`}
+              >
+                Применить
+              </button>
             </div>
           </div>
         </div>
@@ -431,14 +551,52 @@ export default function CollectionContent() {
         {/* Right */}
         <div className="h-full w-full flex flex-col gap-8">
           <div className="flex w-full gap-8">
-            <button className="h-10 border-black border-1 rounded-full p-2 cursor-pointer">
+            <button
+              onClick={() => setFirst(true)}
+              className={`h-10 ${
+                isFirst
+                  ? `border-white bg-[var(--dark)] text-white`
+                  : `border-black border-1 text-black`
+              } rounded-full p-2 cursor-pointer hover:scale-110 transition-transform duration-300`}
+            >
               Коллекция
             </button>
-            <button className="h-10 border-black border-1 rounded-full p-2 cursor-pointer">
+            <button
+              onClick={() => setFirst(false)}
+              className={`h-10 ${
+                !isFirst
+                  ? `border-white bg-[var(--dark)] text-white`
+                  : `border-black border-1 text-black`
+              } rounded-full p-2 cursor-pointer hover:scale-110 transition-transform duration-300`}
+            >
               Карта
             </button>
-            <input className="w-full h-10 border-black border-1 rounded-full px-4 py-2"></input>
-            <button className="relative w-10 h-10 rounded-full border-black border-1 cursor-pointer shrink-0">
+            <div className="relative w-full flex border-black border-1 rounded-full">
+              <input
+                placeholder="Начинайте ввод ..."
+                className="w-full h-10 pl-4 pr-10 py-2 rounded-full"
+                value={searchQuery}
+                onChange={handleSearchInputChange}
+                onKeyDown={handleKeyDown}
+              />
+              {searchQuery && (
+                <button
+                  onClick={ResetInput}
+                  className="absolute right-0 w-10 h-10 cursor-pointer shrink-0 hover:scale-110 transition-transform duration-300"
+                >
+                  <Image
+                    src="/images/icons/cancel-b.png"
+                    alt=""
+                    className="p-2"
+                    fill
+                  />
+                </button>
+              )}
+            </div>
+            <button
+              onClick={handleSearchSubmit}
+              className="relative w-10 h-10 rounded-full border-black border-1 cursor-pointer shrink-0 hover:scale-110 transition-transform duration-300"
+            >
               <Image
                 src="/images/icons/search-b.png"
                 alt=""
@@ -447,49 +605,20 @@ export default function CollectionContent() {
               />
             </button>
           </div>
-          {/* LIST */}
-          <div className="h-full w-full p-8 flex flex-wrap gap-8 border-black border-1 overflow-y-auto overflow-x-hidden scroll-smooth">
-            {loading ? (
-              <div className="h-screen">Загрузка...</div>
-            ) : monuments.length > 0 ? (
-              monuments.map((monument) => (
-                <div
-                  key={monument.id}
-                  className="relative overflow-hidden h-[calc(50%-16px)] w-[calc(50%-32px)] border-1"
-                >
-                  {monument.images?.[0] && (
-                    <Image
-                      src={getImageUrl(monument?.images[0]?.id)}
-                      alt=""
-                      fill
-                      objectFit="cover"
-                      className="hover:scale-110 transition-transform object-top duration-500"
-                      unoptimized
-                    />
-                  )}
-                  <div className="absolute bottom-0 left-0 right-0 w-full bg-[var(--darkcyan)] flex justify-between p-2">
-                    <div className=" bg-opacity-50 text-white text-center p-2">
-                      {monument?.appellation_monument?.value} (
-                      {monument?.year?.value})
-                    </div>
-                    <button
-                      onClick={() => router.push(`/monuments/${monument.id}`)}
-                      className="relative w-10 h-10 shrink-0 border-1 border-white rounded-full cursor-pointer"
-                    >
-                      <Image
-                        src="/images/icons/arrow.png"
-                        alt=""
-                        className="p-2 rotate-180"
-                        fill
-                      />
-                    </button>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <div>Нет памятников, соответствующих выбранным фильтрам</div>
-            )}
-          </div>
+
+          {loading ? (
+            <div className="h-full w-full flex items-center  p-8 border-black border-1">
+              <p className="mx-auto font-american">Загрузка ...</p>
+            </div>
+          ) : (
+            <div className="h-full">
+              {isFirst ? (
+                <Collection monuments={monuments} />
+              ) : (
+                <MapView monuments={monuments} isFirst={isFirst} />
+              )}
+            </div>
+          )}
         </div>
       </div>
     </div>

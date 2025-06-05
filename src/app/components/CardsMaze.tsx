@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
 
 interface Card {
   height?: number;
@@ -16,22 +16,19 @@ interface CardsInColumn {
 }
 
 export default function CardsMaze() {
-  const router = useRouter();
-
   const [monuments, setMonuments] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
   const [cardsCollection, setCardsCollection] = useState<CardsInColumn[]>([]);
 
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const [isAtStart, setIsAtStart] = useState(true);
-  const [isAtEnd, setIsAtEnd] = useState(false);
+
+  const [showHint, setShowHint] = useState(false);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     const fetchMonuments = async () => {
       try {
-        setLoading(true);
         const response = await fetch("/api/monumentsCards");
         if (!response.ok) {
           throw new Error("Ошибка при загрузке памятников");
@@ -41,8 +38,6 @@ export default function CardsMaze() {
       } catch (err) {
         console.error(err);
         setError(err instanceof Error ? err.message : "Неизвестная ошибка");
-      } finally {
-        setLoading(false);
       }
     };
 
@@ -50,6 +45,8 @@ export default function CardsMaze() {
   }, []);
 
   useEffect(() => {
+    setLoading(true);
+
     let columnId = 0;
     let cardsAmount = monuments.length;
     const generatedCardsInColumn: CardsInColumn[] = [];
@@ -58,7 +55,7 @@ export default function CardsMaze() {
     while (cardsAmount > 0) {
       let cardsHolder: any[] = [];
 
-      let cardsInColumn = Math.ceil(Math.random() * 2) + 1;
+      let cardsInColumn = Math.floor(Math.random() * 2) + 1;
 
       if (cardsAmount - cardsInColumn === -1) {
         cardsInColumn = 1;
@@ -74,7 +71,7 @@ export default function CardsMaze() {
         if (i === cardsInColumn - 1) {
           height = maxHeight - sumHeight;
         } else {
-          height = (Math.ceil(Math.random() * 10) + 10) * 2;
+          height = (Math.ceil(Math.random() * 10) + 20) * 2;
           sumHeight += height;
         }
         cardsHolder.push({
@@ -94,12 +91,11 @@ export default function CardsMaze() {
         cards: cardsToAdd,
       });
 
-      cardsHolder.splice(0, cardsHolder.length);
-
       cardsAmount -= cardsInColumn;
     }
 
     setCardsCollection(generatedCardsInColumn);
+    setLoading(false);
   }, [monuments]);
 
   useEffect(() => {
@@ -109,14 +105,6 @@ export default function CardsMaze() {
     let isDown = false;
     let startX = 0;
     let scrollLeft = 0;
-
-    const handleScroll = () => {
-      const scrollLeft = container.scrollLeft;
-      const maxScrollLeft = container.scrollWidth - container.clientWidth;
-
-      setIsAtStart(scrollLeft <= 1);
-      setIsAtEnd(scrollLeft >= maxScrollLeft - 10);
-    };
 
     const onMouseDown = (e: MouseEvent) => {
       isDown = true;
@@ -128,6 +116,11 @@ export default function CardsMaze() {
     const onMouseLeave = () => {
       isDown = false;
       container.style.cursor = "default";
+      setShowHint(false);
+    };
+
+    const onMouseEnter = () => {
+      setShowHint(true);
     };
 
     const onMouseUp = () => {
@@ -136,36 +129,59 @@ export default function CardsMaze() {
     };
 
     const onMouseMove = (e: MouseEvent) => {
+      setMousePos({ x: e.clientX, y: e.clientY });
       if (!isDown) return;
       e.preventDefault();
       const x = e.pageX - container.offsetLeft;
-      const walk = (x - startX) * 1; // скорость прокрутки
+      const walk = (x - startX) * 1;
       container.scrollLeft = scrollLeft - walk;
     };
 
     container.addEventListener("mousedown", onMouseDown);
     container.addEventListener("mouseleave", onMouseLeave);
+    container.addEventListener("mouseenter", onMouseEnter);
     container.addEventListener("mouseup", onMouseUp);
     container.addEventListener("mousemove", onMouseMove);
-    container.addEventListener("scroll", handleScroll);
 
     return () => {
       container.removeEventListener("mousedown", onMouseDown);
       container.removeEventListener("mouseleave", onMouseLeave);
+      container.removeEventListener("mouseenter", onMouseEnter);
       container.removeEventListener("mouseup", onMouseUp);
       container.removeEventListener("mousemove", onMouseMove);
-      container.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
-  const getImageUrl = (imageId: number) => {
-    return `/api/images/${imageId}`;
-  };
-
   return (
-    <div className="relative bg-[var(--darkcyan)] h-screen">
-      {isAtStart && (
-        <div className="absolute bg-gradient-to-r from-black to-transparent h-full w-1/4 top-0 left-0 transition-opacity duration-500 opacity-30"></div>
+    <div className="relative bg-[var(--dark)] h-screen">
+      {showHint && (
+        <div
+          className="fixed z-50 flex items-center pointer-events-none"
+          style={{
+            left: mousePos.x,
+            top: mousePos.y,
+            transform: "translate(-50%, -50%)",
+            transition: "transform 0.05s linear",
+          }}
+        >
+          <div className="relative w-10 h-10">
+            <Image src="/images/icons/arrow.png" alt="" className="p-2" fill />
+          </div>
+          <div className="w-20 h-20 flex items-center justify-center p-2 border border-white bg-[var(--dark)] rounded-full">
+            <p className="text-white text-center font-american">
+              Зажми <br />и тяни
+            </p>
+          </div>
+
+          <div className="relative w-10 h-10">
+            <Image
+              src="/images/icons/arrow.png"
+              alt=""
+              className="p-2 rotate-180"
+              fill
+            />
+          </div>
+        </div>
       )}
       <div
         ref={scrollContainerRef}
@@ -175,8 +191,7 @@ export default function CardsMaze() {
         {cardsCollection.map((column) => (
           <div
             key={column?.id}
-            className="flex-shrink-0 basis-1/3
-          card snap-center"
+            className="flex-shrink-0 basis-1/3 card snap-center"
           >
             {column?.cards.map((monument: any) => (
               <div
@@ -189,13 +204,11 @@ export default function CardsMaze() {
                     <div className="absolute bottom-0 right-0 z-10 bg-white w-full p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                       <div className="flex items-center justify-between">
                         <p className="w-full text-left truncate">
-                          {monument?.appellation_monument} ({monument?.year})
+                          {monument?.appellation_monument} ({monument?.year} г.)
                         </p>
-                        <button
-                          onClick={() =>
-                            router.push(`/monuments/${monument.id}`)
-                          }
-                          className="relative w-10 h-10 shrink-0 border-1 border-black rounded-full cursor-pointer"
+                        <Link
+                          href={`/monuments/${monument.id}`}
+                          className="relative w-10 h-10 shrink-0 border-1 border-black rounded-full cursor-pointer hover:scale-110 transition-transform duration-300"
                         >
                           <Image
                             src="/images/icons/arrow-b.png"
@@ -203,16 +216,16 @@ export default function CardsMaze() {
                             className="p-2 rotate-180"
                             fill
                           />
-                        </button>
+                        </Link>
                       </div>
                     </div>
                     {monument?.src && (
                       <Image
-                        src={getImageUrl(monument?.src)}
+                        src={`/api/images/${monument?.src}`}
                         alt=""
                         fill
-                        objectFit="cover"
-                        className="group-hover:scale-110 transition-transform object-top duration-500"
+                        draggable={false}
+                        className="object-cover group-hover:scale-110 transition-transform object-top duration-500"
                       />
                     )}
                   </div>
@@ -222,9 +235,6 @@ export default function CardsMaze() {
           </div>
         ))}
       </div>
-      {isAtEnd && (
-        <div className="absolute bg-gradient-to-l from-black to-transparent h-full w-1/4 top-0 right-0 transition-opacity duration-500 opacity-30"></div>
-      )}
     </div>
   );
 }

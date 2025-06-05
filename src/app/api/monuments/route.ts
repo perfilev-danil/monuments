@@ -13,8 +13,18 @@ export async function GET(request: NextRequest) {
     const markIds = searchParams.getAll("markId");
     const placeIds = searchParams.getAll("placeId");
     const personalityIds = searchParams.getAll("personId");
+    const searchQuery = searchParams.get("search");
 
     const where: any = {};
+
+    if (searchQuery) {
+      where.appellation_monument = {
+        value: {
+          contains: searchQuery,
+          mode: "insensitive",
+        },
+      };
+    }
 
     if (periodIds.length > 0) {
       where.OR = periodIds.map((id) => ({

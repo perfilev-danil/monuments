@@ -1,8 +1,10 @@
 import { notFound } from "next/navigation";
+
 import Image from "next/image";
 import Link from "next/link";
 
 import Header from "@/app/components/Header";
+import { CardsScroller } from "@/app/components/CardsScroller";
 import Footer from "@/app/components/Footer";
 
 export default async function MonumentPage({
@@ -41,15 +43,21 @@ export default async function MonumentPage({
         {/* Info */}
         <div className="flex flex-col gap-8">
           <div className="flex items-center justify-between">
-            <button className="relative w-10 h-10 border-1 border-black rounded-full">
+            <h1 className="text-xl">
+              {monument?.appellation_monument?.value} ({monument?.year?.value}{" "}
+              г.)
+            </h1>
+            <Link
+              href={"/collection"}
+              className="relative w-10 h-10 border-1 border-black rounded-full cursor-pointer hover:scale-110 transition-transform duration-300"
+            >
               <Image
                 src="/images/icons/arrow-b.png"
-                alt=""
-                className="p-2"
+                alt="Назад"
                 fill
+                className="p-2"
               />
-            </button>
-            <h1 className="text-xl">{monument?.appellation_monument?.value}</h1>
+            </Link>
           </div>
 
           <div className="w-full flex flex-col lg:flex-row lg:gap-8">
@@ -123,14 +131,14 @@ export default async function MonumentPage({
               </div>
               <div className="grid grid-cols-6">
                 <span className="col-span-2 lg:col-span-1">Адрес</span>
-                <div className="flex items-center gap-2">
-                  <p className="col-span-4 lg:col-span-5 items-end">
+                <div className="flex col-span-4 lg:col-span-5 items-center gap-2">
+                  <p className="">
                     {monument?.place?.appellation_address?.value}
                   </p>
                   {monument?.place?.information_object_place?.value && (
                     <Link
                       href={monument?.place?.information_object_place?.value}
-                      className="relative w-4 h-4 cursor-pointer shrink-0"
+                      className="relative w-4 h-4 cursor-pointer shrink-0 hover:scale-110 transition-transform duration-300"
                     >
                       <Image src="/images/icons/link.png" alt="" fill />
                     </Link>
@@ -154,7 +162,7 @@ export default async function MonumentPage({
                           href={
                             personality?.information_object_personality?.value
                           }
-                          className="relative w-4 h-4 cursor-pointer shrink-0"
+                          className="relative w-4 h-4 cursor-pointer shrink-0 hover:scale-110 transition-transform duration-300"
                         >
                           <Image src="/images/icons/link.png" alt="" fill />
                         </Link>
@@ -197,7 +205,7 @@ export default async function MonumentPage({
                         monument?.appellation_info?.information_object_info
                           ?.value
                       }
-                      className="relative w-4 h-4 cursor-pointer shrink-0"
+                      className="relative w-4 h-4 cursor-pointer shrink-0 hover:scale-110 transition-transform duration-300"
                     >
                       <Image src="/images/icons/link.png" alt="" fill />
                     </Link>
@@ -217,7 +225,7 @@ export default async function MonumentPage({
                         monument?.appellation_registry
                           ?.information_object_registry?.value
                       }
-                      className="relative w-4 h-4 cursor-pointer shrink-0"
+                      className="relative w-4 h-4 cursor-pointer shrink-0 hover:scale-110 transition-transform duration-300"
                     >
                       <Image src="/images/icons/link.png" alt="" fill />
                     </Link>
@@ -233,7 +241,7 @@ export default async function MonumentPage({
                       {document?.information_object_document?.value && (
                         <Link
                           href={document?.information_object_document?.value}
-                          className="relative w-4 h-4 cursor-pointer shrink-0"
+                          className="relative w-4 h-4 cursor-pointer shrink-0 hover:scale-110 transition-transform duration-300"
                         >
                           <Image src="/images/icons/link.png" alt="" fill />
                         </Link>
@@ -257,7 +265,7 @@ export default async function MonumentPage({
                       {event?.information_object_event?.value && (
                         <Link
                           href={event.information_object_event.value}
-                          className="relative w-4 h-4 cursor-pointer shrink-0"
+                          className="relative w-4 h-4 cursor-pointer shrink-0 hover:scale-110 transition-transform duration-300"
                         >
                           <Image src="/images/icons/link.png" alt="" fill />
                         </Link>
@@ -268,27 +276,12 @@ export default async function MonumentPage({
               </div>
             </div>
           </div>
+
+          {/* Images */}
+          {monument.images.length !== 0 && (
+            <CardsScroller images={monument.images} />
+          )}
         </div>
-        {/* Images */}
-        {monument.images.length !== 0 && (
-          <div className="overflow-x-auto no-scrollbar w-full flex items-center gap-8 snap-x snap-mandatory">
-            {monument?.images?.map((image: any) => (
-              <div
-                key={image?.id}
-                className="snap-end w-[calc(50%-16px)] shrink-0"
-              >
-                <div className="relative border border-black h-64 ">
-                  <Image
-                    src={`/api/images/${image?.id}`}
-                    alt=""
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
       </div>
       <Footer />
     </div>

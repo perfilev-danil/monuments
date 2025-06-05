@@ -43,7 +43,8 @@
   --font-gogol: "Gogol", sans-serif;
   --font-american: "American", sans-serif;
 
-  --darkcyan: #26282c;
+  --dark: #26282c;
+  --shadowed: #dbdbdb;
 }
 
 /* 26282C
@@ -82,4 +83,38 @@
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+/* pretty-scrollbar */
+
+/* Для WebKit браузеров (Chrome, Safari, Edge) */
+.pretty-scrollbar::-webkit-scrollbar {
+  width: 1px;
+}
+
+.pretty-scrollbar::-webkit-scrollbar-track {
+  background: var(--shadowed);
+  border-radius: 0; /* Убираем скругления */
+}
+
+.pretty-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--dark);
+  border-radius: 0; /* Убираем скругления */
+}
+
+.pretty-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: black;
+}
+
+/* Для Firefox */
+@supports (-moz-appearance: none) {
+  .pretty-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: var(--dark) var(--shadowed);
+  }
+}
+
+/* Для IE и старых Edge */
+.pretty-scrollbar {
+  -ms-overflow-style: -ms-autohiding-scrollbar;
 }

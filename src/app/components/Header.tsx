@@ -1,19 +1,31 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Header() {
   return (
     <header className="w-full">
       <nav className="w-full flex justify-between items-center">
-        <div className="relative w-10 h-10 cursor-pointer">
+        <Link
+          href={"/"}
+          className="relative w-10 h-10 cursor-pointer hover:scale-110 transition-transform duration-300"
+        >
           <Image src="/images/icons/logo-b.png" alt="" className="" fill />
-        </div>
+        </Link>
         <h1 className="font-american text-lg leading-5 text-center">
           монументальное искусство <br />
           Енисейской Сибири
         </h1>
-        <button className="relative w-10 h-10 rounded-full border-black border-1 cursor-pointer shrink-0">
-          <Image src="/images/icons/search-b.png" alt="" className="p-2" fill />
-        </button>
+        <Link
+          href={"/collection"}
+          className="relative w-10 h-10 rounded-full border-black border-1 cursor-pointer shrink-0 hover:scale-110 transition-transform duration-300"
+        >
+          <Image
+            src="/images/icons/collection-b.png"
+            alt=""
+            className="p-2"
+            fill
+          />
+        </Link>
       </nav>
     </header>
   );

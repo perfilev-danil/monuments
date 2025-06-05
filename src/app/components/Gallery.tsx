@@ -87,7 +87,7 @@ export default function Gallery() {
 
   return (
     <div
-      className="w-full h-screen bg-[var(--darkcyan)] p-8 
+      className="w-full h-screen bg-[var(--dark)] p-8 
       flex flex-col items-center justify-center"
     >
       <div
