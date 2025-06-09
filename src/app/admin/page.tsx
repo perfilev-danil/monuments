@@ -1,6 +1,205 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import MonumentsList from "./components/MonumentsList";
+import ColorsList from "./components/ColorsList";
+import MaterialsList from "./components/MaterialList";
+import MarksList from "./components/MarksList";
+import PeriodsList from "./components/PeriodsList";
+import TechniquesList from "./components/TechniquesList";
+import RolesList from "./components/RolesList";
+import LocationsList from "./components/LocationsList";
+import PersonalitiesList from "./components/PersonalitiesList";
+import PlacesList from "./components/PlacesList";
+import EventsList from "./components/EventsList";
+import DocumentsList from "./components/Documents";
+import DimensionsTypesList from "./components/DimensionsTypesList";
+
+export default function AdminPage() {
+  const [activeSection, setActiveSection] = useState("monuments");
+
+  const renderSection = () => {
+    switch (activeSection) {
+      case "monuments":
+        return <MonumentsList />;
+      case "colors":
+        return <ColorsList />;
+      case "materials":
+        return <MaterialsList />;
+      case "marks":
+        return <MarksList />;
+      case "periods":
+        return <PeriodsList />;
+      case "techniques":
+        return <TechniquesList />;
+
+      case "locations":
+        return <LocationsList />;
+      case "places":
+        return <PlacesList />;
+      case "roles":
+        return <RolesList />;
+      case "personalities":
+        return <PersonalitiesList />;
+      case "events":
+        return <EventsList />;
+      case "documents":
+        return <DocumentsList />;
+      case "dimensionsTypes":
+        return <DimensionsTypesList />;
+      default:
+        return null;
+    }
+  };
+  return (
+    <div className="p-4">
+      <div className="flex space-x-4 mb-6">
+        <button
+          onClick={() => setActiveSection("monuments")}
+          className={`px-4 py-2 rounded ${
+            activeSection === "monuments"
+              ? "bg-blue-600 text-white"
+              : "bg-gray-200 text-gray-800"
+          }`}
+        >
+          Памятники
+        </button>
+        <button
+          onClick={() => setActiveSection("colors")}
+          className={`px-4 py-2 rounded ${
+            activeSection === "colors"
+              ? "bg-blue-600 text-white"
+              : "bg-gray-200 text-gray-800"
+          }`}
+        >
+          Цвета
+        </button>
+        <button
+          onClick={() => setActiveSection("materials")}
+          className={`px-4 py-2 rounded ${
+            activeSection === "materials"
+              ? "bg-blue-600 text-white"
+              : "bg-gray-200 text-gray-800"
+          }`}
+        >
+          Материалы
+        </button>
+        <button
+          onClick={() => setActiveSection("marks")}
+          className={`px-4 py-2 rounded ${
+            activeSection === "marks"
+              ? "bg-blue-600 text-white"
+              : "bg-gray-200 text-gray-800"
+          }`}
+        >
+          Символы
+        </button>
+        <button
+          onClick={() => setActiveSection("periods")}
+          className={`px-4 py-2 rounded ${
+            activeSection === "periods"
+              ? "bg-blue-600 text-white"
+              : "bg-gray-200 text-gray-800"
+          }`}
+        >
+          Периоды
+        </button>
+        <button
+          onClick={() => setActiveSection("techniques")}
+          className={`px-4 py-2 rounded ${
+            activeSection === "techniques"
+              ? "bg-blue-600 text-white"
+              : "bg-gray-200 text-gray-800"
+          }`}
+        >
+          Техники
+        </button>
+        <button
+          onClick={() => setActiveSection("roles")}
+          className={`px-4 py-2 rounded ${
+            activeSection === "roles"
+              ? "bg-blue-600 text-white"
+              : "bg-gray-200 text-gray-800"
+          }`}
+        >
+          Роли
+        </button>
+
+        <button
+          onClick={() => setActiveSection("personalities")}
+          className={`px-4 py-2 rounded ${
+            activeSection === "personalities"
+              ? "bg-blue-600 text-white"
+              : "bg-gray-200 text-gray-800"
+          }`}
+        >
+          Личности
+        </button>
+      </div>
+
+      <button
+        onClick={() => setActiveSection("locations")}
+        className={`px-4 py-2 rounded ${
+          activeSection === "locations"
+            ? "bg-blue-600 text-white"
+            : "bg-gray-200 text-gray-800"
+        }`}
+      >
+        Населённые пункты
+      </button>
+
+      <button
+        onClick={() => setActiveSection("places")}
+        className={`px-4 py-2 rounded ${
+          activeSection === "places"
+            ? "bg-blue-600 text-white"
+            : "bg-gray-200 text-gray-800"
+        }`}
+      >
+        Места
+      </button>
+
+      <button
+        onClick={() => setActiveSection("events")}
+        className={`px-4 py-2 rounded ${
+          activeSection === "events"
+            ? "bg-blue-600 text-white"
+            : "bg-gray-200 text-gray-800"
+        }`}
+      >
+        События
+      </button>
+
+      <button
+        onClick={() => setActiveSection("documents")}
+        className={`px-4 py-2 rounded ${
+          activeSection === "documents"
+            ? "bg-blue-600 text-white"
+            : "bg-gray-200 text-gray-800"
+        }`}
+      >
+        Документы
+      </button>
+
+      <button
+        onClick={() => setActiveSection("dimensionsTypes")}
+        className={`px-4 py-2 rounded ${
+          activeSection === "dimensionsTypes"
+            ? "bg-blue-600 text-white"
+            : "bg-gray-200 text-gray-800"
+        }`}
+      >
+        Типы размеров
+      </button>
+
+      {renderSection()}
+    </div>
+  );
+}
+/*
+"use client";
+
+import { useState, useEffect } from "react";
 import {
   Admin,
   Resource,
@@ -271,9 +470,7 @@ export default function AdminPage() {
   );
 }
 
-{
-  /* Monument */
-}
+
 const MonumentList = () => (
   <List>
     <Datagrid rowClick="edit">
@@ -642,9 +839,7 @@ const MonumentCreate = () => (
   </Create>
 );
 
-{
-  /* Appellation monument */
-}
+
 const AppellationMonumentList = () => (
   <List>
     <Datagrid>
@@ -670,9 +865,7 @@ const AppellationMonumentCreate = () => (
   </Create>
 );
 
-{
-  /* Description monument */
-}
+
 const DescriptionMonumentList = () => (
   <List>
     <Datagrid>
@@ -698,9 +891,7 @@ const DescriptionMonumentCreate = () => (
   </Create>
 );
 
-{
-  /* Year */
-}
+
 const YearList = () => (
   <List>
     <Datagrid>
@@ -726,9 +917,7 @@ const YearCreate = () => (
   </Create>
 );
 
-{
-  /* Appellation registry */
-}
+
 const AppellationRegistryList = () => (
   <List>
     <Datagrid>
@@ -764,9 +953,7 @@ const AppellationRegistryCreate = () => (
   </Create>
 );
 
-{
-  /* Appellation info */
-}
+
 const AppellationInfoList = () => (
   <List>
     <Datagrid>
@@ -813,9 +1000,7 @@ const AppellationInfoCreate = () => (
   </Create>
 );
 
-{
-  /* Information object info */
-}
+
 const InformationObjectInfoList = () => (
   <List>
     <Datagrid>
@@ -841,9 +1026,7 @@ const InformationObjectInfoCreate = () => (
   </Create>
 );
 
-{
-  /* Inscription */
-}
+
 const InscriptionList = () => (
   <List>
     <Datagrid>
@@ -869,9 +1052,7 @@ const InscriptionCreate = () => (
   </Create>
 );
 
-{
-  /* Color */
-}
+
 const ColorList = () => (
   <List>
     <Datagrid>
@@ -900,9 +1081,7 @@ const ColorCreate = () => (
   </Create>
 );
 
-{
-  /* Color */
-}
+
 const MarkList = () => (
   <List>
     <Datagrid>
@@ -928,9 +1107,7 @@ const MarkCreate = () => (
   </Create>
 );
 
-{
-  /* Material */
-}
+
 const MaterialList = () => (
   <List>
     <Datagrid>
@@ -956,9 +1133,7 @@ const MaterialCreate = () => (
   </Create>
 );
 
-{
-  /* Technique */
-}
+
 const TechniqueList = () => (
   <List>
     <Datagrid>
@@ -984,9 +1159,7 @@ const TechniqueCreate = () => (
   </Create>
 );
 
-{
-  /* Period */
-}
+
 const PeriodList = () => (
   <List>
     <Datagrid>
@@ -1012,9 +1185,7 @@ const PeriodCreate = () => (
   </Create>
 );
 
-{
-  /* Сonceptual object */
-}
+
 const СonceptualObjectList = () => (
   <List>
     <Datagrid>
@@ -1040,9 +1211,6 @@ const СonceptualObjectCreate = () => (
   </Create>
 );
 
-{
-  /* Document */
-}
 const DocumentList = () => (
   <List>
     <Datagrid rowClick="edit">
@@ -1110,9 +1278,7 @@ const DocumentCreate = () => (
   </Create>
 );
 
-{
-  /* Information object document (Link) */
-}
+
 const InformationObjectDocumentList = () => (
   <List>
     <Datagrid>
@@ -1138,9 +1304,7 @@ const InformationObjectDocumentCreate = () => (
   </Create>
 );
 
-{
-  /* Dimension */
-}
+
 const DimensionList = () => (
   <List>
     <Datagrid rowClick="edit">
@@ -1187,9 +1351,7 @@ const DimensionCreate = () => (
   </Create>
 );
 
-{
-  /* Dimension type */
-}
+
 const DimensionTypeList = () => (
   <List>
     <Datagrid>
@@ -1215,9 +1377,7 @@ const DimensionTypeCreate = () => (
   </Create>
 );
 
-{
-  /* Appellation personality */
-}
+
 const AppellationPersonalityList = () => (
   <List>
     <Datagrid>
@@ -1243,9 +1403,7 @@ const AppellationPersonalityCreate = () => (
   </Create>
 );
 
-{
-  /* Information object personality */
-}
+
 const InformationObjectPersonalityList = () => (
   <List>
     <Datagrid>
@@ -1271,9 +1429,7 @@ const InformationObjectPersonalityCreate = () => (
   </Create>
 );
 
-{
-  /* Role personality */
-}
+
 const RolePersonalityList = () => (
   <List>
     <Datagrid>
@@ -1299,9 +1455,6 @@ const RolePersonalityCreate = () => (
   </Create>
 );
 
-{
-  /* Personality */
-}
 
 const PersonalityList = () => (
   <List>
@@ -1388,9 +1541,7 @@ const PersonalityCreate = () => (
   </Create>
 );
 
-{
-  /* Appellation event */
-}
+
 const AppellationEventList = () => (
   <List>
     <Datagrid>
@@ -1416,9 +1567,7 @@ const AppellationEventCreate = () => (
   </Create>
 );
 
-{
-  /* Time span event */
-}
+
 const TimeSpanEventList = () => (
   <List>
     <Datagrid>
@@ -1447,9 +1596,7 @@ const TimeSpanEventCreate = () => (
   </Create>
 );
 
-{
-  /* Information object event */
-}
+
 const InformationObjectEventList = () => (
   <List>
     <Datagrid>
@@ -1475,9 +1622,7 @@ const InformationObjectEventCreate = () => (
   </Create>
 );
 
-{
-  /* Event */
-}
+
 const EventList = () => (
   <List>
     <Datagrid>
@@ -1605,9 +1750,7 @@ const EventCreate = () => (
   </Create>
 );
 
-{
-  /*  Appellation place */
-}
+
 const AppellationPlaceList = () => (
   <List>
     <Datagrid>
@@ -1633,9 +1776,7 @@ const AppellationPlaceCreate = () => (
   </Create>
 );
 
-{
-  /*  Information object place */
-}
+
 const InformationObjectPlaceList = () => (
   <List>
     <Datagrid>
@@ -1661,15 +1802,13 @@ const InformationObjectPlaceCreate = () => (
   </Create>
 );
 
-{
-  /*  Coordinates */
-}
+
 const CoordinatesList = () => (
   <List>
     <Datagrid>
       <TextField source="id" />
+      <TextField source="lat" label="Широта" />
       <TextField source="lon" label="Долгота" />
-      <TextField source="lat" label="Ширина" />
     </Datagrid>
   </List>
 );
@@ -1677,8 +1816,8 @@ const CoordinatesList = () => (
 const CoordinatesEdit = () => (
   <Edit>
     <SimpleForm>
+      <NumberInput source="lat" label="Широта" />
       <NumberInput source="lon" label="Долгота" />
-      <NumberInput source="lat" label="Ширина" />
     </SimpleForm>
   </Edit>
 );
@@ -1686,15 +1825,13 @@ const CoordinatesEdit = () => (
 const CoordinatesCreate = () => (
   <Create>
     <SimpleForm>
+      <NumberInput source="lat" label="Широта" />
       <NumberInput source="lon" label="Долгота" />
-      <NumberInput source="lat" label="Ширина" />
     </SimpleForm>
   </Create>
 );
 
-{
-  /*  Appellation address */
-}
+
 const AppellationAddressList = () => (
   <List>
     <Datagrid>
@@ -1740,9 +1877,6 @@ const AppellationAddressCreate = () => (
   </Create>
 );
 
-{
-  /* Place */
-}
 const PlaceList = () => (
   <List>
     <Datagrid>
@@ -1828,9 +1962,7 @@ const PlaceCreate = () => (
   </Create>
 );
 
-{
-  /* Img  */
-}
+
 
 const convertFileToBase64 = (file: any) =>
   new Promise((resolve, reject) => {
@@ -1938,3 +2070,5 @@ const ImgCreate = () => (
     </SimpleForm>
   </Create>
 );
+
+*/
