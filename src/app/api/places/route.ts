@@ -15,13 +15,14 @@ export async function GET() {
       },
     });
 
+    /*
     const result = places.map((place) => ({
       id: place.id,
       placeId: place.e53_Place?.id,
       value: place.value || "Без названия",
-    }));
+    }));*/
 
-    return NextResponse.json(result);
+    return NextResponse.json(places);
   } catch (error) {
     console.error(error);
     return NextResponse.json(
