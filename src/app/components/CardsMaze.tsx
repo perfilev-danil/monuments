@@ -20,11 +20,23 @@ export default function CardsMaze() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [cardsCollection, setCardsCollection] = useState<CardsInColumn[]>([]);
+  const [isDesktop, setIsDesktop] = useState(false);
 
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const [showHint, setShowHint] = useState(false);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsDesktop(window.innerWidth >= 1024); // 1024px — tailwind breakpoint для lg
+    };
+
+    checkScreenSize(); // начальная проверка
+    window.addEventListener("resize", checkScreenSize);
+
+    return () => window.removeEventListener("resize", checkScreenSize);
+  }, []);
 
   useEffect(() => {
     const fetchMonuments = async () => {
@@ -154,7 +166,7 @@ export default function CardsMaze() {
 
   return (
     <div className="relative bg-[var(--dark)] h-screen">
-      {showHint && (
+      {showHint && isDesktop && (
         <div
           className="fixed z-50 flex items-center pointer-events-none"
           style={{
@@ -183,58 +195,68 @@ export default function CardsMaze() {
           </div>
         </div>
       )}
-      <div
-        ref={scrollContainerRef}
-        className="h-full overflow-y-hidden no-scrollbar flex p-4 
-        touch-pan-x snap-x snap-mandatory scroll-smooth select-none cursor-grab z-20 relative"
-      >
-        {cardsCollection.map((column) => (
-          <div
-            key={column?.id}
-            className="flex-shrink-0 basis-1/3 card snap-center"
-          >
-            {column?.cards.map((monument: any) => (
-              <div
-                key={monument?.id}
-                className="p-4"
-                style={{ height: `${monument.height}%` }}
-              >
-                <div className="relative overflow-hidden border-1 border-white h-full group">
-                  <div className="">
-                    <div className="absolute bottom-0 right-0 z-10 bg-white w-full p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <div className="flex items-center justify-between">
-                        <p className="w-full text-left truncate">
-                          {monument?.appellation_monument} ({monument?.year} г.)
-                        </p>
-                        <Link
-                          href={`/monuments/${monument.id}`}
-                          className="relative w-10 h-10 shrink-0 border-1 border-black rounded-full cursor-pointer hover:scale-110 transition-transform duration-300"
-                        >
-                          <Image
-                            src="/images/icons/arrow-b.png"
-                            alt=""
-                            className="p-2 rotate-180"
-                            fill
-                          />
-                        </Link>
+
+      {loading ? (
+        <div className="w-full h-full flex items-center justify-center">
+          <span className="text-white text-center font-american">
+            Загрузка ...
+          </span>
+        </div>
+      ) : (
+        <div
+          ref={scrollContainerRef}
+          className="h-full overflow-y-auto no-scrollbar flex p-2 lg:p-4 
+        snap-x snap-mandatory scroll-smooth select-none lg:cursor-grab z-20 relative"
+        >
+          {cardsCollection.map((column) => (
+            <div
+              key={column?.id}
+              className="flex-shrink-0 w-full lg:basis-1/3 card snap-center"
+            >
+              {column?.cards.map((monument: any) => (
+                <div
+                  key={monument?.id}
+                  className="p-2 lg:p-4"
+                  style={{ height: `${monument.height}%` }}
+                >
+                  <div className="relative overflow-hidden border-1 border-white h-full group">
+                    <div className="">
+                      <div className="absolute bottom-0 right-0 z-10 bg-white w-full p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <div className="flex items-center justify-between">
+                          <p className="w-full text-left truncate">
+                            {monument?.appellation_monument} ({monument?.year}{" "}
+                            г.)
+                          </p>
+                          <Link
+                            href={`/monuments/${monument.id}`}
+                            className="relative w-10 h-10 shrink-0 border-1 border-black rounded-full cursor-pointer hover:scale-110 transition-transform duration-300"
+                          >
+                            <Image
+                              src="/images/icons/arrow-b.png"
+                              alt=""
+                              className="p-2 rotate-180"
+                              fill
+                            />
+                          </Link>
+                        </div>
                       </div>
+                      {monument?.src && (
+                        <Image
+                          src={`/api/images/${monument?.src}`}
+                          alt=""
+                          fill
+                          draggable={false}
+                          className="object-cover group-hover:scale-110 transition-transform object-top duration-500"
+                        />
+                      )}
                     </div>
-                    {monument?.src && (
-                      <Image
-                        src={`/api/images/${monument?.src}`}
-                        alt=""
-                        fill
-                        draggable={false}
-                        className="object-cover group-hover:scale-110 transition-transform object-top duration-500"
-                      />
-                    )}
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        ))}
-      </div>
+              ))}
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

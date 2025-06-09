@@ -9,6 +9,8 @@ import Header from "../components/Header";
 import Collection from "./Collection";
 import MapView from "./MapView";
 
+import Filter from "./Filter";
+
 type Monument = {
   name: string;
   url: string;
@@ -27,6 +29,9 @@ const mon: Monument[] = [
 ];
 
 export default function CollectionContent() {
+  const [isMobile, setIsMobile] = useState(false);
+  const [clickToFilter, setClickToFilter] = useState(false);
+
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -35,7 +40,7 @@ export default function CollectionContent() {
 
   const [loading, setLoading] = useState(true);
 
-  const [monuments, setMonuments] = useState<any[]>([]);
+  const [monuments, setMonuments] = useState<number[]>([]);
 
   const [periods, setPeriods] = useState<any[]>([]);
   const [selectedPeriods, setSelectedPeriods] = useState<number[]>([]);
@@ -66,6 +71,17 @@ export default function CollectionContent() {
   const [activeSearchQuery, setActiveSearchQuery] = useState("");
 
   const filtersContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsMobile(window.innerWidth < 1024); // 1024px — tailwind breakpoint для lg
+    };
+
+    checkScreenSize(); // начальная проверка
+    window.addEventListener("resize", checkScreenSize);
+
+    return () => window.removeEventListener("resize", checkScreenSize);
+  }, []);
 
   useEffect(() => {
     setSelectedPeriods(
@@ -292,322 +308,153 @@ export default function CollectionContent() {
   };
 
   return (
-    <div className="w-full h-screen max-h-screen flex flex-col justify-between gap-8 p-8">
+    <div className="w-full min-h-screen h-screen flex flex-col justify-between gap-4 lg:gap-8 p-4 lg:p-8">
       <Header />
-      <div className="min-h-0 h-full max-h-full w-full flex gap-8">
-        {/* Filter */}
-        <div className="w-1/3 p-8 border-black border-1 flex flex-col gap-8">
-          <div
-            ref={filtersContainerRef}
-            className="w-full h-full flex flex-col gap-8 pr-8 overflow-x-hidden overflow-y-auto scroll-smooth pretty-scrollbar "
-          >
-            {/* Periods */}
-            <div>
-              <h3 className="mb-2">Периоды</h3>
-              <div className="h-20 space-y-2 overflow-x-hidden overflow-y-auto pretty-scrollbar">
-                {periods.map((period) => (
-                  <div key={period.id} className="flex items-center">
-                    <input
-                      type="checkbox"
-                      id={`period-${period.id}`}
-                      checked={selectedPeriods.includes(period.id)}
-                      onChange={() =>
-                        handleFilterChange(
-                          period.id,
+      <div className="min-h-0 h-full max-h-full w-full flex flex-col lg:flex-row gap-4 lg:gap-8">
+        {!isMobile && (
+          <Filter
+            FilterProps={{
+              periods,
+              materials,
+              colors,
+              techniques,
+              marks,
+              places,
+              personalities,
+              selectedPeriods,
+              selectedColors,
+              selectedMaterials,
+              selectedTechniques,
+              selectedMarks,
+              selectedPlaces,
+              selectedPersonalities,
+              toFilter,
+              filtersContainerRef,
+              setSelectedPeriods,
+              setSelectedColors,
+              setSelectedMaterials,
+              setSelectedTechniques,
+              setSelectedMarks,
+              setSelectedPlaces,
+              setSelectedPersonalities,
+              setToFilter,
+              handleFilterChange,
+              handleScrollUp,
+              ResetFilters,
+            }}
+          />
+        )}
 
-                          setSelectedPeriods
-                        )
-                      }
-                      className=" h-8 w-8 "
-                    />
-                    <label
-                      htmlFor={`period-${period.id}`}
-                      className="ml-2 text-sm text-gray-700"
-                    >
-                      {period.value}
-                    </label>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Materials */}
-            <div>
-              <h3 className="mb-2">Материалы</h3>
-              <div className="h-20 space-y-2 overflow-x-hidden overflow-y-auto pretty-scrollbar">
-                {materials.map((material) => (
-                  <div key={material.id} className="flex items-center">
-                    <input
-                      type="checkbox"
-                      id={`material-${material.id}`}
-                      checked={selectedMaterials.includes(material.id)}
-                      onChange={() =>
-                        handleFilterChange(
-                          material.id,
-
-                          setSelectedMaterials
-                        )
-                      }
-                      className=" h-8 w-8 "
-                    />
-                    <label
-                      htmlFor={`material-${material.id}`}
-                      className="ml-2 text-sm text-gray-700"
-                    >
-                      {material.value}
-                    </label>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Colors */}
-            <div>
-              <h3 className="mb-2">Цвета</h3>
-              <div className="h-20 space-y-2 overflow-x-hidden overflow-y-auto pretty-scrollbar">
-                {colors.map((color) => (
-                  <div key={color.id} className="flex items-center">
-                    <input
-                      type="checkbox"
-                      id={`color-${color.id}`}
-                      checked={selectedColors.includes(color.id)}
-                      onChange={() =>
-                        handleFilterChange(
-                          color.id,
-
-                          setSelectedColors
-                        )
-                      }
-                      className=" h-8 w-8"
-                    />
-                    <label
-                      htmlFor={`color-${color.id}`}
-                      className="ml-2 text-sm text-gray-700"
-                    >
-                      <div className="flex gap-2 items-center">
-                        <span
-                          style={{ backgroundColor: `#${color.code}` }}
-                          className="w-4 h-4 rounded-full"
-                        ></span>
-                        {color.value}
-                      </div>
-                    </label>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Techniques */}
-            <div>
-              <h3 className="mb-2">Техники</h3>
-              <div className="h-20 space-y-2 overflow-x-hidden overflow-y-auto pretty-scrollbar">
-                {techniques.map((technique) => (
-                  <div key={technique.id} className="flex items-center">
-                    <input
-                      type="checkbox"
-                      id={`technique-${technique.id}`}
-                      checked={selectedTechniques.includes(technique.id)}
-                      onChange={() =>
-                        handleFilterChange(
-                          technique.id,
-
-                          setSelectedTechniques
-                        )
-                      }
-                      className=" h-8 w-8 "
-                    />
-                    <label
-                      htmlFor={`technique-${technique.id}`}
-                      className="ml-2 text-sm text-gray-700"
-                    >
-                      {technique.value}
-                    </label>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Marks */}
-            <div>
-              <h3 className="mb-2">Символы</h3>
-              <div className="h-20 space-y-2 overflow-x-hidden overflow-y-auto pretty-scrollbar">
-                {marks.map((mark) => (
-                  <div key={mark.id} className="flex items-center">
-                    <input
-                      type="checkbox"
-                      id={`mark-${mark.id}`}
-                      checked={selectedMarks.includes(mark.id)}
-                      onChange={() =>
-                        handleFilterChange(
-                          mark.id,
-
-                          setSelectedMarks
-                        )
-                      }
-                      className=" h-8 w-8 "
-                    />
-                    <label
-                      htmlFor={`mark-${mark.id}`}
-                      className="ml-2 text-sm text-gray-700"
-                    >
-                      {mark.value}
-                    </label>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Places */}
-            <div>
-              <h3 className="mb-2">Населённые пункты</h3>
-              <div className="h-20 space-y-2 overflow-x-hidden overflow-y-auto pretty-scrollbar">
-                {places.map((place) => (
-                  <div key={place.id} className="flex items-center">
-                    <input
-                      type="checkbox"
-                      id={`place-${place.id}`}
-                      checked={selectedPlaces.includes(place.id)}
-                      onChange={() =>
-                        handleFilterChange(
-                          place.id,
-
-                          setSelectedPlaces
-                        )
-                      }
-                      className=" h-8 w-8 "
-                    />
-                    <label
-                      htmlFor={`place-${place.id}`}
-                      className="ml-2 text-sm text-gray-700"
-                    >
-                      {place.value}
-                    </label>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Personalities */}
-            <div>
-              <h3 className="mb-2">Личности</h3>
-              <div className="h-20 space-y-2 overflow-x-hidden overflow-y-auto pretty-scrollbar">
-                {personalities.map((person) => (
-                  <div key={person.id} className="flex items-center">
-                    <input
-                      type="checkbox"
-                      id={`person-${person.id}`}
-                      checked={selectedPersonalities.includes(person.id)}
-                      onChange={() =>
-                        handleFilterChange(
-                          person.id,
-
-                          setSelectedPersonalities
-                        )
-                      }
-                      className=" h-8 w-8 "
-                    />
-                    <label
-                      htmlFor={`person-${person.id}`}
-                      className="ml-2 text-sm text-gray-700"
-                    >
-                      {person.value}
-                    </label>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="w-full relative flex items-center gap-8 px-2 pb-2">
+        {/* Right */}
+        <div className="h-full w-full flex flex-col gap-4 lg:gap-8">
+          <div className="flex flex-col lg:flex-row w-full gap-4 lg:gap-8">
+            <div className="flex gap-4 lg:gap-8 order-2 lg:order-1">
+              {isMobile && (
+                <button
+                  onClick={() => setClickToFilter((prev) => !prev)}
+                  className={`h-10 truncate ${
+                    clickToFilter
+                      ? `border-white bg-[var(--dark)] text-white`
+                      : `border-black border-1 text-black`
+                  } rounded-full p-2 cursor-pointer hover:scale-110 transition-transform duration-300`}
+                >
+                  Применить фильтры
+                </button>
+              )}
               <button
-                onClick={handleScrollUp}
-                className="relative w-10 h-10 border-1 broder-black rounded-full hover:scale-110 transition-transform duration-300"
+                onClick={() => setFirst(true)}
+                className={`h-10 ${
+                  isFirst
+                    ? `border-white bg-[var(--dark)] text-white`
+                    : `border-black border-1 text-black`
+                } rounded-full p-2 cursor-pointer hover:scale-110 transition-transform duration-300`}
+              >
+                Коллекция
+              </button>
+              <button
+                onClick={() => setFirst(false)}
+                className={`h-10 ${
+                  !isFirst
+                    ? `border-white bg-[var(--dark)] text-white`
+                    : `border-black border-1 text-black`
+                } rounded-full p-2 cursor-pointer hover:scale-110 transition-transform duration-300`}
+              >
+                Карта
+              </button>
+            </div>
+            <div className="flex w-full gap-4 lg:gap-8 lg:order-1">
+              <div className="relative w-full flex border-black border-1 rounded-full">
+                <input
+                  placeholder="Начинайте ввод ..."
+                  className="w-full h-10 pl-4 pr-10 py-2 rounded-full"
+                  value={searchQuery}
+                  onChange={handleSearchInputChange}
+                  onKeyDown={handleKeyDown}
+                />
+                {searchQuery && (
+                  <button
+                    onClick={ResetInput}
+                    className="absolute right-0 w-10 h-10 cursor-pointer shrink-0 hover:scale-110 transition-transform duration-300"
+                  >
+                    <Image
+                      src="/images/icons/cancel-b.png"
+                      alt=""
+                      className="p-2"
+                      fill
+                    />
+                  </button>
+                )}
+              </div>
+              <button
+                onClick={handleSearchSubmit}
+                className="relative w-10 h-10 rounded-full border-black border-1 cursor-pointer shrink-0 hover:scale-110 transition-transform duration-300"
               >
                 <Image
-                  src="/images/icons/arrow-b.png"
+                  src="/images/icons/search-b.png"
                   alt=""
-                  className="p-2 rotate-90"
+                  className="p-2"
                   fill
                 />
               </button>
-              <button
-                onClick={() => ResetFilters()}
-                className="p-2 truncate border-1 broder-black rounded-full hover:scale-110 transition-transform duration-300"
-              >
-                Сбросить
-              </button>
-              <button
-                onClick={() => setToFilter(true)}
-                className={`p-2 truncate border-1 rounded-full shrink-0 hover:scale-110 transition-transform duration-300 ${
-                  toFilter
-                    ? `border-white text-white bg-[var(--dark)]`
-                    : `border-black text-black`
-                }`}
-              >
-                Применить
-              </button>
             </div>
           </div>
-        </div>
 
-        {/* Right */}
-        <div className="h-full w-full flex flex-col gap-8">
-          <div className="flex w-full gap-8">
-            <button
-              onClick={() => setFirst(true)}
-              className={`h-10 ${
-                isFirst
-                  ? `border-white bg-[var(--dark)] text-white`
-                  : `border-black border-1 text-black`
-              } rounded-full p-2 cursor-pointer hover:scale-110 transition-transform duration-300`}
-            >
-              Коллекция
-            </button>
-            <button
-              onClick={() => setFirst(false)}
-              className={`h-10 ${
-                !isFirst
-                  ? `border-white bg-[var(--dark)] text-white`
-                  : `border-black border-1 text-black`
-              } rounded-full p-2 cursor-pointer hover:scale-110 transition-transform duration-300`}
-            >
-              Карта
-            </button>
-            <div className="relative w-full flex border-black border-1 rounded-full">
-              <input
-                placeholder="Начинайте ввод ..."
-                className="w-full h-10 pl-4 pr-10 py-2 rounded-full"
-                value={searchQuery}
-                onChange={handleSearchInputChange}
-                onKeyDown={handleKeyDown}
-              />
-              {searchQuery && (
-                <button
-                  onClick={ResetInput}
-                  className="absolute right-0 w-10 h-10 cursor-pointer shrink-0 hover:scale-110 transition-transform duration-300"
-                >
-                  <Image
-                    src="/images/icons/cancel-b.png"
-                    alt=""
-                    className="p-2"
-                    fill
-                  />
-                </button>
-              )}
-            </div>
-            <button
-              onClick={handleSearchSubmit}
-              className="relative w-10 h-10 rounded-full border-black border-1 cursor-pointer shrink-0 hover:scale-110 transition-transform duration-300"
-            >
-              <Image
-                src="/images/icons/search-b.png"
-                alt=""
-                className="p-2"
-                fill
-              />
-            </button>
-          </div>
+          {isMobile && clickToFilter && (
+            <Filter
+              FilterProps={{
+                periods,
+                materials,
+                colors,
+                techniques,
+                marks,
+                places,
+                personalities,
+                selectedPeriods,
+                selectedColors,
+                selectedMaterials,
+                selectedTechniques,
+                selectedMarks,
+                selectedPlaces,
+                selectedPersonalities,
+                toFilter,
+                filtersContainerRef,
+                setSelectedPeriods,
+                setSelectedColors,
+                setSelectedMaterials,
+                setSelectedTechniques,
+                setSelectedMarks,
+                setSelectedPlaces,
+                setSelectedPersonalities,
+                setToFilter,
+                handleFilterChange,
+                handleScrollUp,
+                ResetFilters,
+              }}
+            />
+          )}
 
           {loading ? (
-            <div className="h-full w-full flex items-center  p-8 border-black border-1">
+            <div className="h-full w-full flex items-center p-4 lg:p-8 border-black border-1">
               <p className="mx-auto font-american">Загрузка ...</p>
             </div>
           ) : (

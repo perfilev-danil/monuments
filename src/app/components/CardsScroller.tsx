@@ -8,10 +8,21 @@ interface Props {
 }
 
 export const CardsScroller: React.FC<Props> = ({ images }) => {
+  const [isDesktop, setIsDesktop] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [showHint, setShowHint] = useState(false);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  //const [hasMounted, setHasMounted] = useState(false);
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsDesktop(window.innerWidth >= 1024); // 1024px — tailwind breakpoint для lg
+    };
+
+    checkScreenSize(); // начальная проверка
+    window.addEventListener("resize", checkScreenSize);
+
+    return () => window.removeEventListener("resize", checkScreenSize);
+  }, []);
 
   useEffect(() => {
     const container = scrollContainerRef.current;
@@ -75,8 +86,8 @@ export const CardsScroller: React.FC<Props> = ({ images }) => {
   */
 
   return (
-    <div className="relative h-96 w-full select-none">
-      {showHint && (
+    <div className="relative h-screen w-full p-4 lg:p-8  select-none">
+      {showHint && isDesktop && (
         <div
           className="fixed z-50 flex items-center pointer-events-none"
           style={{
@@ -112,12 +123,12 @@ export const CardsScroller: React.FC<Props> = ({ images }) => {
       )}
       <div
         ref={scrollContainerRef}
-        className="overflow-x-auto no-scrollbar h-full w-full flex items-center gap-8 snap-x snap-mandatory cursor-grab scroll-smooth"
+        className="overflow-x-auto no-scrollbar h-full w-full flex items-center gap-4 lg:gap-8 snap-x snap-mandatory cursor-grab scroll-smooth"
       >
         {images.map((image) => (
           <div
             key={image.id}
-            className="h-full snap-end w-[calc(50%-16px)] shrink-0"
+            className="h-full snap-end w-full lg:w-[calc(50%-16px)] shrink-0"
           >
             <div className="relative overflow-hidden h-full border-1 border-black select-none">
               <Image

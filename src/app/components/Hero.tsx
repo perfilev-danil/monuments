@@ -16,17 +16,17 @@ export default function Hero() {
         <source src="videos/hero.mp4" type="video/mp4" />
       </video>
       <div
-        className="absolute bottom-0 w-full h-full p-8 z-10
-        text-center text-white
+        className="absolute bottom-0 w-full h-full p-4 lg:p-8 z-10
+        text-center text-white text-lg
         flex flex-col items-center justify-between"
       >
         {/* <div className="w-32 h-[1px] bg-white "></div> */}
-        <p className="font-american text-lg text-center">ensib-monuments</p>
+        <p className="font-american  text-center">ensib-monuments</p>
         <div className="w-full flex items-end justify-between">
           <div className="relative w-10 h-10">
             <Image src="/images/icons/logo-w.png" alt="" className="" fill />
           </div>
-          <h1 className="font-american text-lg leading-5 text-center">
+          <h1 className="font-american  leading-5 text-center">
             монументальное искусство <br />
             Енисейской Сибири
           </h1>

@@ -38,13 +38,13 @@ export default function Home() {
       </div>
 
       <div id="wrapper" className="absolute top-[100vh] left-0 w-full z-20">
-        <div className="relative h-[200vh]">
+        <div className="relative h-[140vh]">
           <div className="sticky top-0">
             <Opening />
           </div>
         </div>
 
-        <div className="relative h-[200vh]">
+        <div className="relative h-[140vh]">
           <div className="sticky top-0">
             {/*
             <Gallery />
@@ -54,7 +54,15 @@ export default function Home() {
           </div>
         </div>
 
-        <Info />
+        <div className="relative h-[140vh]">
+          <div className="sticky top-0">
+            {/*
+            <Gallery />
+            */}
+
+            <Info />
+          </div>
+        </div>
 
         <Footer />
       </div>

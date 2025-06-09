@@ -4,30 +4,30 @@ import Header from "./Header";
 
 export default function Opening() {
   return (
-    <div className="relative bg-white w-full h-screen flex flex-col justify-between p-8">
+    <div className="relative bg-white w-full h-screen flex flex-col justify-between p-4 lg:p-8 text-base">
       <Header />
-      <div className="h-[70%] flex items-center">
+      <div className="h-[75%] lg:h-[70%] flex items-center">
         <div className="bg-black h-full w-[1px]"></div>
-        <div className="h-full flex flex-col justify-between pl-20">
+        <div className="h-full flex flex-col justify-between pl-4 lg:pl-20">
           <div className="flex flex-col gap-8">
-            <h2 className="text-4xl leading-normal">
+            <h2 className="text-[26px] lg:text-4xl leading-normal">
               Навигатор по монументам <br /> Енисейской Сибири
             </h2>
-            <p className="text-base leading-relaxed">
+            <p className=" leading-relaxed">
               Проект представляет цифровое собрание <br /> памятников
               приенисейских земель: <br /> Красноярского края, <br /> Хакасии и
               Тывы
             </p>
           </div>
-          <p className="text-base leading-relaxed">
-            Подробное описание <br />
+          <p className=" leading-relaxed">
+            Описание <br />
             50+ объектов
           </p>
         </div>
       </div>
-      <div className="relative flex items-end justify-between z-20 text-sm">
+      <div className="relative flex items-center justify-between z-20 ">
         <span>ensib</span>
-        <span className="absolute left-0 right-0 font-american text-lg text-center">
+        <span className="absolute left-0 right-0 font-american text-center text-lg">
           ensib-monuments
         </span>
         <div>
@@ -35,7 +35,7 @@ export default function Opening() {
         </div>
       </div>
 
-      <div className="absolute bottom-0 right-0 w-1/3 h-4/5">
+      <div className="absolute bottom-0 right-0 w-2/3 lg:w-1/3 h-6/7">
         <Image
           src="/images/contents/opening.png"
           alt=""

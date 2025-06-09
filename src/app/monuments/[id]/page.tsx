@@ -37,11 +37,11 @@ export default async function MonumentPage({
 
   return (
     <div>
-      <div className="p-4 lg:p-8 flex flex-col gap-8">
+      <div className=" lg:h-[calc(100vh-32px)] p-4 lg:p-8 pb-0 lg:pb-0 flex flex-col gap-4 lg:gap-8">
         <Header />
 
         {/* Info */}
-        <div className="flex flex-col gap-8">
+        <div className="h-full flex flex-col gap-4 lg:gap-8">
           <div className="flex items-center justify-between">
             <h1 className="text-xl">
               {monument?.appellation_monument?.value} ({monument?.year?.value}{" "}
@@ -60,9 +60,9 @@ export default async function MonumentPage({
             </Link>
           </div>
 
-          <div className="w-full flex flex-col lg:flex-row lg:gap-8">
+          <div className="h-full w-full flex flex-col lg:flex-row lg:gap-8">
             {/* 1st col */}
-            <div className="lg:w-1/2 border-1 border-black p-4 lg:p-8 flex flex-col gap-4">
+            <div className="lg:w-1/2 border-1 border-b-0 lg:border-b-1 border-black p-4 pb-0 lg:p-8 flex flex-col gap-4">
               <div className="grid grid-cols-6">
                 <span className="col-span-2 lg:col-span-1">Год</span>
                 <p className="col-span-4 lg:col-span-5">
@@ -173,7 +173,7 @@ export default async function MonumentPage({
               </div>
             </div>
             {/* 2nd col */}
-            <div className="lg:w-1/2 border-1 border-black p-4 lg:p-8 flex flex-col gap-4">
+            <div className="lg:w-1/2 border-1 border-t-0 lg:border-t-1 border-black p-4 lg:p-8 flex flex-col gap-4">
               <div className="grid grid-cols-6">
                 <span className="col-span-2 lg:col-span-1">Описание</span>
                 <p className="col-span-4 lg:col-span-5 text-justify">
@@ -276,13 +276,20 @@ export default async function MonumentPage({
               </div>
             </div>
           </div>
-
-          {/* Images */}
-          {monument.images.length !== 0 && (
-            <CardsScroller images={monument.images} />
-          )}
         </div>
       </div>
+      {/* Images */}
+      {monument.images.length !== 0 && (
+        <div className="relative h-[140vh]">
+          <div className="sticky top-0">
+            {/*
+                    <Gallery />
+                    */}
+
+            <CardsScroller images={monument.images} />
+          </div>
+        </div>
+      )}
       <Footer />
     </div>
   );
