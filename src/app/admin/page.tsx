@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+
 import MonumentsList from "./components/MonumentsList";
 import ColorsList from "./components/ColorsList";
 import MaterialsList from "./components/MaterialList";
@@ -17,6 +19,45 @@ import DimensionsTypesList from "./components/DimensionsTypesList";
 
 export default function AdminPage() {
   const [activeSection, setActiveSection] = useState("monuments");
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
+
+  useEffect(() => {
+    // Проверяем авторизацию при загрузке компонента
+    const checkAuth = async () => {
+      try {
+        const response = await fetch("/api/admin/check-auth", {
+          credentials: "include",
+        });
+
+        if (response.ok) {
+          setIsAuthenticated(true);
+        } else {
+          router.push("/admin/login");
+        }
+      } catch (error) {
+        console.error("Auth check failed:", error);
+        router.push("/admin/login");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    checkAuth();
+  }, [router]);
+
+  const handleLogout = async () => {
+    try {
+      await fetch("/api/admin/logout", {
+        method: "POST",
+        credentials: "include",
+      });
+      router.push("/admin/login");
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
 
   const renderSection = () => {
     switch (activeSection) {
@@ -51,6 +92,15 @@ export default function AdminPage() {
         return null;
     }
   };
+
+  if (loading) {
+    return <div className="p-4">Проверка авторизации...</div>;
+  }
+
+  if (!isAuthenticated) {
+    return null; // или redirect через useEffect
+  }
+
   return (
     <div className="p-4">
       <div className="flex space-x-4 mb-6">
@@ -190,6 +240,12 @@ export default function AdminPage() {
         }`}
       >
         Типы размеров
+      </button>
+      <button
+        onClick={handleLogout}
+        className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+      >
+        Выйти
       </button>
 
       {renderSection()}

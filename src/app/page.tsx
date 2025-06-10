@@ -3,8 +3,6 @@
 import Hero from "./components/Hero";
 import Opening from "./components/Opening";
 
-import Gallery from "./components/Gallery";
-
 import CardsMaze from "./components/CardsMaze";
 
 import Info from "./components/Info";
@@ -33,18 +31,18 @@ export default function Home() {
 
   return (
     <div className="relative">
-      <div className="h-screen">
+      <div className="h-[100dvh]">
         <Hero />
       </div>
 
       <div id="wrapper" className="absolute top-[100vh] left-0 w-full z-20">
-        <div className="relative h-[140vh]">
+        <div className="relative h-[120vh]">
           <div className="sticky top-0">
             <Opening />
           </div>
         </div>
 
-        <div className="relative h-[140vh]">
+        <div className="relative h-[120vh]">
           <div className="sticky top-0">
             {/*
             <Gallery />
@@ -54,7 +52,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="relative h-[140vh]">
+        <div className="relative h-[120vh]">
           <div className="sticky top-0">
             {/*
             <Gallery />

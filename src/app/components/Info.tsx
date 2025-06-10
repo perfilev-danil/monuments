@@ -17,7 +17,7 @@ export default function Info() {
   }, []);
   return (
     <div
-      className="w-full h-screen p-4 lg:p-8
+      className="w-full h-[100dvh] p-4 lg:p-8
      flex items-center justify-center"
     >
       <div
