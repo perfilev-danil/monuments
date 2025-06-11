@@ -4,7 +4,7 @@ import Header from "./Header";
 
 export default function Opening() {
   return (
-    <div className="relative bg-white w-full h-[100svh] flex flex-col justify-between p-4 lg:p-8 text-base">
+    <div className="relative bg-white w-full h-screen flex flex-col justify-between p-4 lg:p-8 text-base">
       <Header />
       <div className="h-[75%] lg:h-[70%] flex items-center">
         <div className="bg-black h-full w-[1px]"></div>

@@ -165,7 +165,7 @@ export default function CardsMaze() {
   }, []);
 
   return (
-    <div className="relative bg-[var(--dark)] h-[100svh]">
+    <div className="relative bg-[var(--dark)] h-screen">
       {showHint && isDesktop && (
         <div
           className="fixed z-50 flex items-center pointer-events-none"

@@ -1,9 +1,34 @@
+"use client";
+import { useEffect } from "react";
+
 import Image from "next/image";
 import Link from "next/link";
 
 export default function Hero() {
+  useEffect(() => {
+    const video = document.querySelector("video");
+    if (video) {
+      video.muted = true;
+      video.playsInline = true;
+      video.autoplay = true;
+      video.setAttribute("muted", "true");
+      video.setAttribute("playsinline", "true");
+
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            // Видео запущено
+          })
+          .catch((error) => {
+            console.error("Ошибка воспроизведения видео:", error);
+          });
+      }
+    }
+  }, []);
+
   return (
-    <div className="relative w-full h-[100svh]">
+    <div className="relative w-full h-screen">
       <video
         autoPlay
         muted
@@ -16,7 +41,7 @@ export default function Hero() {
       >
         <source src="videos/hero.mp4" type="video/mp4" />
       </video>
-      <div className="absolute top-0 left-0 w-full h-full"></div>
+
       <div
         className="absolute bottom-0 w-full h-full p-4 lg:p-8 z-10
         text-center text-white text-lg
@@ -34,7 +59,7 @@ export default function Hero() {
           </h1>
           <Link
             href={"/collection"}
-            className="relative w-10 h-10 rounded-full border-white border-2 cursor-pointer hover:scale-110 transition-transform duration-300"
+            className="relative w-10 h-10 rounded-full border-white border-[4px] cursor-pointer hover:scale-110 transition-transform duration-300"
           >
             <Image
               src="/images/icons/collection.png"
