@@ -24,7 +24,7 @@ export default function Home() {
         trigger: "#wrapper",
         start: "top bottom",
         end: "top top",
-        scrub: 0.3,
+        scrub: true,
       },
     });
   }, []);
