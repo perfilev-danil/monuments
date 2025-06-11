@@ -14,12 +14,14 @@ export default function Hero() {
     };
 
     checkScreenSize(); // начальная проверка
-    window.addEventListener("resize", checkScreenSize);
+    //window.addEventListener("resize", checkScreenSize);
 
-    return () => window.removeEventListener("resize", checkScreenSize);
+    //return () => window.removeEventListener("resize", checkScreenSize);
   }, []);
+
   return (
     <div className="relative w-full h-[100svh]">
+      {/*
       {isDesktop ? (
         <video
           autoPlay
@@ -41,6 +43,14 @@ export default function Hero() {
           fill
         />
       )}
+     */}
+
+      <Image
+        src="/gifs/hero.gif" // путь к вашей гифке
+        alt=""
+        fill
+        className="w-full h-full object-cover"
+      />
 
       <div
         className="absolute bottom-0 w-full h-full p-4 lg:p-8 z-10
