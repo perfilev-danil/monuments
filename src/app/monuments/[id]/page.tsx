@@ -281,7 +281,7 @@ export default async function MonumentPage({
       </div>
       {/* Images */}
       {monument?.images?.length !== 0 && (
-        <div className="relative h-[140vh]">
+        <div className="relative lg:h-[140vh]">
           <div className="sticky top-0">
             <CardsScroller images={monument?.images} />
           </div>
