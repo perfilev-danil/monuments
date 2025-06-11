@@ -18,7 +18,7 @@ export default function Header() {
         <Link
           href={"/collection"}
           className="relative w-10 h-10 rounded-full cursor-pointer shrink-0 hover:scale-110 transition-transform duration-300"
-          style={{ border: "2px solid black" }}
+          style={{ border: "1px solid black" }}
         >
           <Image
             src="/images/icons/collection-b.png"

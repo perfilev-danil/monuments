@@ -49,7 +49,8 @@ export default async function MonumentPage({
             </h1>
             <Link
               href={"/collection"}
-              className="relative w-10 h-10 border border-black rounded-full cursor-pointer hover:scale-110 transition-transform duration-300"
+              className="relative w-10 h-10 rounded-full cursor-pointer hover:scale-110 transition-transform duration-300"
+              style={{ border: "1px solid black" }}
             >
               <Image
                 src="/images/icons/arrow-b.png"
@@ -62,7 +63,7 @@ export default async function MonumentPage({
 
           <div className="h-full w-full flex flex-col lg:flex-row lg:gap-8">
             {/* 1st col */}
-            <div className="lg:w-1/2 border border-b-0 lg:border-b-1 border-black p-4 pb-0 lg:p-8 flex flex-col gap-4">
+            <div className="lg:w-1/2 p-4 pb-0 lg:p-8 flex flex-col gap-4 custom-border-bottom">
               <div className="grid grid-cols-6">
                 <span className="col-span-2 lg:col-span-1">Год</span>
                 <p className="col-span-4 lg:col-span-5">
@@ -173,7 +174,7 @@ export default async function MonumentPage({
               </div>
             </div>
             {/* 2nd col */}
-            <div className="lg:w-1/2 border border-t-0 lg:border-t-1 border-black p-4 lg:p-8 flex flex-col gap-4">
+            <div className="lg:w-1/2 custom-border-top p-4 lg:p-8 flex flex-col gap-4">
               <div className="grid grid-cols-6">
                 <span className="col-span-2 lg:col-span-1">Описание</span>
                 <p className="col-span-4 lg:col-span-5 text-justify">

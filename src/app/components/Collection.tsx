@@ -3,14 +3,18 @@ import Link from "next/link";
 
 export default function Collection({ monuments }: { monuments: any }) {
   return (
-    <div className="h-full w-full p-4 lg:p-8 border-black border">
+    <div
+      className="h-full w-full p-4 lg:p-8 "
+      style={{ border: "1px solid black" }}
+    >
       {/* LIST */}
       <div className="h-full lg:w-full flex flex-wrap gap-4 lg:gap-8 overflow-y-auto snap-y snap-mandatory overflow-x-hidden scroll-smooth pretty-scrollbar">
         {monuments.length > 0 ? (
           monuments.map((monument: any) => (
             <div
               key={monument.id}
-              className="relative snap-start overflow-hidden h-full w-full lg:w-[calc(50%-32px)] border"
+              className="relative snap-start overflow-hidden h-full w-full lg:w-[calc(50%-32px)] "
+              style={{ border: "1px solid black" }}
             >
               {monument.images?.[0] && (
                 <Image
@@ -30,7 +34,8 @@ export default function Collection({ monuments }: { monuments: any }) {
 
                 <Link
                   href={`/monuments/${monument.id}`}
-                  className="relative w-10 h-10 shrink-0 border border-white rounded-full cursor-pointer hover:scale-110 transition-transform duration-300"
+                  className="relative w-10 h-10 shrink-0  rounded-full cursor-pointer hover:scale-110 transition-transform duration-300"
+                  style={{ border: "1px solid white" }}
                 >
                   <Image
                     src="/images/icons/arrow.png"

@@ -86,7 +86,7 @@ export const CardsScroller: React.FC<Props> = ({ images }) => {
   */
 
   return (
-    <div className="relative h-screen w-full p-4 lg:p-8  select-none">
+    <div className="relative h-[100svh] w-full p-4 lg:p-8  select-none">
       {showHint && isDesktop && (
         <div
           className="fixed z-50 flex items-center pointer-events-none"
@@ -105,7 +105,10 @@ export const CardsScroller: React.FC<Props> = ({ images }) => {
               fill
             />
           </div>
-          <div className="w-20 h-20 flex items-center justify-center p-2 border border-black bg-white rounded-full">
+          <div
+            className="w-20 h-20 flex items-center justify-center p-2  bg-white rounded-full"
+            style={{ border: "1px solid black" }}
+          >
             <p className="text-black text-center font-american">
               Зажми <br />и тяни
             </p>
@@ -130,7 +133,10 @@ export const CardsScroller: React.FC<Props> = ({ images }) => {
             key={image.id}
             className="h-full snap-end w-full lg:w-[calc(50%-16px)] shrink-0"
           >
-            <div className="relative overflow-hidden h-full border border-black select-none">
+            <div
+              className="relative overflow-hidden h-full select-none"
+              style={{ border: "1px solid black" }}
+            >
               <Image
                 src={`/api/images/${image.id}`}
                 alt=""

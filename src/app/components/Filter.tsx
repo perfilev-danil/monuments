@@ -62,7 +62,10 @@ export default function Filter({ FilterProps }: { FilterProps: FilterProps }) {
     ResetFilters,
   } = FilterProps;
   return (
-    <div className="lg:w-1/3 h-1/2 lg:h-full p-4 lg:p-8 border-black border flex flex-col gap-4 lg:gap-8">
+    <div
+      className="lg:w-1/3 h-1/2 lg:h-full p-4 lg:p-8 flex flex-col gap-4 lg:gap-8"
+      style={{ border: "1px solid black" }}
+    >
       <div
         ref={filtersContainerRef}
         className="w-full h-full flex flex-col gap-4 lg:gap-8 pr-4 lg:pr-8 overflow-x-hidden overflow-y-auto scroll-smooth pretty-scrollbar "
@@ -285,7 +288,8 @@ export default function Filter({ FilterProps }: { FilterProps: FilterProps }) {
         <div className="w-full relative flex items-center justify-between gap-4 lg:gap-8 lg:px-2 lg:pb-2">
           <button
             onClick={handleScrollUp}
-            className="relative w-10 h-10 shrink-0 border broder-black rounded-full hover:scale-110 transition-transform duration-300"
+            className="relative w-10 h-10 shrink-0  rounded-full hover:scale-110 transition-transform duration-300"
+            style={{ border: "1px solid black" }}
           >
             <Image
               src="/images/icons/arrow-b.png"
@@ -296,17 +300,21 @@ export default function Filter({ FilterProps }: { FilterProps: FilterProps }) {
           </button>
           <button
             onClick={() => ResetFilters()}
-            className="p-2 truncate border broder-black rounded-full hover:scale-110 transition-transform duration-300"
+            className="p-2 truncate  broder-black rounded-full hover:scale-110 transition-transform duration-300"
+            style={{ border: "1px solid black" }}
           >
             Сбросить
           </button>
           <button
             onClick={() => setToFilter(true)}
-            className={`p-2 truncate border rounded-full shrink-0 hover:scale-110 transition-transform duration-300 ${
-              toFilter
-                ? `border-white text-white bg-[var(--dark)]`
-                : `border-black text-black`
+            className={`p-2 truncate rounded-full shrink-0 hover:scale-110 transition-transform duration-300 ${
+              toFilter ? `text-white bg-[var(--dark)]` : `text-black`
             }`}
+            style={
+              toFilter
+                ? { border: "1px solid white" }
+                : { border: "1px solid black" }
+            }
           >
             Применить
           </button>

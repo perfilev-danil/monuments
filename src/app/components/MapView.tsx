@@ -79,7 +79,7 @@ export default function MapView({
             const id = feature.get("id");
 
             popupRef.current!.innerHTML = `
-        <div class="relative h-64 w-80 gap-4 bg-white border border-black overflow-hidden">
+        <div class="relative h-64 w-80 gap-4 bg-white overflow-hidden" style = {{ border: "1px solid black"}}>
          
             <img 
               src="${url}" 
@@ -87,9 +87,9 @@ export default function MapView({
               class="w-full h-full object-cover object-top hover:scale-110 transition-transform duration-500"
             />
          
-          <div class="absolute bottom-0 right-0 z-10 w-full p-2 bg-white border-t-1 border-black flex items-center justify-between">
+          <div class="absolute bottom-0 right-0 z-10 w-full p-2 bg-white  flex items-center justify-between" style = {{ borderTop: "1px solid black"}}>
             <div class="truncate">${name} ${year} г.</div>
-            <button id="popup-button" class="rounded-full w-10 h-10 border shrink-0 border-black cursor-pointer hover:scale-110 transition-transform duration-300">
+            <button id="popup-button" class="rounded-full w-10 h-10  shrink-0 cursor-pointer hover:scale-110 transition-transform duration-300" style = {{ border: "1px solid black"}}>
             <img 
               src="/images/icons/arrow-b.png"
               alt="" 
@@ -189,7 +189,10 @@ export default function MapView({
  */
 
   return (
-    <div className="relative h-full border border-black w-full overflow-hidden ">
+    <div
+      className="relative h-full w-full overflow-hidden"
+      style={{ border: "1px solid black" }}
+    >
       <div ref={mapRef} className="w-full h-full" />
       <div ref={popupRef} className="absolute z-10" />
     </div>

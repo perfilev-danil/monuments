@@ -165,7 +165,7 @@ export default function CardsMaze() {
   }, []);
 
   return (
-    <div className="relative bg-[var(--dark)] h-screen">
+    <div className="relative bg-[var(--dark)] h-[100svh]">
       {showHint && isDesktop && (
         <div
           className="fixed z-50 flex items-center pointer-events-none"
@@ -179,7 +179,10 @@ export default function CardsMaze() {
           <div className="relative w-10 h-10">
             <Image src="/images/icons/arrow.png" alt="" className="p-2" fill />
           </div>
-          <div className="w-20 h-20 flex items-center justify-center p-2 border border-white bg-[var(--dark)] rounded-full">
+          <div
+            className="w-20 h-20 flex items-center justify-center p-2 bg-[var(--dark)] rounded-full"
+            style={{ border: "1px solid white" }}
+          >
             <p className="text-white text-center font-american">
               Зажми <br />и тяни
             </p>
@@ -219,7 +222,10 @@ export default function CardsMaze() {
                   className="p-2 lg:p-4"
                   style={{ height: `${monument.height}%` }}
                 >
-                  <div className="relative overflow-hidden border border-white h-full group">
+                  <div
+                    className="relative overflow-hidden  h-full group"
+                    style={{ border: "1px solid white" }}
+                  >
                     <div className="">
                       <div className="absolute bottom-0 right-0 z-10 bg-white w-full p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         <div className="flex items-center justify-between">
@@ -229,7 +235,8 @@ export default function CardsMaze() {
                           </p>
                           <Link
                             href={`/monuments/${monument.id}`}
-                            className="relative w-10 h-10 shrink-0 border border-black rounded-full cursor-pointer hover:scale-110 transition-transform duration-300"
+                            className="relative w-10 h-10 shrink-0  rounded-full cursor-pointer hover:scale-110 transition-transform duration-300"
+                            style={{ border: "1px solid black" }}
                           >
                             <Image
                               src="/images/icons/arrow-b.png"

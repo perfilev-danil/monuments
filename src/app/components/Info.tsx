@@ -17,14 +17,17 @@ export default function Info() {
   }, []);
   return (
     <div
-      className="w-full h-screen p-4 lg:p-8
+      className="w-full h-[100svh] p-4 lg:p-8
      flex items-center justify-center"
     >
       <div
         className="w-full h-full lg:py-20
       flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8 lg:gap-28"
       >
-        <div className="relative overflow-hidden w-full h-full lg:h-full lg:w-1/2 border border-black">
+        <div
+          className="relative overflow-hidden w-full h-full lg:h-full lg:w-1/2 "
+          style={{ border: "1px solid black" }}
+        >
           <Image
             src="/images/contents/trio.jpg"
             alt=""
@@ -46,7 +49,8 @@ export default function Info() {
                 </p>
                 <Link
                   href={"/collection"}
-                  className="w-max  rounded-full border-black border cursor-pointer p-2  hover:scale-110 transition-transform duration-300"
+                  className="w-max  rounded-full cursor-pointer p-2  hover:scale-110 transition-transform duration-300"
+                  style={{ border: "1px solid black" }}
                 >
                   Исследовать коллекцию
                 </Link>
@@ -58,7 +62,8 @@ export default function Info() {
                 </p>
                 <Link
                   href={"/collection"}
-                  className="w-max  rounded-full border-black border cursor-pointer p-2  hover:scale-110 transition-transform duration-300"
+                  className="w-max  rounded-full cursor-pointer p-2  hover:scale-110 transition-transform duration-300"
+                  style={{ border: "1px solid black" }}
                 >
                   Изучить карту
                 </Link>

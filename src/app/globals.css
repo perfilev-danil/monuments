@@ -118,3 +118,27 @@
 .pretty-scrollbar {
   -ms-overflow-style: -ms-autohiding-scrollbar;
 }
+
+.custom-border-bottom {
+  border: 1px solid black;
+  border-bottom-width: 0;
+}
+
+@media (min-width: 1024px) {
+  .custom-border-bottom {
+    border-bottom-width: 1px;
+  }
+}
+
+/* Стили границ по умолчанию для мобильных устройств */
+.custom-border-top {
+  border: 1px solid black;
+  border-top-width: 0;
+}
+
+/* Стили границ для больших экранов */
+@media (min-width: 1024px) {
+  .custom-border-top {
+    border-top-width: 1px;
+  }
+}

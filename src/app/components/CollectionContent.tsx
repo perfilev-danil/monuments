@@ -308,7 +308,7 @@ export default function CollectionContent() {
   };
 
   return (
-    <div className="w-full h-screen flex flex-col justify-between gap-4 lg:gap-8 p-4 lg:p-8">
+    <div className="w-full h-[100svh] flex flex-col justify-between gap-4 lg:gap-8 p-4 lg:p-8">
       <Header />
       <div className="min-h-0 h-full max-h-full w-full flex flex-col lg:flex-row gap-4 lg:gap-8">
         {!isMobile && (
@@ -353,10 +353,13 @@ export default function CollectionContent() {
                 <button
                   onClick={() => setClickToFilter((prev) => !prev)}
                   className={`h-10 truncate ${
-                    clickToFilter
-                      ? `border-white bg-[var(--dark)] text-white`
-                      : `border-black border text-black`
+                    clickToFilter ? `bg-[var(--dark)] text-white` : `text-black`
                   } rounded-full p-2 cursor-pointer hover:scale-110 transition-transform duration-300`}
+                  style={
+                    clickToFilter
+                      ? { border: "1px solid white" }
+                      : { border: "1px solid black" }
+                  }
                 >
                   Применить фильтры
                 </button>
@@ -364,26 +367,35 @@ export default function CollectionContent() {
               <button
                 onClick={() => setFirst(true)}
                 className={`h-10 ${
-                  isFirst
-                    ? `border-white bg-[var(--dark)] text-white`
-                    : `border-black border text-black`
+                  isFirst ? `bg-[var(--dark)] text-white` : `text-black`
                 } rounded-full p-2 cursor-pointer hover:scale-110 transition-transform duration-300`}
+                style={
+                  isFirst
+                    ? { border: "1px solid white" }
+                    : { border: "1px solid black" }
+                }
               >
                 Коллекция
               </button>
               <button
                 onClick={() => setFirst(false)}
                 className={`h-10 ${
-                  !isFirst
-                    ? `border-white bg-[var(--dark)] text-white`
-                    : `border-black border text-black`
+                  !isFirst ? `bg-[var(--dark)] text-white` : `text-black`
                 } rounded-full p-2 cursor-pointer hover:scale-110 transition-transform duration-300`}
+                style={
+                  !isFirst
+                    ? { border: "1px solid white" }
+                    : { border: "1px solid black" }
+                }
               >
                 Карта
               </button>
             </div>
             <div className="flex w-full gap-4 lg:gap-8 lg:order-1">
-              <div className="relative w-full flex border-black border rounded-full">
+              <div
+                className="relative w-full flex rounded-full"
+                style={{ border: "1px solid black" }}
+              >
                 <input
                   placeholder="Начинайте ввод ..."
                   className="w-full h-10 pl-4 pr-10 py-2 rounded-full"
@@ -407,7 +419,8 @@ export default function CollectionContent() {
               </div>
               <button
                 onClick={handleSearchSubmit}
-                className="relative w-10 h-10 rounded-full border-black border cursor-pointer shrink-0 hover:scale-110 transition-transform duration-300"
+                className="relative w-10 h-10 rounded-full cursor-pointer shrink-0 hover:scale-110 transition-transform duration-300"
+                style={{ border: "1px solid black" }}
               >
                 <Image
                   src="/images/icons/search-b.png"
@@ -454,7 +467,10 @@ export default function CollectionContent() {
           )}
 
           {loading ? (
-            <div className="h-full w-full flex items-center p-4 lg:p-8 border-black border">
+            <div
+              className="h-full w-full flex items-center p-4 lg:p-8 "
+              style={{ border: "1px solid black" }}
+            >
               <p className="mx-auto font-american">Загрузка ...</p>
             </div>
           ) : (
