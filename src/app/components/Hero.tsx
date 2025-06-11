@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function Hero() {
   return (
-    <div className="relative w-full h-[100dvh]">
+    <div className="relative w-full h-[100svh]">
       <video
         autoPlay
         muted
@@ -16,6 +16,7 @@ export default function Hero() {
       >
         <source src="videos/hero.mp4" type="video/mp4" />
       </video>
+      <div className="absolute top-0 left-0 w-full h-full"></div>
       <div
         className="absolute bottom-0 w-full h-full p-4 lg:p-8 z-10
         text-center text-white text-lg
@@ -33,7 +34,7 @@ export default function Hero() {
           </h1>
           <Link
             href={"/collection"}
-            className="relative w-10 h-10 rounded-full border-white border-[1px] cursor-pointer hover:scale-110 transition-transform duration-300"
+            className="relative w-10 h-10 rounded-full border-white border-2 cursor-pointer hover:scale-110 transition-transform duration-300"
           >
             <Image
               src="/images/icons/collection.png"
