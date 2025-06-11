@@ -1,33 +1,8 @@
 @import "tailwindcss";
 
 @font-face {
-  font-family: "Nunito-ExtraLight";
+  font-family: "Nunito";
   src: url("/fonts/Nunito-ExtraLight.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: "Nunito-ExtraLightItalic";
-  src: url("/fonts/Nunito-ExtraLightItalic.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: "Leotaro";
-  src: url("/fonts/Leotaro.otf") format("opentype");
-}
-
-@font-face {
-  font-family: "Futurespore";
-  src: url("/fonts/Futurespore.otf") format("opentype");
-}
-
-@font-face {
-  font-family: "Alethia";
-  src: url("/fonts/Alethia.otf") format("opentype");
-}
-
-@font-face {
-  font-family: "Gogol";
-  src: url("/fonts/Gogol.ttf") format("truetype");
 }
 
 @font-face {
@@ -36,11 +11,7 @@
 }
 
 :root {
-  --font-nunito: "Nunito-ExtraLight", sans-serif;
-  --font-nunito-italic: "Nunito-ExtraLightItalic", sans-serif;
-  --font-leotaro: "Leotaro", sans-serif;
-  --font-futurespore: "Futurespore", sans-serif;
-  --font-gogol: "Gogol", sans-serif;
+  --font-nunito: "Nunito", sans-serif;
   --font-american: "American", sans-serif;
 
   --dark: #26282c;
@@ -52,22 +23,6 @@
 
 .font-nunito {
   font-family: var(--font-nunito);
-}
-
-.font-nunito-italic {
-  font-family: var(--font-nunito-italic);
-}
-
-.font-leotaro {
-  font-family: var(--font-leotaro);
-}
-
-.font-futurespore {
-  font-family: var(--font-futurespore);
-}
-
-.font-gogol {
-  font-family: var(--font-gogol);
 }
 
 .font-american {

@@ -9,7 +9,7 @@ export async function GET() {
   } catch (error) {
     console.error(error);
     return NextResponse.json(
-      { error: "Ошибка при получении цветов" },
+      { error: "Ошибка при получении материалов" },
       { status: 500 }
     );
   }

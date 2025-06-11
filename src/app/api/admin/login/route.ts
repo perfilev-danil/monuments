@@ -12,11 +12,9 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Invalid credentials" }, { status: 401 });
   }
 
-  const token = jwt.sign(
-    { username },
-    process.env.JWT_SECRET!,
-    { expiresIn: "8h" } // Токен на 8 часов
-  );
+  const token = jwt.sign({ username }, process.env.JWT_SECRET!, {
+    expiresIn: "8h",
+  });
 
   const response = NextResponse.json({ success: true }, { status: 200 });
 
@@ -25,7 +23,7 @@ export async function POST(request: Request) {
     value: token,
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
-    maxAge: 60 * 60 * 8, // 8 часов
+    maxAge: 60 * 60 * 8,
     path: "/",
   });
 
