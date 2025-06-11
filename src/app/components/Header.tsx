@@ -17,7 +17,7 @@ export default function Header() {
         </h1>
         <Link
           href={"/collection"}
-          className="relative w-10 h-10 rounded-full border-black border cursor-pointer shrink-0 hover:scale-110 transition-transform duration-300"
+          className="relative w-10 h-10 rounded-full border-black border-2 bg-transparent overflow-hidden cursor-pointer shrink-0 hover:scale-110 transition-transform duration-300"
         >
           <Image
             src="/images/icons/collection-b.png"

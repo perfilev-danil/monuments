@@ -1,46 +1,46 @@
 "use client";
-import { useEffect } from "react";
+
+import { useState, useEffect } from "react";
 
 import Image from "next/image";
 import Link from "next/link";
 
 export default function Hero() {
+  const [isDesktop, setIsDesktop] = useState(false);
+
   useEffect(() => {
-    const video = document.querySelector("video");
-    if (video) {
-      video.muted = true;
-      video.playsInline = true;
-      video.autoplay = true;
-      video.setAttribute("muted", "true");
-      video.setAttribute("playsinline", "true");
+    const checkScreenSize = () => {
+      setIsDesktop(window.innerWidth >= 1024);
+    };
 
-      const tryPlay = () => {
-        const playPromise = video.play();
-        if (playPromise !== undefined) {
-          playPromise.catch((error) => {
-            console.warn("Не удалось воспроизвести видео:", error);
-          });
-        }
-      };
+    checkScreenSize(); // начальная проверка
+    window.addEventListener("resize", checkScreenSize);
 
-      video.addEventListener("canplaythrough", tryPlay, { once: true });
-    }
+    return () => window.removeEventListener("resize", checkScreenSize);
   }, []);
-
   return (
     <div className="relative w-full h-[100svh]">
-      <video
-        autoPlay
-        muted
-        loop
-        playsInline
-        disablePictureInPicture
-        preload="auto"
-        poster="images/contents/hero.jpg"
-        className="w-full h-full object-cover"
-      >
-        <source src="videos/hero.mp4" type="video/mp4" />
-      </video>
+      {isDesktop ? (
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          disablePictureInPicture
+          preload="auto"
+          poster="images/contents/hero.jpg"
+          className="w-full h-full object-cover"
+        >
+          <source src="videos/hero.mp4" type="video/mp4" />
+        </video>
+      ) : (
+        <Image
+          src="/images/contents/hero.jpg"
+          alt=""
+          className="object-cover"
+          fill
+        />
+      )}
 
       <div
         className="absolute bottom-0 w-full h-full p-4 lg:p-8 z-10
@@ -59,7 +59,7 @@ export default function Hero() {
           </h1>
           <Link
             href={"/collection"}
-            className="relative w-10 h-10 rounded-full border-white border cursor-pointer hover:scale-110 transition-transform duration-300"
+            className="relative w-10 h-10 rounded-full border-white border-2 bg-transparent overflow-hidden cursor-pointer hover:scale-110 transition-transform duration-300"
           >
             <Image
               src="/images/icons/collection.png"
