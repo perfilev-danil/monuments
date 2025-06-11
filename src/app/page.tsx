@@ -19,7 +19,7 @@ export default function Home() {
   useEffect(() => {
     gsap.to("#wrapper", {
       top: "0",
-      ease: "sine.out",
+      ease: "expoScale(0.5,7,none)",
       scrollTrigger: {
         trigger: "#wrapper",
         start: "top bottom",
@@ -31,14 +31,11 @@ export default function Home() {
 
   return (
     <div className="relative scroll-smooth ">
-      <div className="h-screen">
+      <div className="h-[100svh]">
         <Hero />
       </div>
 
-      <div
-        id="wrapper"
-        className="absolute top-[100vh] left-0 w-full z-20 will-change-transform"
-      >
+      <div id="wrapper" className="absolute top-[100vh] left-0 w-full z-20 ">
         <div className="relative h-[130vh]">
           <div className="sticky top-0">
             <Opening />

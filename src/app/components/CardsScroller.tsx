@@ -130,7 +130,7 @@ export const CardsScroller: React.FC<Props> = ({ images }) => {
             key={image.id}
             className="h-full snap-end w-full lg:w-[calc(50%-16px)] shrink-0"
           >
-            <div className="relative overflow-hidden h-full border-1 border-black select-none">
+            <div className="relative overflow-hidden h-full border border-black select-none">
               <Image
                 src={`/api/images/${image.id}`}
                 alt=""

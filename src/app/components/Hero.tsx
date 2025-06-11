@@ -14,16 +14,16 @@ export default function Hero() {
       video.setAttribute("muted", "true");
       video.setAttribute("playsinline", "true");
 
-      const playPromise = video.play();
-      if (playPromise !== undefined) {
-        playPromise
-          .then(() => {
-            // Видео запущено
-          })
-          .catch((error) => {
-            console.error("Ошибка воспроизведения видео:", error);
+      const tryPlay = () => {
+        const playPromise = video.play();
+        if (playPromise !== undefined) {
+          playPromise.catch((error) => {
+            console.warn("Не удалось воспроизвести видео:", error);
           });
-      }
+        }
+      };
+
+      video.addEventListener("canplaythrough", tryPlay, { once: true });
     }
   }, []);
 
@@ -59,7 +59,7 @@ export default function Hero() {
           </h1>
           <Link
             href={"/collection"}
-            className="relative w-10 h-10 rounded-full border-white border-[4px] cursor-pointer hover:scale-110 transition-transform duration-300"
+            className="relative w-10 h-10 rounded-full border-white border cursor-pointer hover:scale-110 transition-transform duration-300"
           >
             <Image
               src="/images/icons/collection.png"

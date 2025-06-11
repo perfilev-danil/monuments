@@ -219,7 +219,7 @@ export default function CardsMaze() {
                   className="p-2 lg:p-4"
                   style={{ height: `${monument.height}%` }}
                 >
-                  <div className="relative overflow-hidden border-1 border-white h-full group">
+                  <div className="relative overflow-hidden border border-white h-full group">
                     <div className="">
                       <div className="absolute bottom-0 right-0 z-10 bg-white w-full p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         <div className="flex items-center justify-between">
@@ -229,7 +229,7 @@ export default function CardsMaze() {
                           </p>
                           <Link
                             href={`/monuments/${monument.id}`}
-                            className="relative w-10 h-10 shrink-0 border-1 border-black rounded-full cursor-pointer hover:scale-110 transition-transform duration-300"
+                            className="relative w-10 h-10 shrink-0 border border-black rounded-full cursor-pointer hover:scale-110 transition-transform duration-300"
                           >
                             <Image
                               src="/images/icons/arrow-b.png"

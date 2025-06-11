@@ -61,14 +61,14 @@ export default function Footer() {
         )}
       </div>
       <div className="w-1/2 lg:w-1/3 flex flex-col justify-between items-end">
-        <button className="relative w-10 h-10 rounded-full border-white border-1 cursor-pointer shrink-0 hover:scale-110 transition-transform duration-300">
+        <button className="relative w-10 h-10 rounded-full border-white border cursor-pointer shrink-0 hover:scale-110 transition-transform duration-300">
           <Image src="/images/icons/tg.png" alt="" className="p-2" fill />
         </button>
         <div className="w-[1px] h-10 bg-white "></div>
 
         <button
           onClick={ScrollToUp}
-          className="relative w-10 h-10 rounded-full border-white border-1 cursor-pointer shrink-0 hover:scale-110 transition-transform duration-300"
+          className="relative w-10 h-10 rounded-full border-white border cursor-pointer shrink-0 hover:scale-110 transition-transform duration-300"
         >
           <Image
             src="/images/icons/arrow.png"

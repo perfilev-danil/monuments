@@ -24,7 +24,7 @@ export default function Info() {
         className="w-full h-full lg:py-20
       flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8 lg:gap-28"
       >
-        <div className="relative overflow-hidden w-full h-full lg:h-full lg:w-1/2 border-1 border-black">
+        <div className="relative overflow-hidden w-full h-full lg:h-full lg:w-1/2 border border-black">
           <Image
             src="/images/contents/trio.jpg"
             alt=""
@@ -46,7 +46,7 @@ export default function Info() {
                 </p>
                 <Link
                   href={"/collection"}
-                  className="w-max  rounded-full border-black border-1 cursor-pointer p-2  hover:scale-110 transition-transform duration-300"
+                  className="w-max  rounded-full border-black border cursor-pointer p-2  hover:scale-110 transition-transform duration-300"
                 >
                   Исследовать коллекцию
                 </Link>
@@ -58,7 +58,7 @@ export default function Info() {
                 </p>
                 <Link
                   href={"/collection"}
-                  className="w-max  rounded-full border-black border-1 cursor-pointer p-2  hover:scale-110 transition-transform duration-300"
+                  className="w-max  rounded-full border-black border cursor-pointer p-2  hover:scale-110 transition-transform duration-300"
                 >
                   Изучить карту
                 </Link>
