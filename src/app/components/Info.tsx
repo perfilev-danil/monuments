@@ -22,7 +22,7 @@ export default function Info() {
     >
       <div
         className="w-full h-full lg:py-20
-      flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8 lg:gap-28"
+      flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 lg:gap-28"
       >
         <div
           className="relative overflow-hidden w-full h-full lg:h-full lg:w-1/2 "
@@ -68,7 +68,6 @@ export default function Info() {
                   Изучить карту
                 </Link>
               </div>
-              {isMobile && <div className="bg-black w-full h-[1px]"></div>}
             </div>
           </div>
           <div className="bg-black h-full w-[1px]"></div>

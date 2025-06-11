@@ -21,16 +21,21 @@ export default function Hero() {
         {/* <div className="w-32 h-[1px] bg-white "></div> */}
         <p className="font-american  text-center">ensib-monuments</p>
         <div className="w-full flex items-end justify-between">
-          <div className="relative w-10 h-10">
-            <Image src="/images/icons/logo-w.png" alt="" className="" fill />
+          <div
+            className="relative hidden lg:block w-10 h-10 shrink-0 rounded-full"
+            style={{ border: "1px solid white" }}
+          >
+            <Image src="/images/icons/logo-w.png" alt="" className="p-2" fill />
           </div>
-          <h1 className="font-american leading-5 text-center">
-            монументальное искусство <br />
-            Енисейской Сибири
-          </h1>
+          <Link href={"/"} className="mx-auto shrink-0">
+            <h1 className="font-american leading-5 text-center">
+              монументальное искусство <br />
+              Енисейской Сибири
+            </h1>
+          </Link>
           <Link
             href={"/collection"}
-            className="relative w-10 h-10 rounded-full cursor-pointer hover:scale-110 transition-transform duration-300"
+            className="relative hidden lg:block w-10 h-10 rounded-full cursor-pointer hover:scale-110 transition-transform duration-300"
             style={{ border: "1px solid white" }}
           >
             <Image

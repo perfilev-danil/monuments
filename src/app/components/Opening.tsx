@@ -6,7 +6,7 @@ export default function Opening() {
   return (
     <div className="relative bg-white w-full h-[100svh] flex flex-col justify-between p-4 lg:p-8 text-base">
       <Header />
-      <div className="h-[75%] lg:h-[70%] flex items-center">
+      <div className="h-[80%] lg:h-[70%] flex items-center">
         <div className="bg-black h-full w-[1px]"></div>
         <div className="h-full flex flex-col justify-between pl-4 lg:pl-20">
           <div className="flex flex-col gap-8">
@@ -35,7 +35,7 @@ export default function Opening() {
         </div>
       </div>
 
-      <div className="absolute bottom-0 right-0 w-2/3 lg:w-1/3 h-6/7">
+      <div className="absolute bottom-0 right-0 w-[60%] lg:w-[30%] h-full">
         <Image
           src="/images/contents/opening.png"
           alt=""

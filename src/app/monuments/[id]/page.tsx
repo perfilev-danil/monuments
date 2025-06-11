@@ -43,10 +43,6 @@ export default async function MonumentPage({
         {/* Info */}
         <div className="h-full flex flex-col gap-4 lg:gap-8">
           <div className="flex items-center justify-between">
-            <h1 className="text-xl">
-              {monument?.appellation_monument?.value} ({monument?.year?.value}{" "}
-              г.)
-            </h1>
             <Link
               href={"/collection"}
               className="relative w-10 h-10 rounded-full cursor-pointer hover:scale-110 transition-transform duration-300"
@@ -59,6 +55,10 @@ export default async function MonumentPage({
                 className="p-2"
               />
             </Link>
+            <h1 className="text-xl">
+              {monument?.appellation_monument?.value} ({monument?.year?.value}{" "}
+              г.)
+            </h1>
           </div>
 
           <div className="h-full w-full flex flex-col lg:flex-row lg:gap-8">
@@ -280,14 +280,10 @@ export default async function MonumentPage({
         </div>
       </div>
       {/* Images */}
-      {monument.images.length !== 0 && (
+      {monument?.images?.length !== 0 && (
         <div className="relative h-[140vh]">
           <div className="sticky top-0">
-            {/*
-                    <Gallery />
-                    */}
-
-            <CardsScroller images={monument.images} />
+            <CardsScroller images={monument?.images} />
           </div>
         </div>
       )}

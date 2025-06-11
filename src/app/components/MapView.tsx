@@ -46,7 +46,7 @@ export default function MapView({
 
     apply(
       mapInstance.current,
-      "https://api.maptiler.com/maps/01970c44-5bd0-7113-88a3-16ff53d79702/style.json?key=OFdna1UVR8QPIS2lGPxZ"
+      `https://api.maptiler.com/maps/01970c44-5bd0-7113-88a3-16ff53d79702/style.json?key=${process.env.JWT_SECRET}`
     ).then(() => {
       overlayRef.current = new Overlay({
         element: popupRef.current!,
@@ -79,26 +79,26 @@ export default function MapView({
             const id = feature.get("id");
 
             popupRef.current!.innerHTML = `
-        <div class="relative h-64 w-80 gap-4 bg-white overflow-hidden" style = {{ border: "1px solid black"}}>
-         
-            <img 
-              src="${url}" 
-              alt="" 
-              class="w-full h-full object-cover object-top hover:scale-110 transition-transform duration-500"
-            />
-         
-          <div class="absolute bottom-0 right-0 z-10 w-full p-2 bg-white  flex items-center justify-between" style = {{ borderTop: "1px solid black"}}>
-            <div class="truncate">${name} ${year} г.</div>
-            <button id="popup-button" class="rounded-full w-10 h-10  shrink-0 cursor-pointer hover:scale-110 transition-transform duration-300" style = {{ border: "1px solid black"}}>
-            <img 
-              src="/images/icons/arrow-b.png"
-              alt="" 
-              class="w-full h-full p-2 rotate-180"
-            />
-            </button>
-          </div>
-        </div>
-      `;
+            <div class="relative h-64 w-80 gap-4 bg-white overflow-hidden" style = {{ border: "1px solid black"}}>
+            
+                <img 
+                  src="${url}" 
+                  alt="" 
+                  class="w-full h-full object-cover object-top hover:scale-110 transition-transform duration-500"
+                />
+            
+              <div class="absolute bottom-0 right-0 z-10 w-full p-2 bg-white  flex items-center justify-between" style = {{ borderTop: "1px solid black"}}>
+                <div class="truncate">${name} ${year} г.</div>
+                <button id="popup-button" class="rounded-full w-10 h-10  shrink-0 cursor-pointer hover:scale-110 transition-transform duration-300" style = {{ border: "1px solid black"}}>
+                <img 
+                  src="/images/icons/arrow-b.png"
+                  alt="" 
+                  class="w-full h-full p-2 rotate-180"
+                />
+                </button>
+              </div>
+            </div>
+          `;
 
             const button = popupRef.current?.querySelector("#popup-button");
             if (button) {

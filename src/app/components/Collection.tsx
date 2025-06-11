@@ -33,7 +33,7 @@ export default function Collection({ monuments }: { monuments: any }) {
                 </div>
 
                 <Link
-                  href={`/monuments/${monument.id}`}
+                  href={`/monuments/${monument?.id}`}
                   className="relative w-10 h-10 shrink-0  rounded-full cursor-pointer hover:scale-110 transition-transform duration-300"
                   style={{ border: "1px solid white" }}
                 >
