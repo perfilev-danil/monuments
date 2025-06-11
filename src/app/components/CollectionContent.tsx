@@ -308,7 +308,7 @@ export default function CollectionContent() {
   };
 
   return (
-    <div className="w-full h-[100svh] flex flex-col justify-between gap-4 lg:gap-8 p-4 lg:p-8">
+    <div className="w-full h-[620px] lg:h-screen flex flex-col justify-between gap-4 lg:gap-8 p-4 lg:p-8">
       <Header />
       <div className="min-h-0 h-full max-h-full w-full flex flex-col lg:flex-row gap-4 lg:gap-8">
         {!isMobile && (

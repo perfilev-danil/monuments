@@ -29,19 +29,19 @@ export default function Home() {
   useEffect(() => {
     gsap.to("#wrapper", {
       top: "0",
-      ease: "expoScale(0.5,7,none)",
+      ease: "power2.out",
       scrollTrigger: {
         trigger: "#wrapper",
         start: "top bottom",
         end: "top top",
-        scrub: 0.2,
+        scrub: true,
       },
     });
   }, []);
 
   return (
-    <div className="relative scroll-smooth ">
-      <div className="h-[100svh]">
+    <div className="relative scroll-smooth">
+      <div className="h-screen">
         <Hero />
       </div>
 

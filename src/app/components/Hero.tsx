@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function Hero() {
   return (
-    <div className="relative w-full h-[100svh]">
+    <div className="relative w-full h-full">
       <Image
         src="/gifs/hero.gif"
         alt=""
@@ -19,13 +19,10 @@ export default function Hero() {
         flex flex-col items-center justify-between"
       >
         {/* <div className="w-32 h-[1px] bg-white "></div> */}
-        <p className="font-american  text-center">ensib-monuments</p>
+        <p className="font-american text-center">ensib-monuments</p>
         <div className="w-full flex items-end justify-between">
-          <div
-            className="relative hidden lg:block w-10 h-10 shrink-0 rounded-full"
-            style={{ border: "1px solid white" }}
-          >
-            <Image src="/images/icons/logo-w.png" alt="" className="p-2" fill />
+          <div className="lg:relative lg:bottom-0 lg:left-0 lg:-translate-x-0 w-10 h-10 shrink-0 rounded-full absolute bottom-16 left-1/2 -translate-x-1/2">
+            <Image src="/images/icons/logo-w.png" alt="" className="" fill />
           </div>
           <Link href={"/"} className="mx-auto shrink-0">
             <h1 className="font-american leading-5 text-center">

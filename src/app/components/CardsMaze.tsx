@@ -99,7 +99,7 @@ export default function CardsMaze() {
   }, [isDesktop]);
 
   return (
-    <div className="relative bg-[var(--dark)] h-[100svh] w-full p-4 lg:p-8 select-none">
+    <div className="relative bg-[var(--dark)] h-[620px] lg:h-screen w-full p-4 lg:p-8 select-none">
       {isLoading && (
         <div className="h-full w-full flex items-center justify-center">
           <span className="text-white text-center font-american">

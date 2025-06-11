@@ -46,7 +46,7 @@ export default function MapView({
 
     apply(
       mapInstance.current,
-      `https://api.maptiler.com/maps/01970c44-5bd0-7113-88a3-16ff53d79702/style.json?key=${process.env.JWT_SECRET}`
+      "https://api.maptiler.com/maps/01970c44-5bd0-7113-88a3-16ff53d79702/style.json?key=OFdna1UVR8QPIS2lGPxZ"
     ).then(() => {
       overlayRef.current = new Overlay({
         element: popupRef.current!,

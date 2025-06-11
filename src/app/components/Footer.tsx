@@ -26,7 +26,7 @@ export default function Footer() {
   }, []);
 
   return (
-    <div className="relative w-full h-64 lg:h-96 bg-[var(--dark)] text-white flex p-4 lg:p-8 text-sm">
+    <div className="relative w-full h-96 bg-[var(--dark)] text-white flex p-4 lg:p-8 text-sm">
       <div className="lg:w-1/3 flex flex-col justify-between">
         <p>
           По вопросам и предложениям <br /> обращайтесь в Telegram

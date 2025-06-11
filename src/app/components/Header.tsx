@@ -8,12 +8,11 @@ export default function Header() {
         <Link
           href={"/"}
           className="relative hidden lg:block w-10 h-10 rounded-full cursor-pointer shrink-0 hover:scale-110 transition-transform duration-300"
-          style={{ border: "1px solid black" }}
         >
-          <Image src="/images/icons/logo-b.png" alt="" className="p-2" fill />
+          <Image src="/images/icons/logo-b.png" alt="" className="" fill />
         </Link>
         <Link href={"/"} className="mx-auto">
-          <h1 className=" font-american text-[20px] leading-5 text-center">
+          <h1 className="font-american text-[20px] leading-5 text-center">
             монументальное искусство <br />
             Енисейской Сибири
           </h1>
