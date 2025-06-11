@@ -26,12 +26,12 @@ export default function Opening() {
         </div>
       </div>
       <div className="relative flex items-center justify-between z-20 ">
-        <span>ensib</span>
+        <span className="hidden lg:block">ensib</span>
         <span className="absolute left-0 right-0 font-american text-center text-lg">
           ensib-monuments
         </span>
         <div>
-          <p className="text-white text-right">Трансформация</p>
+          <p className="text-white text-right hidden lg:block">Трансформация</p>
         </div>
       </div>
 
