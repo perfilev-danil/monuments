@@ -20,6 +20,8 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+    networks:
+      - ensib-network
 
   postgres:
     container_name: ensib-postgres
