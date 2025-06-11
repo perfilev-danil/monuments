@@ -43,7 +43,7 @@ export default function Footer() {
       <div
         className="absolute z-20 left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 
                   lg:relative lg:left-0 lg:top-0 lg:transform-none lg:-translate-x-0 lg:-translate-y-0
-                   lg:w-1/3 flex flex-col justify-between items-center text-lg"
+                   lg:w-1/3 flex flex-col justify-between items-center text-[20px]"
       >
         {isDesktop && (
           <p className="font-american text-center">ensib-monuments</p>
@@ -55,7 +55,7 @@ export default function Footer() {
           <Image src="/images/icons/logo-w.png" alt="" className="" fill />
         </Link>
         {isDesktop && (
-          <p className="font-american leading-5  text-center">
+          <p className="font-american leading-5 text-center">
             монументальное искусство <br /> Енисейской Сибири
           </p>
         )}

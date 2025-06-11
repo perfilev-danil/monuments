@@ -35,16 +35,16 @@ export default function Hero() {
         </video>
       ) : (
         <Image
-          src="/images/contents/hero.jpg"
+          src="/images/contents/hero-mobile.jpg"
           alt=""
-          className="object-cover"
+          className="object-cover object-center"
           fill
         />
       )}
 
       <div
         className="absolute bottom-0 w-full h-full p-4 lg:p-8 z-10
-        text-center text-white text-lg
+        text-center text-white text-[20px]
         flex flex-col items-center justify-between"
       >
         {/* <div className="w-32 h-[1px] bg-white "></div> */}
@@ -53,13 +53,14 @@ export default function Hero() {
           <div className="relative w-10 h-10">
             <Image src="/images/icons/logo-w.png" alt="" className="" fill />
           </div>
-          <h1 className="font-american  leading-5 text-center">
+          <h1 className="font-american leading-5 text-center">
             монументальное искусство <br />
             Енисейской Сибири
           </h1>
           <Link
             href={"/collection"}
-            className="relative w-10 h-10 rounded-full border-white border-2 bg-transparent overflow-hidden cursor-pointer hover:scale-110 transition-transform duration-300"
+            className="relative w-10 h-10 rounded-full cursor-pointer hover:scale-110 transition-transform duration-300"
+            style={{ border: "2px solid white" }}
           >
             <Image
               src="/images/icons/collection.png"
