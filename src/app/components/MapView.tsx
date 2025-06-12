@@ -101,11 +101,11 @@ export default function MapView({ monuments, isFirst }: MapViewProps) {
         center: fromLonLat(startPosition),
         zoom: initialZoom,
         minZoom: 3,
-        maxZoom: 18,
+        maxZoom: 8,
       }),
       layers: [],
       controls: [],
-      pixelRatio: Math.min(window.devicePixelRatio, 2), // Ограничиваем максимальное качество
+      pixelRatio: 1,
     });
 
     // Инициализация оверлея для попапа
@@ -145,7 +145,7 @@ export default function MapView({ monuments, isFirst }: MapViewProps) {
               const { url, name, year, id } = feature.getProperties();
 
               popupRef.current.innerHTML = `
-                <div class="relative h-64 w-80 gap-4 bg-white overflow-hidden" style="border:1px solid black">
+                <div class="relative h-64 w-64 lg:w-80 gap-4 bg-white overflow-hidden" style="border:1px solid black">
                   <img 
                     src="${url}" 
                     alt="${name}" 

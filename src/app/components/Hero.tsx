@@ -21,7 +21,7 @@ export default function Hero() {
         {/* <div className="w-32 h-[1px] bg-white "></div> */}
         <p className="font-american text-center">ensib-monuments</p>
         <div className="relative w-full flex items-end justify-between">
-          <div className="absolute bottom-16 left-0 right-0 mx-auto lg:relative lg:bottom-0 lg:mx-0 w-10 h-10 shrink-0 rounded-full">
+          <div className="absolute bottom-14 left-0 right-0 mx-auto lg:relative lg:bottom-0 lg:mx-0 w-10 h-10 shrink-0 rounded-full">
             <Image src="/images/icons/logo-w.png" alt="" className="" fill />
           </div>
           <Link href={"/"} className="mx-auto shrink-0">
