@@ -25,13 +25,13 @@ export default function Opening() {
           </p>
         </div>
       </div>
-      <div className="relative flex items-center justify-between z-20 ">
+      <div className="relative flex items-center justify-center lg:justify-between z-20">
         <span className="hidden lg:block">ensib</span>
-        <span className="absolute left-0 right-0 font-american text-center text-[20px]">
+        <span className="font-american text-center text-[20px]">
           ensib-monuments
         </span>
-        <div>
-          <p className="text-white text-right hidden lg:block">Трансформация</p>
+        <div className="hidden lg:block">
+          <p className="text-white text-right">Трансформация</p>
         </div>
       </div>
 
@@ -42,10 +42,6 @@ export default function Opening() {
           fill
           className="relative object-contain object-right-bottom"
         />
-
-        {/*
-        <div className="absolute bottom-0 right-0 w-24 h-0 border-t-[16vh] border-b-0 border-r-[40vw] border-t-transparent border-b-transparent border-r-[var(--darkcyan)]"></div>
-      */}
       </div>
     </div>
   );

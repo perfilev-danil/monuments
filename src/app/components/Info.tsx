@@ -1,20 +1,9 @@
 "use client";
-import { useEffect, useState } from "react";
+
 import Image from "next/image";
 import Link from "next/link";
 
 export default function Info() {
-  const [isMobile, setIsMobile] = useState(false);
-  useEffect(() => {
-    const checkScreenSize = () => {
-      setIsMobile(window.innerWidth < 1024); // 1024px — tailwind breakpoint для lg
-    };
-
-    checkScreenSize(); // начальная проверка
-    window.addEventListener("resize", checkScreenSize);
-
-    return () => window.removeEventListener("resize", checkScreenSize);
-  }, []);
   return (
     <div
       className="w-full h-[620px] lg:h-screen p-4 lg:p-8
@@ -68,9 +57,11 @@ export default function Info() {
                   Изучить карту
                 </Link>
               </div>
+
+              <div className="bg-black h-[1px] w-full lg:hidden"></div>
             </div>
           </div>
-          <div className="bg-black h-full w-[1px]"></div>
+          <div className="bg-black h-full w-[1px] hidden lg:block"></div>
         </div>
       </div>
     </div>

@@ -30,8 +30,13 @@ RUN pnpm exec prisma generate
 # Установка переменных окружения (если нужно)
 ARG NEXT_PUBLIC_URL
 ARG DATABASE_URL
+ARG ADMIN_USERNAME
+ARG ADMIN_PASSWORD
+
 ENV NEXT_PUBLIC_URL=${NEXT_PUBLIC_URL}
 ENV DATABASE_URL=${DATABASE_URL}
+ENV ADMIN_USERNAME=${ADMIN_USERNAME}
+ENV ADMIN_PASSWORD=${ADMIN_PASSWORD}
 
 # Сборка проекта
 RUN pnpm build
@@ -60,6 +65,8 @@ COPY --from=builder /app/prisma ./prisma
 # Копируем переменные окружения (если передаются через ARG)
 ENV NEXT_PUBLIC_URL=${NEXT_PUBLIC_URL}
 ENV DATABASE_URL=${DATABASE_URL}
+ENV ADMIN_USERNAME=${ADMIN_USERNAME}
+ENV ADMIN_PASSWORD=${ADMIN_PASSWORD}
 
 # Назначаем права пользователю
 RUN chown -R nextjs:nodejs /app
