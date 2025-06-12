@@ -29,7 +29,7 @@ export default function Home() {
   useEffect(() => {
     gsap.to("#wrapper", {
       top: "0",
-      ease: "power2.out",
+      ease: "sine.in",
       scrollTrigger: {
         trigger: "#wrapper",
         start: "top bottom",
@@ -41,13 +41,13 @@ export default function Home() {
 
   return (
     <div className="relative scroll-smooth">
-      <div className="h-screen">
+      <div className="h-[100svh]">
         <Hero />
       </div>
 
       {!isDesktop ? (
         <div id="wrapper" className="absolute top-[100vh] left-0 w-full z-20">
-          <div className="relative h-[400vh]">
+          <div className="relative h-full">
             <div className="sticky top-0">
               <Opening />
               <CardsMaze />

@@ -37,19 +37,19 @@ export default function Info() {
         </div>
         <div className="w-full lg:w-1/2 h-full flex justify-between">
           <div className="flex flex-col gap-8 justify-between">
-            <div className="h-full w-full flex flex-col gap-8 lg:gap-0 justify-between text-left">
+            <div className="h-full w-full flex flex-col gap-8 lg:gap-0 justify-between">
               <div className=" flex flex-col gap-4 lg:gap-8">
-                <h2 className="text-[26px] lg:text-4xl leading-normal">
+                <h2 className="text-[26px] lg:text-4xl leading-normal text-center lg:text-left">
                   Коллекция памятников
                 </h2>
-                <p className="lg:w-2/3 text-left text-balance">
+                <p className="lg:w-2/3 text-center lg:text-left text-balance">
                   Откройте Енисейскую Сибирь через её скульптурный эпос, где
                   формаобретает голос —  о суровом быте, замысле художника и
                   вековой истории.
                 </p>
                 <Link
                   href={"/collection"}
-                  className="w-max  rounded-full cursor-pointer p-2  hover:scale-110 transition-transform duration-300"
+                  className="w-max mx-auto lg:mx-0 rounded-full cursor-pointer p-2  hover:scale-110 transition-transform duration-300"
                   style={{ border: "1px solid black" }}
                 >
                   Исследовать коллекцию
@@ -57,12 +57,12 @@ export default function Info() {
               </div>
 
               <div className="flex flex-col gap-4 lg:gap-8">
-                <p className="lg:w-2/3 text-left text-balance">
+                <p className="lg:w-2/3 text-center lg:text-left text-balance">
                   Откройте Енисейскую Сибирь, где формаобретает голос ысле ху
                 </p>
                 <Link
                   href={"/collection"}
-                  className="w-max  rounded-full cursor-pointer p-2  hover:scale-110 transition-transform duration-300"
+                  className="w-max mx-auto lg:mx-0 rounded-full cursor-pointer p-2  hover:scale-110 transition-transform duration-300"
                   style={{ border: "1px solid black" }}
                 >
                   Изучить карту

@@ -20,8 +20,8 @@ export default function Hero() {
       >
         {/* <div className="w-32 h-[1px] bg-white "></div> */}
         <p className="font-american text-center">ensib-monuments</p>
-        <div className="w-full flex items-end justify-between">
-          <div className="lg:relative lg:bottom-0 lg:left-0 lg:-translate-x-0 w-10 h-10 shrink-0 rounded-full absolute bottom-16 left-1/2 -translate-x-1/2">
+        <div className="relative w-full flex items-end justify-between">
+          <div className="absolute bottom-16 left-1/2 -translate-x-1/2 lg:relative lg:bottom-0 lg:left-0 lg:translate-x-0 w-10 h-10 shrink-0 rounded-full">
             <Image src="/images/icons/logo-w.png" alt="" className="" fill />
           </div>
           <Link href={"/"} className="mx-auto shrink-0">
