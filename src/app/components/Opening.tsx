@@ -40,7 +40,7 @@ export default function Opening() {
           src="/images/contents/opening.png"
           alt=""
           fill
-          sizes="(max-width: 768px) 40vw, (max-width: 1200px) 60vw"
+          sizes="(max-width: 768px) 40vw, (max-width: 1200px) 60vw, 50vw"
           className="relative object-contain object-right-bottom"
         />
       </div>

@@ -22,7 +22,7 @@ export default function Info() {
             alt=""
             className="object-cover"
             fill
-            sizes="(max-width: 768px) 40vw, (max-width: 1200px) 60vw"
+            sizes="(max-width: 768px) 40vw, (max-width: 1200px) 60vw, 50vw"
           />
         </div>
         <div className="w-full lg:w-1/2 h-full flex justify-between">

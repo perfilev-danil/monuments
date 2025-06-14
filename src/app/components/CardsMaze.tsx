@@ -169,7 +169,7 @@ export default function CardsMaze() {
                   }
                   alt=""
                   fill
-                  sizes="(max-width: 768px) 40vw, (max-width: 1200px) 60vw"
+                  sizes="(max-width: 768px) 40vw, (max-width: 1200px) 60vw, 50vw"
                   draggable={false}
                   className="object-cover object-top hover:scale-110 transition-transform duration-300"
                 />

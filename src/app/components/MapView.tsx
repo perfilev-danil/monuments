@@ -55,8 +55,7 @@ export default function MapView({ monuments }: { monuments: any[] }) {
       canvases?.forEach((element) => {
         if (element instanceof HTMLCanvasElement) {
           element.willReadFrequently = true;
-          element.style.filter =
-            "grayscale(100%) contrast(200%) brightness(1.05)";
+          element.style.filter = "grayscale(100%) contrast(200%)";
           element.style.imageRendering = "crisp-edges";
         }
       });

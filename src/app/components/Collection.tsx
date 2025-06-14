@@ -22,7 +22,7 @@ export default function Collection({ monuments }: { monuments: any }) {
                   alt=""
                   fill
                   priority
-                  sizes="(max-width: 768px) 40vw, (max-width: 1200px) 60vw"
+                  sizes="(max-width: 768px) 40vw, (max-width: 1200px) 60vw, 50vw"
                   className="object-cover hover:scale-110 transition-transform object-top duration-500"
                 />
               )}

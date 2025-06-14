@@ -21,7 +21,7 @@ export default function Hero() {
         src="/images/contents/hero-mobile.jpg"
         alt=""
         fill
-        sizes="(max-width: 768px) 40vw, (max-width: 1200px) 60vw"
+        sizes="(max-width: 768px) 40vw, (max-width: 1200px) 60vw, 50vw"
         className="block lg:hidden w-full h-full object-cover"
       />
 
