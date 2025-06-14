@@ -25,9 +25,9 @@ export default function Opening() {
           </p>
         </div>
       </div>
-      <div className="relative flex items-center justify-center lg:justify-between z-20">
+      <div className="relative h-[20px] flex items-center lg:justify-between z-20">
         <span className="hidden lg:block">ensib</span>
-        <span className="font-american text-center text-[20px]">
+        <span className="absolute bottom-0 left-0 right-0 inset-0 font-american text-center text-[20px]">
           ensib-monuments
         </span>
         <div className="hidden lg:block">
@@ -40,7 +40,7 @@ export default function Opening() {
           src="/images/contents/opening.png"
           alt=""
           fill
-          sizes="(max-width: 768px) 40vw, (max-width: 1200px) 60vw, 50vw"
+          sizes="(max-width: 300px) 40vw, (max-width: 1200px) 60vw, 50vw"
           className="relative object-contain object-right-bottom"
         />
       </div>

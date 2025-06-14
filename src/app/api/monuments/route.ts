@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
 import { prisma } from "../../../../lib/prisma";
 
+export const revalidate = 86400;
+
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
@@ -135,64 +137,3 @@ export async function GET(request: NextRequest) {
     );
   }
 }
-
-/* 
-  
-  export async function POST(request: Request) {
-  try {
-    const body = await request.json();
-
-    if (
-      !body.appellation_monument ||
-      !body.description_monument ||
-      !body.year
-    ) {
-      return NextResponse.json(
-        { error: "Не указано одно из свойств памятника" },
-        { status: 400 }
-      );
-    }
-
-    const newMonument = await prisma.e24_Monument.create({
-      data: {
-        appellation_monument: {
-          create: {
-            value: body.appellation_monument,
-          },
-        },
-        description_monument: {
-          create: {
-            value: body.description_monument,
-          },
-        },
-        year: {
-          create: {
-            value: body.year,
-          },
-        },
-        colors: {
-          connect: body.colorIds?.map((id: number) => ({ id })) || [],
-        },
-      },
-      include: {
-        appellation_monument: true,
-        description_monument: true,
-        year: true,
-        colors: true,
-      },
-    });
-
-    return NextResponse.json(newMonument, { status: 201 });
-  } catch (error) {
-    console.error(error);
-    return NextResponse.json(
-      { error: "Ошибка при создании нового памятника" },
-      { status: 500 }
-    );
-  }
-}
-
-
-
-  
-  */

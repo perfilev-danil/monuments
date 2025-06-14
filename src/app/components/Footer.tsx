@@ -68,7 +68,7 @@ export default function Footer() {
       </div>
       <div className="w-1/3 z-30 flex flex-col justify-between items-end">
         <button
-          className="relative w-10 h-10 rounded-full  cursor-pointer shrink-0 hover:scale-110 transition-transform duration-300"
+          className="relative w-10 h-10 rounded-full cursor-pointer shrink-0 hover:scale-110 transition-transform duration-300"
           style={{ border: "1px solid white" }}
         >
           <Image

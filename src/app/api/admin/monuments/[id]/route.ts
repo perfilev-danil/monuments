@@ -1,5 +1,6 @@
 import { connect } from "http2";
-import { prisma } from "../../../../../../lib/prisma"; // путь может отличаться
+import { prisma } from "../../../../../../lib/prisma";
+import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function DELETE(
@@ -21,6 +22,7 @@ export async function DELETE(
       where: { id: monumentId },
     });
 
+    revalidatePath("/api/monuments");
     return NextResponse.json({ message: "Удалено" }, { status: 200 });
   } catch (error) {
     console.error("Ошибка при удалении:", error);
@@ -243,6 +245,7 @@ export async function PUT(
       },
     });
 
+    revalidatePath("/api/monuments");
     return NextResponse.json(updatedMonument, { status: 200 });
   } catch (error) {
     console.error("Ошибка при обновлении памятника:", error);

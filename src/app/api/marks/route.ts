@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { prisma } from "../../../../lib/prisma";
 
+export const revalidate = 86400;
+
 export async function GET() {
   try {
     const marks = await prisma.e37_Mark.findMany();
