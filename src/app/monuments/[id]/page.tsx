@@ -18,7 +18,8 @@ export default async function MonumentPage({
 
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_URL}/api/monuments/${id}`
+      `${process.env.NEXT_PUBLIC_URL}/api/monuments/${id}`,
+      { next: { revalidate: 3600 } }
     );
 
     if (!response.ok) {

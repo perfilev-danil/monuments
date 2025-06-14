@@ -15,10 +15,10 @@ export const CardsScroller: React.FC<Props> = ({ images }) => {
 
   useEffect(() => {
     const checkScreenSize = () => {
-      setIsDesktop(window.innerWidth >= 1024); // 1024px — tailwind breakpoint для lg
+      setIsDesktop(window.innerWidth >= 1024);
     };
 
-    checkScreenSize(); // начальная проверка
+    checkScreenSize();
     window.addEventListener("resize", checkScreenSize);
 
     return () => window.removeEventListener("resize", checkScreenSize);

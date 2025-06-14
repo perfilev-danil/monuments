@@ -26,7 +26,9 @@ export default function CardsMaze() {
   useEffect(() => {
     const fetchMonuments = async () => {
       try {
-        const response = await fetch("/api/monumentsCards");
+        const response = await fetch("/api/monumentsCards", {
+          next: { revalidate: 3600 },
+        });
         if (!response.ok) {
           throw new Error("Ошибка при загрузке памятников");
         }

@@ -74,10 +74,10 @@ export default function CollectionContent() {
 
   useEffect(() => {
     const checkScreenSize = () => {
-      setIsMobile(window.innerWidth < 1024); // 1024px — tailwind breakpoint для lg
+      setIsMobile(window.innerWidth < 1024);
     };
 
-    checkScreenSize(); // начальная проверка
+    checkScreenSize();
     window.addEventListener("resize", checkScreenSize);
 
     return () => window.removeEventListener("resize", checkScreenSize);
@@ -120,13 +120,13 @@ export default function CollectionContent() {
           placesRes,
           personalitiesRes,
         ] = await Promise.all([
-          fetch("/api/periods"),
-          fetch("/api/materials"),
-          fetch("/api/colors"),
-          fetch("api/techniques"),
-          fetch("api/marks"),
-          fetch("api/places"),
-          fetch("api/personalities"),
+          fetch("/api/periods", { next: { revalidate: 3600 } }),
+          fetch("/api/materials", { next: { revalidate: 3600 } }),
+          fetch("/api/colors", { next: { revalidate: 3600 } }),
+          fetch("api/techniques", { next: { revalidate: 3600 } }),
+          fetch("api/marks", { next: { revalidate: 3600 } }),
+          fetch("api/places", { next: { revalidate: 3600 } }),
+          fetch("api/personalities", { next: { revalidate: 3600 } }),
         ]);
 
         const [
@@ -192,7 +192,9 @@ export default function CollectionContent() {
           );
         }
 
-        const res = await fetch(`/api/monuments?${params.toString()}`);
+        const res = await fetch(`/api/monuments?${params.toString()}`, {
+          next: { revalidate: 3600 },
+        });
         const data = await res.json();
         setMonuments(data);
       } catch (error) {
@@ -205,7 +207,6 @@ export default function CollectionContent() {
     fetchMonuments();
   }, [toFilter, activeSearchQuery]);
 
-  //if router gets changed
   useEffect(() => {
     const params = new URLSearchParams();
 
@@ -243,7 +244,6 @@ export default function CollectionContent() {
     selectedPlaces,
     selectedPersonalities,
     activeSearchQuery,
-    //searchQuery,
     pathname,
     router,
   ]);
@@ -256,11 +256,10 @@ export default function CollectionContent() {
       prev.includes(id) ? prev.filter((itemId) => itemId !== id) : [...prev, id]
     );
     setToFilter(false);
-    setActiveSearchQuery(""); // Сбрасываем поиск при изменении фильтров
+    setActiveSearchQuery("");
   };
 
   const ResetFilters = () => {
-    // Сброс всех состояний фильтров
     setSelectedPeriods([]);
     setSelectedMaterials([]);
     setSelectedColors([]);
@@ -269,7 +268,6 @@ export default function CollectionContent() {
     setSelectedPlaces([]);
     setSelectedPersonalities([]);
 
-    // Сброс поиска
     setSearchQuery("");
     setActiveSearchQuery("");
     setToFilter(false);
