@@ -27,7 +27,7 @@ export default function Footer() {
 
   return (
     <div className="relative w-full h-96 bg-[var(--dark)] text-white flex justify-between p-4 lg:p-8 text-sm">
-      <div className="w-1/3 flex flex-col justify-between">
+      <div className="flex flex-col justify-between">
         <p>
           По вопросам и предложениям <br /> обращайтесь в Telegram
         </p>
@@ -60,7 +60,7 @@ export default function Footer() {
           </p>
         )}
       </div>
-      <div className="w-1/3 flex flex-col justify-between items-end">
+      <div className="w-1/3 z-30 flex flex-col justify-between items-end">
         <button
           className="relative w-10 h-10 rounded-full  cursor-pointer shrink-0 hover:scale-110 transition-transform duration-300"
           style={{ border: "1px solid white" }}

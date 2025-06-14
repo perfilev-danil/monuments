@@ -1,3 +1,4 @@
+import { connect } from "http2";
 import { prisma } from "../../../../../../lib/prisma"; // путь может отличаться
 import { NextRequest, NextResponse } from "next/server";
 
@@ -59,11 +60,22 @@ export async function PUT(
     const info = formData.get("info") as string;
     const info_link = formData.get("info_link") as string;
 
+    const period = formData.get("period") as string;
+    const location = formData.get("location") as string;
+
+    const address = formData.get("address") as string;
+    const lon = parseFloat(formData.get("lon") as string);
+    const lat = parseFloat(formData.get("lat") as string);
+
     const imagesFiles = formData.getAll("images") as File[];
 
     const personalitiesIds = (formData.getAll("personalities") as string[]).map(
       (id) => ({ id: parseInt(id) })
     );
+
+    const eventsIds = (formData.getAll("events") as string[]).map((id) => ({
+      id: parseInt(id),
+    }));
 
     async function saveImages(files: File[]) {
       const savedImages = await Promise.all(
@@ -125,8 +137,59 @@ export async function PUT(
             },
           },
         },
+        period: period ? { connect: { id: parseInt(period) } } : undefined,
+        place: {
+          upsert: {
+            create: {
+              ...(location && {
+                appellation_place: { connect: { id: parseInt(location) } },
+              }),
+              appellation_address: {
+                create: {
+                  value: address,
+                  coordinates: {
+                    create: {
+                      lon: lon,
+                      lat: lat,
+                    },
+                  },
+                },
+              },
+            },
+            update: {
+              ...(location && {
+                appellation_place: { connect: { id: parseInt(location) } },
+              }),
+              appellation_address: {
+                upsert: {
+                  create: {
+                    value: address,
+                    coordinates: {
+                      create: {
+                        lon: lon,
+                        lat: lat,
+                      },
+                    },
+                  },
+                  update: {
+                    value: address,
+                    coordinates: {
+                      update: {
+                        lon: lon,
+                        lat: lat,
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
         personalities: {
           connect: personalitiesIds,
+        },
+        events: {
+          connect: eventsIds,
         },
         images: {
           createMany: {
@@ -155,9 +218,25 @@ export async function PUT(
           },
         },
         period: true,
+        place: {
+          include: {
+            appellation_place: true,
+            appellation_address: {
+              include: {
+                coordinates: true,
+              },
+            },
+          },
+        },
         personalities: {
           include: {
             appellation_personality: true,
+          },
+        },
+        events: {
+          include: {
+            appellation_event: true,
+            time_span: true,
           },
         },
         images: true,

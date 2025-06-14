@@ -88,11 +88,22 @@ export async function POST(request: NextRequest) {
     const registry_link = formData.get("registry_link") as string;
     const info = formData.get("info") as string;
     const info_link = formData.get("info_link") as string;
+
     const period = formData.get("period") as string;
+    const location = formData.get("location") as string;
+
+    const address = formData.get("address") as string;
+    const lon = parseFloat(formData.get("lon") as string);
+    const lat = parseFloat(formData.get("lat") as string);
 
     const personalitiesIds = (formData.getAll("personalities") as string[]).map(
       (id) => ({ id: parseInt(id) })
     );
+
+    const eventsIds = (formData.getAll("events") as string[]).map((id) => ({
+      id: parseInt(id),
+    }));
+
     const images = formData.getAll("images") as File[];
 
     const newMonument = await prisma.e24_Monument.create({
@@ -143,11 +154,25 @@ export async function POST(request: NextRequest) {
           },
         },
         period: period ? { connect: { id: parseInt(period) } } : undefined,
-
+        place: {
+          create: {
+            ...(location && {
+              appellation_place: { connect: { id: parseInt(location) } },
+            }),
+            appellation_address: {
+              create: {
+                value: address,
+                coordinates: { create: { lon, lat } },
+              },
+            },
+          },
+        },
         personalities: {
           connect: personalitiesIds,
         },
-
+        events: {
+          connect: eventsIds,
+        },
         images: {
           create: await Promise.all(
             images.map(async (image) => {
@@ -178,9 +203,25 @@ export async function POST(request: NextRequest) {
           },
         },
         period: true,
+        place: {
+          include: {
+            appellation_place: true,
+            appellation_address: {
+              include: {
+                coordinates: true,
+              },
+            },
+          },
+        },
         personalities: {
           include: {
             appellation_personality: true,
+          },
+        },
+        events: {
+          include: {
+            appellation_event: true,
+            time_span: true,
           },
         },
         images: true,
