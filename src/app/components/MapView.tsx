@@ -162,6 +162,7 @@ export default function MapView({ monuments }: { monuments: any[] }) {
               src: "/images/icons/marker-b.png",
               scale: 0.5,
               anchor: [0.5, 1],
+              crossOrigin: "anonymous",
             }),
           })
         );
