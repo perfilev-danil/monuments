@@ -27,7 +27,7 @@ export default function Footer() {
 
   return (
     <div className="relative w-full h-96 bg-[var(--dark)] text-white flex justify-between p-4 lg:p-8 text-sm">
-      <div className="flex flex-col justify-between">
+      <div className="lg:w-1/3 flex flex-col justify-between">
         <p>
           По вопросам и предложениям <br /> обращайтесь в Telegram
         </p>
@@ -52,7 +52,13 @@ export default function Footer() {
           href={"/"}
           className="relative w-10 h-10 cursor-pointer hover:scale-110 transition-transform duration-300"
         >
-          <Image src="/images/icons/logo-w.png" alt="" className="" fill />
+          <Image
+            src="/images/icons/logo-w.png"
+            alt=""
+            className=""
+            fill
+            sizes="(max-width: 768px) 60vw"
+          />
         </Link>
         {isDesktop && (
           <p className="font-american leading-5 text-center">
@@ -65,7 +71,13 @@ export default function Footer() {
           className="relative w-10 h-10 rounded-full  cursor-pointer shrink-0 hover:scale-110 transition-transform duration-300"
           style={{ border: "1px solid white" }}
         >
-          <Image src="/images/icons/tg.png" alt="" className="p-2" fill />
+          <Image
+            src="/images/icons/tg.png"
+            alt=""
+            className="p-2"
+            fill
+            sizes="(max-width: 768px) 60vw"
+          />
         </button>
         <div className="w-[1px] h-10 bg-white "></div>
 
@@ -79,6 +91,7 @@ export default function Footer() {
             alt=""
             className="p-2"
             fill
+            sizes="(max-width: 768px) 60vw"
             style={{ transform: "rotate(90deg)" }}
           />
         </button>

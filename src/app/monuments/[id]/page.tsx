@@ -50,8 +50,9 @@ export default async function MonumentPage({
             >
               <Image
                 src="/images/icons/arrow-b.png"
-                alt="Назад"
+                alt=""
                 fill
+                sizes="(max-width: 768px) 60vw"
                 className="p-2"
               />
             </Link>
@@ -141,7 +142,12 @@ export default async function MonumentPage({
                       href={monument?.place?.information_object_place?.value}
                       className="relative w-4 h-4 cursor-pointer shrink-0 hover:scale-110 transition-transform duration-300"
                     >
-                      <Image src="/images/icons/link.png" alt="" fill />
+                      <Image
+                        src="/images/icons/link.png"
+                        alt=""
+                        fill
+                        sizes="(max-width: 768px) 60vw"
+                      />
                     </Link>
                   )}
                 </div>
@@ -165,7 +171,12 @@ export default async function MonumentPage({
                           }
                           className="relative w-4 h-4 cursor-pointer shrink-0 hover:scale-110 transition-transform duration-300"
                         >
-                          <Image src="/images/icons/link.png" alt="" fill />
+                          <Image
+                            src="/images/icons/link.png"
+                            alt=""
+                            fill
+                            sizes="(max-width: 768px) 60vw"
+                          />
                         </Link>
                       )}
                     </div>
@@ -208,7 +219,12 @@ export default async function MonumentPage({
                       }
                       className="relative w-4 h-4 cursor-pointer shrink-0 hover:scale-110 transition-transform duration-300"
                     >
-                      <Image src="/images/icons/link.png" alt="" fill />
+                      <Image
+                        src="/images/icons/link.png"
+                        alt=""
+                        fill
+                        sizes="(max-width: 768px) 60vw"
+                      />
                     </Link>
                   )}
                 </div>
@@ -228,7 +244,12 @@ export default async function MonumentPage({
                       }
                       className="relative w-4 h-4 cursor-pointer shrink-0 hover:scale-110 transition-transform duration-300"
                     >
-                      <Image src="/images/icons/link.png" alt="" fill />
+                      <Image
+                        src="/images/icons/link.png"
+                        alt=""
+                        fill
+                        sizes="(max-width: 768px) 60vw"
+                      />
                     </Link>
                   )}
                 </div>
@@ -244,7 +265,12 @@ export default async function MonumentPage({
                           href={document?.information_object_document?.value}
                           className="relative w-4 h-4 cursor-pointer shrink-0 hover:scale-110 transition-transform duration-300"
                         >
-                          <Image src="/images/icons/link.png" alt="" fill />
+                          <Image
+                            src="/images/icons/link.png"
+                            alt=""
+                            fill
+                            sizes="(max-width: 768px) 60vw"
+                          />
                         </Link>
                       )}
                     </div>
@@ -268,7 +294,12 @@ export default async function MonumentPage({
                           href={event.information_object_event.value}
                           className="relative w-4 h-4 cursor-pointer shrink-0 hover:scale-110 transition-transform duration-300"
                         >
-                          <Image src="/images/icons/link.png" alt="" fill />
+                          <Image
+                            src="/images/icons/link.png"
+                            alt=""
+                            fill
+                            sizes="(max-width: 768px) 60vw"
+                          />
                         </Link>
                       )}
                     </div>

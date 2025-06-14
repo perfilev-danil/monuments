@@ -21,6 +21,7 @@ export default function Hero() {
         src="/images/contents/hero-mobile.jpg"
         alt=""
         fill
+        sizes="(max-width: 768px) 40vw, (max-width: 1200px) 60vw"
         className="block lg:hidden w-full h-full object-cover"
       />
 
@@ -33,7 +34,13 @@ export default function Hero() {
         <p className="font-american text-center">ensib-monuments</p>
         <div className="relative w-full flex items-end justify-between">
           <div className="absolute bottom-14 left-0 right-0 mx-auto md:relative md:bottom-0 md:mx-0 w-10 h-10 shrink-0 rounded-full">
-            <Image src="/images/icons/logo-w.png" alt="" className="" fill />
+            <Image
+              src="/images/icons/logo-w.png"
+              alt=""
+              className=""
+              fill
+              sizes="(max-width: 768px) 60vw"
+            />
           </div>
           <Link href={"/"} className="mx-auto shrink-0">
             <h1 className="font-american leading-5 text-center">
@@ -51,6 +58,7 @@ export default function Hero() {
               alt=""
               className="p-2"
               fill
+              sizes="(max-width: 768px) 60vw"
             />
           </Link>
         </div>

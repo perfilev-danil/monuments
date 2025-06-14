@@ -123,6 +123,7 @@ export default function CardsMaze() {
               alt=""
               className="p-2"
               fill
+              sizes="(max-width: 768px) 60vw"
             />
           </div>
           <div
@@ -140,6 +141,7 @@ export default function CardsMaze() {
               alt=""
               className="p-2 rotate-180"
               fill
+              sizes="(max-width: 768px) 60vw"
             />
           </div>
         </div>
@@ -167,6 +169,7 @@ export default function CardsMaze() {
                   }
                   alt=""
                   fill
+                  sizes="(max-width: 768px) 40vw, (max-width: 1200px) 60vw"
                   draggable={false}
                   className="object-cover object-top hover:scale-110 transition-transform duration-300"
                 />
@@ -189,6 +192,7 @@ export default function CardsMaze() {
                       alt=""
                       className="p-2"
                       fill
+                      sizes="(max-width: 768px) 60vw"
                       style={{ transform: "rotate(180deg)" }}
                     />
                   </Link>

@@ -21,9 +21,9 @@ export default function Collection({ monuments }: { monuments: any }) {
                   src={`/api/images/${monument?.images[0]?.id}`}
                   alt=""
                   fill
-                  objectFit="cover"
-                  className="hover:scale-110 transition-transform object-top duration-500"
-                  //unoptimized
+                  priority
+                  sizes="(max-width: 768px) 40vw, (max-width: 1200px) 60vw"
+                  className="object-cover hover:scale-110 transition-transform object-top duration-500"
                 />
               )}
               <div className="absolute bottom-0 left-0 right-0 w-full bg-[var(--dark)] flex justify-between p-2 ">
@@ -42,6 +42,7 @@ export default function Collection({ monuments }: { monuments: any }) {
                     alt=""
                     className="p-2"
                     fill
+                    sizes="(max-width: 768px) 60vw"
                     style={{ transform: "rotate(180deg)" }}
                   />
                 </Link>

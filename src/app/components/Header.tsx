@@ -9,7 +9,14 @@ export default function Header() {
           href={"/"}
           className="relative hidden md:block w-10 h-10 rounded-full cursor-pointer shrink-0 hover:scale-110 transition-transform duration-300"
         >
-          <Image src="/images/icons/logo-b.png" alt="" className="" fill />
+          <Image
+            src="/images/icons/logo-b.png"
+            alt=""
+            className=""
+            fill
+            sizes="(max-width: 768px) 60vw"
+            priority
+          />
         </Link>
         <Link href={"/"} className="mx-auto">
           <h1 className="font-american text-[20px] leading-5 text-center">
@@ -27,6 +34,7 @@ export default function Header() {
             alt=""
             className="p-2"
             fill
+            sizes="(max-width: 768px) 60vw"
           />
         </Link>
       </nav>

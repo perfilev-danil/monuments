@@ -296,6 +296,7 @@ export default function Filter({ FilterProps }: { FilterProps: FilterProps }) {
               alt=""
               className="p-2 rotate-90"
               fill
+              sizes="(max-width: 768px) 60vw"
             />
           </button>
           <button

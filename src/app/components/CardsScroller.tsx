@@ -97,6 +97,7 @@ export const CardsScroller: React.FC<Props> = ({ images }) => {
               alt=""
               className="p-2"
               fill
+              sizes="(max-width: 768px) 60vw"
             />
           </div>
           <div
@@ -114,6 +115,7 @@ export const CardsScroller: React.FC<Props> = ({ images }) => {
               alt=""
               className="p-2 rotate-180"
               fill
+              sizes="(max-width: 768px) 60vw"
             />
           </div>
         </div>
@@ -135,6 +137,7 @@ export const CardsScroller: React.FC<Props> = ({ images }) => {
                 src={`/api/images/${image.id}`}
                 alt=""
                 fill
+                sizes="(max-width: 768px) 60vw, (max-width: 1200px) 40vw"
                 draggable={false}
                 className="object-cover object-top hover:scale-110 transition-transform duration-300"
               />

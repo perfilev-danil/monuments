@@ -413,6 +413,7 @@ export default function CollectionContent() {
                       alt=""
                       className="p-2"
                       fill
+                      sizes="(max-width: 768px) 60vw"
                     />
                   </button>
                 )}
@@ -427,6 +428,7 @@ export default function CollectionContent() {
                   alt=""
                   className="p-2"
                   fill
+                  sizes="(max-width: 768px) 60vw"
                 />
               </button>
             </div>
@@ -478,7 +480,7 @@ export default function CollectionContent() {
               {isFirst ? (
                 <Collection monuments={monuments} />
               ) : (
-                <MapView monuments={monuments} isFirst={isFirst} />
+                <MapView monuments={monuments} />
               )}
             </div>
           )}
