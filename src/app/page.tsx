@@ -38,7 +38,7 @@ export default function Home() {
 
   return (
     <div className="relative scroll-smooth">
-      <div className="h-[100svh]">
+      <div className="h-screen">
         <Hero />
       </div>
 

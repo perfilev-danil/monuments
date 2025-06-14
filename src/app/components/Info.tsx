@@ -6,7 +6,7 @@ import Link from "next/link";
 export default function Info() {
   return (
     <div
-      className="w-full h-[620px] lg:h-screen p-4 lg:p-8
+      className="w-full h-[620px] md:h-[900px] lg:h-screen p-4 lg:p-8
      flex items-center justify-center"
     >
       <div
@@ -31,7 +31,7 @@ export default function Info() {
                 <h2 className="text-[26px] lg:text-4xl leading-normal text-center lg:text-left">
                   Коллекция памятников
                 </h2>
-                <p className="lg:w-2/3 text-center lg:text-left text-balance">
+                <p className=" text-center lg:text-left text-balance">
                   Откройте Енисейскую Сибирь через её скульптурный эпос, где
                   формаобретает голос —  о суровом быте, замысле художника и
                   вековой истории.
@@ -46,7 +46,7 @@ export default function Info() {
               </div>
 
               <div className="flex flex-col gap-4 lg:gap-8">
-                <p className="lg:w-2/3 text-center lg:text-left text-balance">
+                <p className=" text-center lg:text-left text-balance">
                   Откройте Енисейскую Сибирь, где формаобретает голос ысле ху
                 </p>
                 <Link

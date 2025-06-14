@@ -26,8 +26,8 @@ export default function Footer() {
   }, []);
 
   return (
-    <div className="relative w-full h-96 bg-[var(--dark)] text-white flex p-4 lg:p-8 text-sm">
-      <div className="lg:w-1/3 flex flex-col justify-between">
+    <div className="relative w-full h-96 bg-[var(--dark)] text-white flex justify-between p-4 lg:p-8 text-sm">
+      <div className="w-1/3 flex flex-col justify-between">
         <p>
           По вопросам и предложениям <br /> обращайтесь в Telegram
         </p>
@@ -41,9 +41,9 @@ export default function Footer() {
         </p>
       </div>
       <div
-        className="absolute z-20 left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 
-                  lg:relative lg:left-0 lg:top-0 lg:transform-none lg:-translate-x-0 lg:-translate-y-0
-                   lg:w-1/3 flex flex-col justify-between items-center text-[20px]"
+        className="w-full lg:w-1/3 absolute z-20 inset-0 flex justify-center
+                  lg:relative lg:left-0 lg:top-0
+                   lg:flex-col lg:justify-between items-center text-[20px]"
       >
         {isDesktop && (
           <p className="font-american text-center">ensib-monuments</p>
@@ -60,7 +60,7 @@ export default function Footer() {
           </p>
         )}
       </div>
-      <div className="w-1/2 lg:w-1/3 flex flex-col justify-between items-end">
+      <div className="w-1/3 flex flex-col justify-between items-end">
         <button
           className="relative w-10 h-10 rounded-full  cursor-pointer shrink-0 hover:scale-110 transition-transform duration-300"
           style={{ border: "1px solid white" }}
@@ -71,14 +71,15 @@ export default function Footer() {
 
         <button
           onClick={ScrollToUp}
-          className="relative w-10 h-10 rounded-full  cursor-pointer shrink-0 hover:scale-110 transition-transform duration-300"
+          className="relative w-10 h-10 rounded-full cursor-pointer shrink-0 hover:scale-110 transition-transform duration-300"
           style={{ border: "1px solid white" }}
         >
           <Image
             src="/images/icons/arrow.png"
             alt=""
-            className="p-2 rotate-90"
+            className="p-2"
             fill
+            style={{ transform: "rotate(90deg)" }}
           />
         </button>
       </div>

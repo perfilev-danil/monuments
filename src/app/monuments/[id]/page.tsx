@@ -55,7 +55,7 @@ export default async function MonumentPage({
                 className="p-2"
               />
             </Link>
-            <h1 className="text-xl">
+            <h1 className="truncate">
               {monument?.appellation_monument?.value} ({monument?.year?.value}{" "}
               г.)
             </h1>

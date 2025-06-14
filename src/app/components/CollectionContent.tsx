@@ -308,7 +308,7 @@ export default function CollectionContent() {
   };
 
   return (
-    <div className="w-full h-[620px] lg:h-screen flex flex-col justify-between gap-4 lg:gap-8 p-4 lg:p-8">
+    <div className="w-full h-[620px] md:h-[900px] lg:h-screen flex flex-col justify-between gap-4 lg:gap-8 p-4 lg:p-8">
       <Header />
       <div className="min-h-0 h-full max-h-full w-full flex flex-col lg:flex-row gap-4 lg:gap-8">
         {!isMobile && (
@@ -347,8 +347,8 @@ export default function CollectionContent() {
 
         {/* Right */}
         <div className="h-full w-full flex flex-col gap-4 lg:gap-8">
-          <div className="flex flex-col lg:flex-row w-full gap-4 lg:gap-8">
-            <div className="flex gap-4 lg:gap-8 order-2 lg:order-1">
+          <div className="flex flex-col md:flex-row w-full gap-4 lg:gap-8">
+            <div className="flex gap-4 lg:gap-8 order-2 md:order-1">
               {isMobile && (
                 <button
                   onClick={() => setClickToFilter((prev) => !prev)}
@@ -391,7 +391,7 @@ export default function CollectionContent() {
                 Карта
               </button>
             </div>
-            <div className="flex w-full gap-4 lg:gap-8 lg:order-1">
+            <div className="flex w-full gap-4 lg:gap-8 md:order-1">
               <div
                 className="relative w-full flex rounded-full"
                 style={{ border: "1px solid black" }}

@@ -99,7 +99,7 @@ export default function CardsMaze() {
   }, [isDesktop]);
 
   return (
-    <div className="relative bg-[var(--dark)] h-[620px] lg:h-screen w-full p-4 lg:p-8 select-none">
+    <div className="relative bg-[var(--dark)] h-[620px] md:h-[900px] lg:h-screen w-full p-4 lg:p-8 select-none">
       {isLoading && (
         <div className="h-full w-full flex items-center justify-center">
           <span className="text-white text-center font-american">
@@ -160,7 +160,11 @@ export default function CardsMaze() {
                 style={{ border: "1px solid black" }}
               >
                 <Image
-                  src={`/api/images/${monument?.images[0]?.id}`}
+                  src={
+                    monument?.images.length === 0
+                      ? `/images/contents/noimage.jpg`
+                      : `/api/images/${monument?.images[0]?.id}`
+                  }
                   alt=""
                   fill
                   draggable={false}
@@ -183,8 +187,9 @@ export default function CardsMaze() {
                     <Image
                       src="/images/icons/arrow-b.png"
                       alt=""
-                      className="p-2 rotate-180"
+                      className="p-2"
                       fill
+                      style={{ transform: "rotate(180deg)" }}
                     />
                   </Link>
                 </div>

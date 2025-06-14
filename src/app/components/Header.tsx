@@ -7,7 +7,7 @@ export default function Header() {
       <nav className="w-full flex justify-between items-center">
         <Link
           href={"/"}
-          className="relative hidden lg:block w-10 h-10 rounded-full cursor-pointer shrink-0 hover:scale-110 transition-transform duration-300"
+          className="relative hidden md:block w-10 h-10 rounded-full cursor-pointer shrink-0 hover:scale-110 transition-transform duration-300"
         >
           <Image src="/images/icons/logo-b.png" alt="" className="" fill />
         </Link>
@@ -19,7 +19,7 @@ export default function Header() {
         </Link>
         <Link
           href={"/collection"}
-          className="relative hidden lg:block w-10 h-10 rounded-full cursor-pointer shrink-0 hover:scale-110 transition-transform duration-300"
+          className="relative hidden md:block w-10 h-10 rounded-full cursor-pointer shrink-0 hover:scale-110 transition-transform duration-300"
           style={{ border: "1px solid black" }}
         >
           <Image

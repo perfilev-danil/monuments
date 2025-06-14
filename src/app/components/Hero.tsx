@@ -6,11 +6,22 @@ import Link from "next/link";
 export default function Hero() {
   return (
     <div className="relative w-full h-full">
+      <video
+        className="hidden lg:block w-full h-full object-cover"
+        autoPlay
+        muted
+        loop
+        playsInline
+      >
+        <source src="/videos/hero.mp4" type="video/mp4" />
+      </video>
+
+      {/* Картинка — видно только на мобильных */}
       <Image
-        src="/gifs/hero.gif"
+        src="/images/contents/hero-mobile.jpg"
         alt=""
         fill
-        className="w-full h-full object-cover"
+        className="block lg:hidden w-full h-full object-cover"
       />
 
       <div
@@ -21,7 +32,7 @@ export default function Hero() {
         {/* <div className="w-32 h-[1px] bg-white "></div> */}
         <p className="font-american text-center">ensib-monuments</p>
         <div className="relative w-full flex items-end justify-between">
-          <div className="absolute bottom-14 left-0 right-0 mx-auto lg:relative lg:bottom-0 lg:mx-0 w-10 h-10 shrink-0 rounded-full">
+          <div className="absolute bottom-14 left-0 right-0 mx-auto md:relative md:bottom-0 md:mx-0 w-10 h-10 shrink-0 rounded-full">
             <Image src="/images/icons/logo-w.png" alt="" className="" fill />
           </div>
           <Link href={"/"} className="mx-auto shrink-0">
@@ -32,7 +43,7 @@ export default function Hero() {
           </Link>
           <Link
             href={"/collection"}
-            className="relative hidden lg:block w-10 h-10 rounded-full cursor-pointer hover:scale-110 transition-transform duration-300"
+            className="relative hidden md:block w-10 h-10 rounded-full cursor-pointer hover:scale-110 transition-transform duration-300"
             style={{ border: "1px solid white" }}
           >
             <Image

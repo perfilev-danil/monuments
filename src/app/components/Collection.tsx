@@ -40,8 +40,9 @@ export default function Collection({ monuments }: { monuments: any }) {
                   <Image
                     src="/images/icons/arrow.png"
                     alt=""
-                    className="p-2 rotate-180"
+                    className="p-2"
                     fill
+                    style={{ transform: "rotate(180deg)" }}
                   />
                 </Link>
               </div>
