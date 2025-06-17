@@ -18,8 +18,7 @@ export default async function MonumentPage({
 
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_URL}/api/monuments/${id}`,
-      { next: { revalidate: 3600 } }
+      `${process.env.NEXT_PUBLIC_URL}/api/monuments/${id}`
     );
 
     if (!response.ok) {
@@ -313,11 +312,15 @@ export default async function MonumentPage({
       </div>
       {/* Images */}
       {monument?.images?.length !== 0 && (
+        <CardsScroller images={monument?.images} />
+
+        /*
         <div className="relative lg:h-[140vh]">
           <div className="sticky top-0">
             <CardsScroller images={monument?.images} />
           </div>
         </div>
+       */
       )}
       <Footer />
     </div>

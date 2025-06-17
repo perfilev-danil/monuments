@@ -1,8 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "../../../../lib/prisma";
 
-export const revalidate = 86400;
-
 export async function GET() {
   try {
     const dimensionTypes = await prisma.e55_Dimension_type.findMany();

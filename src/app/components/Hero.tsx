@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function Hero() {
   return (
-    <div className="relative w-full h-full">
+    <div className="relative w-full h-[100svh]">
       <video
         className="hidden lg:block w-full h-full object-cover"
         autoPlay
@@ -40,6 +40,7 @@ export default function Hero() {
               className=""
               fill
               sizes="(max-width: 768px) 60vw"
+              priority
             />
           </div>
           <Link href={"/"} className="mx-auto shrink-0">

@@ -58,6 +58,7 @@ export default function Footer() {
             className=""
             fill
             sizes="(max-width: 768px) 60vw"
+            priority
           />
         </Link>
         {isDesktop && (

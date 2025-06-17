@@ -4,9 +4,13 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-export default function CardsMaze() {
-  const [monuments, setMonuments] = useState<any[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+export default function CardsMaze({
+  initialMonuments,
+}: {
+  initialMonuments: any[];
+}) {
+  const [monuments, setMonuments] = useState<any[]>(initialMonuments);
+  const [isLoading, setIsLoading] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [showHint, setShowHint] = useState(false);
@@ -23,12 +27,11 @@ export default function CardsMaze() {
     return () => window.removeEventListener("resize", checkScreenSize);
   }, []);
 
+  /*
   useEffect(() => {
     const fetchMonuments = async () => {
       try {
-        const response = await fetch("/api/monumentsCards", {
-          next: { revalidate: 3600 },
-        });
+        const response = await fetch("/api/monumentsCards");
         if (!response.ok) {
           throw new Error("Ошибка при загрузке памятников");
         }
@@ -42,6 +45,7 @@ export default function CardsMaze() {
     };
     fetchMonuments();
   }, []);
+  */
 
   useEffect(() => {
     if (!isDesktop) return;

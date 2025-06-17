@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { FilteredMonumentsServer } from "../../../lib/FilteredMonumentsServer";
 
 import Image from "next/image";
 import Header from "../components/Header";
@@ -11,24 +12,23 @@ import MapView from "./MapView";
 
 import Filter from "./Filter";
 
-type Monument = {
-  name: string;
-  url: string;
-  coords: [number, number]; // [lon, lat]
-};
-
-const mon: Monument[] = [
-  //{ name: "Памятник Победы", coords: [37.618423, 55.751244] },
-  //{ name: "Медный всадник", coords: [30.3086, 59.9375] },
-  //{ name: "Родина-мать зовёт!", coords: [44.5168, 48.7347] },
-  {
-    name: "Памятник В.И. Ленину",
-    url: "/images/contents/hero.jpg",
-    coords: [92.877789, 56.015342],
-  },
-];
-
-export default function CollectionContent() {
+export default function CollectionContent({
+  initialPeriods,
+  initialMaterials,
+  initialColors,
+  initialPlaces,
+  initialTechniques,
+  initialMarks,
+  initialPersonalities,
+}: {
+  initialPeriods: any[];
+  initialMaterials: any[];
+  initialColors: any[];
+  initialPlaces: any[];
+  initialTechniques: any[];
+  initialMarks: any[];
+  initialPersonalities: any[];
+}) {
   const [isMobile, setIsMobile] = useState(false);
   const [clickToFilter, setClickToFilter] = useState(false);
 
@@ -42,25 +42,26 @@ export default function CollectionContent() {
 
   const [monuments, setMonuments] = useState<number[]>([]);
 
-  const [periods, setPeriods] = useState<any[]>([]);
+  const [periods, setPeriods] = useState<any[]>(initialPeriods);
   const [selectedPeriods, setSelectedPeriods] = useState<number[]>([]);
 
-  const [materials, setMaterials] = useState<any[]>([]);
+  const [materials, setMaterials] = useState<any[]>(initialMaterials);
   const [selectedMaterials, setSelectedMaterials] = useState<number[]>([]);
 
-  const [colors, setColors] = useState<any[]>([]);
+  const [colors, setColors] = useState<any[]>(initialColors);
   const [selectedColors, setSelectedColors] = useState<number[]>([]);
 
-  const [places, setPlaces] = useState<any[]>([]);
+  const [places, setPlaces] = useState<any[]>(initialPlaces);
   const [selectedPlaces, setSelectedPlaces] = useState<number[]>([]);
 
-  const [techniques, setTechniques] = useState<any[]>([]);
+  const [techniques, setTechniques] = useState<any[]>(initialTechniques);
   const [selectedTechniques, setSelectedTechniques] = useState<number[]>([]);
 
-  const [marks, setMarks] = useState<any[]>([]);
+  const [marks, setMarks] = useState<any[]>(initialMarks);
   const [selectedMarks, setSelectedMarks] = useState<number[]>([]);
 
-  const [personalities, setPersonalities] = useState<any[]>([]);
+  const [personalities, setPersonalities] =
+    useState<any[]>(initialPersonalities);
   const [selectedPersonalities, setSelectedPersonalities] = useState<number[]>(
     []
   );
@@ -108,6 +109,7 @@ export default function CollectionContent() {
     );
   }, [searchParams]);
 
+  /*
   useEffect(() => {
     const fetchFilters = async () => {
       try {
@@ -120,13 +122,13 @@ export default function CollectionContent() {
           placesRes,
           personalitiesRes,
         ] = await Promise.all([
-          fetch("/api/periods", { next: { revalidate: 3600 } }),
-          fetch("/api/materials", { next: { revalidate: 3600 } }),
-          fetch("/api/colors", { next: { revalidate: 3600 } }),
-          fetch("api/techniques", { next: { revalidate: 3600 } }),
-          fetch("api/marks", { next: { revalidate: 3600 } }),
-          fetch("api/places", { next: { revalidate: 3600 } }),
-          fetch("api/personalities", { next: { revalidate: 3600 } }),
+          fetch("/api/periods"),
+          fetch("/api/materials"),
+          fetch("/api/colors"),
+          fetch("api/techniques"),
+          fetch("api/marks"),
+          fetch("api/places"),
+          fetch("api/personalities"),
         ]);
 
         const [
@@ -161,6 +163,7 @@ export default function CollectionContent() {
 
     fetchFilters();
   }, []);
+  */
 
   useEffect(() => {
     const fetchMonuments = async () => {
@@ -192,10 +195,7 @@ export default function CollectionContent() {
           );
         }
 
-        const res = await fetch(`/api/monuments?${params.toString()}`, {
-          next: { revalidate: 3600 },
-        });
-        const data = await res.json();
+        const data = await FilteredMonumentsServer(params);
         setMonuments(data);
       } catch (error) {
         console.error("Ошибка при загрузке памятников:", error);

@@ -2,8 +2,6 @@ import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
 import { prisma } from "../../../../../lib/prisma";
 
-export const revalidate = 86400;
-
 export async function GET(
   NextRequest: Request,
   { params }: { params: Promise<{ id: string }> }
