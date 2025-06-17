@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import CardsMaze from "./CardsMaze";
 
 export default async function CardsMazeServer() {
