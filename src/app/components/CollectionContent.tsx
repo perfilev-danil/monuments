@@ -12,23 +12,7 @@ import MapView from "./MapView";
 
 import Filter from "./Filter";
 
-export default function CollectionContent({
-  initialPeriods,
-  initialMaterials,
-  initialColors,
-  initialPlaces,
-  initialTechniques,
-  initialMarks,
-  initialPersonalities,
-}: {
-  initialPeriods: any[];
-  initialMaterials: any[];
-  initialColors: any[];
-  initialPlaces: any[];
-  initialTechniques: any[];
-  initialMarks: any[];
-  initialPersonalities: any[];
-}) {
+export default function CollectionContent() {
   const [isMobile, setIsMobile] = useState(false);
   const [clickToFilter, setClickToFilter] = useState(false);
 
@@ -42,26 +26,25 @@ export default function CollectionContent({
 
   const [monuments, setMonuments] = useState<number[]>([]);
 
-  const [periods, setPeriods] = useState<any[]>(initialPeriods);
+  const [periods, setPeriods] = useState<any[]>([]);
   const [selectedPeriods, setSelectedPeriods] = useState<number[]>([]);
 
-  const [materials, setMaterials] = useState<any[]>(initialMaterials);
+  const [materials, setMaterials] = useState<any[]>([]);
   const [selectedMaterials, setSelectedMaterials] = useState<number[]>([]);
 
-  const [colors, setColors] = useState<any[]>(initialColors);
+  const [colors, setColors] = useState<any[]>([]);
   const [selectedColors, setSelectedColors] = useState<number[]>([]);
 
-  const [places, setPlaces] = useState<any[]>(initialPlaces);
+  const [places, setPlaces] = useState<any[]>([]);
   const [selectedPlaces, setSelectedPlaces] = useState<number[]>([]);
 
-  const [techniques, setTechniques] = useState<any[]>(initialTechniques);
+  const [techniques, setTechniques] = useState<any[]>([]);
   const [selectedTechniques, setSelectedTechniques] = useState<number[]>([]);
 
-  const [marks, setMarks] = useState<any[]>(initialMarks);
+  const [marks, setMarks] = useState<any[]>([]);
   const [selectedMarks, setSelectedMarks] = useState<number[]>([]);
 
-  const [personalities, setPersonalities] =
-    useState<any[]>(initialPersonalities);
+  const [personalities, setPersonalities] = useState<any[]>([]);
   const [selectedPersonalities, setSelectedPersonalities] = useState<number[]>(
     []
   );
@@ -109,7 +92,6 @@ export default function CollectionContent({
     );
   }, [searchParams]);
 
-  /*
   useEffect(() => {
     const fetchFilters = async () => {
       try {
@@ -163,7 +145,6 @@ export default function CollectionContent({
 
     fetchFilters();
   }, []);
-  */
 
   useEffect(() => {
     const fetchMonuments = async () => {
@@ -194,7 +175,6 @@ export default function CollectionContent({
             params.append("personId", id.toString())
           );
         }
-
         const data = await FilteredMonumentsServer(params);
         setMonuments(data);
       } catch (error) {
