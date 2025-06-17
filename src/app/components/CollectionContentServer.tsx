@@ -1,7 +1,5 @@
-import CardsMaze from "./CardsMaze";
+export const dynamic = "force-dynamic";
 
-import Image from "next/image";
-import Link from "next/link";
 import CollectionContent from "./CollectionContent";
 
 export default async function CollectionContentServer() {
