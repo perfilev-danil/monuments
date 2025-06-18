@@ -2,11 +2,10 @@
 
 import Hero from "./components/Hero";
 import Opening from "./components/Opening";
-import CardsMaze from "./components/CardsMaze";
+
 import Info from "./components/Info";
 import Footer from "./components/Footer";
 import StickySection from "./components/StickySection";
-import CardsMazeServer from "./components/CardsMazeServer";
 
 //import { useState, useEffect } from "react";
 //import gsap from "gsap";
@@ -76,9 +75,7 @@ export default function Home() {
     <div className="relative scroll-smooth">
       <Hero />
       <Opening />
-      <CardsMaze>
-        <CardsMazeServer />
-      </CardsMaze>
+
       <Info />
       <Footer />
     </div>
