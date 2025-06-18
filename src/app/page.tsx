@@ -76,7 +76,9 @@ export default function Home() {
     <div className="relative scroll-smooth">
       <Hero />
       <Opening />
-      <CardsMazeServer />
+      <CardsMaze>
+        <CardsMazeServer />
+      </CardsMaze>
       <Info />
       <Footer />
     </div>
