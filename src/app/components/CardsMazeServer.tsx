@@ -5,7 +5,6 @@ import Link from "next/link";
 
 export default async function CardsMazeServer() {
   const monuments = await CardsServer();
-
   return (
     <>
       {monuments?.map((monument: any) => (

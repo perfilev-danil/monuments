@@ -1,3 +1,5 @@
+"use server";
+
 export async function FilteredMonumentsServer(params: URLSearchParams) {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_URL}/api/monuments?${params.toString()}`

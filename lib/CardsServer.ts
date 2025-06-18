@@ -1,3 +1,5 @@
+"use server";
+
 export default async function CardsServer() {
   const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/monumentsCards`);
 
