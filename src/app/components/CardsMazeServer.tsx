@@ -1,11 +1,8 @@
 import CardsMaze from "./CardsMaze";
+import CardsServer from "../../../lib/CardsServer";
 
 export default async function CardsMazeServer() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/monumentsCards`, {
-    next: { revalidate: 60 },
-  });
-
-  const monuments = await res.json();
+  const monuments = await CardsServer();
 
   return <CardsMaze initialMonuments={monuments} />;
 }
