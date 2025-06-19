@@ -1,10 +1,14 @@
-//import CardsMaze from "./CardsMaze";
-import CardsServer from "../../../lib/CardsServer";
 import Image from "next/image";
 import Link from "next/link";
 
 export default async function CardsMazeServer() {
-  const monuments = await CardsServer();
+  const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/monumentsCards`);
+
+  if (!res.ok) {
+    throw new Error("Ошибка загрузки памятников");
+  }
+
+  const monuments = await res.json();
   return (
     <>
       {monuments?.map((monument: any) => (

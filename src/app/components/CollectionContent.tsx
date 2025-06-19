@@ -175,8 +175,9 @@ export default function CollectionContent() {
             params.append("personId", id.toString())
           );
         }
-        const data = await FilteredMonumentsServer(params);
-        setMonuments(data);
+        const res = await fetch(`/api/monuments?${params.toString()}`);
+        const monuments = await res.json();
+        setMonuments(monuments);
       } catch (error) {
         console.error("Ошибка при загрузке памятников:", error);
       } finally {
