@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useRef } from "react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
-import { FilteredMonumentsServer } from "../../../lib/FilteredMonumentsServer";
 
 import Image from "next/image";
 import Header from "../components/Header";
