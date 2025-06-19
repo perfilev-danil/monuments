@@ -12,7 +12,6 @@ export default function Collection() {
       <QueryClientProvider client={queryClient}>
         <CollectionContent />
       </QueryClientProvider>
-
       <Footer />
     </Suspense>
   );

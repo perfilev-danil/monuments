@@ -22,7 +22,7 @@ export default function CollectionContent() {
 
   const [isFirst, setFirst] = useState(true);
 
-  const [loading, setLoading] = useState(false);
+  //const [loading, setLoading] = useState(false);
 
   //const [monuments, setMonuments] = useState<number[]>([]);
 
@@ -92,6 +92,89 @@ export default function CollectionContent() {
     );
   }, [searchParams]);
 
+  const {
+    data: filtersData,
+    isLoading: isLoadingFilters,
+    error: filtersError,
+  } = useQuery({
+    queryKey: ["filters"],
+    queryFn: async () => {
+      const [
+        periodsRes,
+        materialsRes,
+        colorsRes,
+        techniquesRes,
+        marksRes,
+        placesRes,
+        personalitiesRes,
+      ] = await Promise.all([
+        fetch("/api/periods"),
+        fetch("/api/materials"),
+        fetch("/api/colors"),
+        fetch("/api/techniques"),
+        fetch("/api/marks"),
+        fetch("/api/places"),
+        fetch("/api/personalities"),
+      ]);
+
+      if (
+        !periodsRes.ok ||
+        !materialsRes.ok ||
+        !colorsRes.ok ||
+        !techniquesRes.ok ||
+        !marksRes.ok ||
+        !placesRes.ok ||
+        !personalitiesRes.ok
+      ) {
+        throw new Error("Ошибка при загрузке фильтров");
+      }
+
+      const [
+        periods,
+        materials,
+        colors,
+        techniques,
+        marks,
+        places,
+        personalities,
+      ] = await Promise.all([
+        periodsRes.json(),
+        materialsRes.json(),
+        colorsRes.json(),
+        techniquesRes.json(),
+        marksRes.json(),
+        placesRes.json(),
+        personalitiesRes.json(),
+      ]);
+
+      return {
+        periods,
+        materials,
+        colors,
+        techniques,
+        marks,
+        places,
+        personalities,
+      };
+    },
+    staleTime: 24 * 60 * 60 * 1000,
+    refetchInterval: 30 * 60 * 1000,
+  });
+
+  // Обновляем состояния фильтров после успешной загрузки
+  useEffect(() => {
+    if (filtersData) {
+      setPeriods(filtersData.periods);
+      setMaterials(filtersData.materials);
+      setColors(filtersData.colors);
+      setTechniques(filtersData.techniques);
+      setMarks(filtersData.marks);
+      setPlaces(filtersData.places);
+      setPersonalities(filtersData.personalities);
+    }
+  }, [filtersData]);
+
+  /*
   useEffect(() => {
     const fetchFilters = async () => {
       try {
@@ -145,6 +228,7 @@ export default function CollectionContent() {
 
     fetchFilters();
   }, []);
+  */
 
   /*
   useEffect(() => {
@@ -239,6 +323,8 @@ export default function CollectionContent() {
 
       return res.json();
     },
+    staleTime: 24 * 60 * 60 * 1000,
+    refetchInterval: 30 * 60 * 1000,
   });
 
   useEffect(() => {
