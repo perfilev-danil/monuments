@@ -68,6 +68,7 @@ COPY --from=builder /app/prisma ./prisma
 
 # Копируем переменные окружения (если передаются через ARG)
 ENV NEXT_PUBLIC_URL=${NEXT_PUBLIC_URL}
+ENV API_URL=${API_URL}
 ENV DATABASE_URL=${DATABASE_URL}
 ENV ADMIN_USERNAME=${ADMIN_USERNAME}
 ENV ADMIN_PASSWORD=${ADMIN_PASSWORD}
