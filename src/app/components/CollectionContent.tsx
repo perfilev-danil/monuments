@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 
 import Image from "next/image";
@@ -21,9 +22,9 @@ export default function CollectionContent() {
 
   const [isFirst, setFirst] = useState(true);
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
-  const [monuments, setMonuments] = useState<number[]>([]);
+  //const [monuments, setMonuments] = useState<number[]>([]);
 
   const [periods, setPeriods] = useState<any[]>([]);
   const [selectedPeriods, setSelectedPeriods] = useState<number[]>([]);
@@ -145,6 +146,7 @@ export default function CollectionContent() {
     fetchFilters();
   }, []);
 
+  /*
   useEffect(() => {
     const fetchMonuments = async () => {
       try {
@@ -186,6 +188,58 @@ export default function CollectionContent() {
 
     fetchMonuments();
   }, [toFilter, activeSearchQuery]);
+  */
+
+  const {
+    data: monuments,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: [
+      "monuments",
+      {
+        activeSearchQuery,
+        selectedPeriods,
+        selectedMaterials,
+        selectedColors,
+        selectedTechniques,
+        selectedMarks,
+        selectedPlaces,
+        selectedPersonalities,
+      },
+    ],
+    queryFn: async () => {
+      const params = new URLSearchParams();
+
+      if (activeSearchQuery) {
+        params.append("search", activeSearchQuery);
+      } else {
+        selectedPeriods.forEach((id) =>
+          params.append("periodId", id.toString())
+        );
+        selectedMaterials.forEach((id) =>
+          params.append("materialId", id.toString())
+        );
+        selectedColors.forEach((id) => params.append("colorId", id.toString()));
+        selectedTechniques.forEach((id) =>
+          params.append("techniqueId", id.toString())
+        );
+        selectedMarks.forEach((id) => params.append("markId", id.toString()));
+        selectedPlaces.forEach((id) => params.append("placeId", id.toString()));
+        selectedPersonalities.forEach((id) =>
+          params.append("personId", id.toString())
+        );
+      }
+
+      const res = await fetch(`/api/monuments?${params.toString()}`);
+
+      if (!res.ok) {
+        throw new Error("Ошибка при загрузке памятников");
+      }
+
+      return res.json();
+    },
+  });
 
   useEffect(() => {
     const params = new URLSearchParams();
@@ -446,7 +500,7 @@ export default function CollectionContent() {
             />
           )}
 
-          {loading ? (
+          {isLoading ? (
             <div
               className="h-full w-full flex items-center p-4 lg:p-8 "
               style={{ border: "1px solid black" }}

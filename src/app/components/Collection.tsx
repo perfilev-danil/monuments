@@ -9,8 +9,8 @@ export default function Collection({ monuments }: { monuments: any }) {
     >
       {/* LIST */}
       <div className="h-full lg:w-full flex flex-wrap gap-4 lg:gap-8 overflow-y-auto snap-y snap-mandatory overflow-x-hidden scroll-smooth pretty-scrollbar">
-        {monuments.length > 0 ? (
-          monuments.map((monument: any) => (
+        {monuments?.length > 0 ? (
+          monuments?.map((monument: any) => (
             <div
               key={monument.id}
               className="relative snap-start overflow-hidden h-full w-full lg:w-[calc(50%-32px)] "

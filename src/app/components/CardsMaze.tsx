@@ -3,10 +3,11 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useQuery } from "@tanstack/react-query";
 
 export default function CardsMaze() {
-  const [monuments, setMonuments] = useState<any[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  //const [monuments, setMonuments] = useState<any[]>([]);
+  //const [isLoading, setIsLoading] = useState(true);
   const [isDesktop, setIsDesktop] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [showHint, setShowHint] = useState(false);
@@ -23,6 +24,20 @@ export default function CardsMaze() {
     return () => window.removeEventListener("resize", checkScreenSize);
   }, []);
 
+  const {
+    data: monuments,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["monuments"],
+    queryFn: async () => {
+      const response = await fetch("/api/monumentsCards");
+      if (!response.ok) throw new Error("Ошибка при загрузке памятников");
+      return response.json();
+    },
+  });
+
+  /*
   useEffect(() => {
     const fetchMonuments = async () => {
       try {
@@ -40,6 +55,7 @@ export default function CardsMaze() {
     };
     fetchMonuments();
   }, []);
+  */
 
   useEffect(() => {
     if (!isDesktop) return;

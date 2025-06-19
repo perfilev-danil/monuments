@@ -1,4 +1,4 @@
-//"use client";
+"use client";
 
 import Hero from "./components/Hero";
 import Opening from "./components/Opening";
@@ -6,6 +6,11 @@ import Opening from "./components/Opening";
 import Info from "./components/Info";
 import CardsMaze from "./components/CardsMaze";
 import Footer from "./components/Footer";
+
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
+
 //import StickySection from "./components/StickySection";
 
 //import { useState, useEffect } from "react";
@@ -73,12 +78,14 @@ export default function Home() {
       </div>
     </div>
     */
-    <div className="relative scroll-smooth">
-      <Hero />
-      <Opening />
-      <CardsMaze />
-      <Info />
-      <Footer />
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <div className="relative scroll-smooth">
+        <Hero />
+        <Opening />
+        <CardsMaze />
+        <Info />
+        <Footer />
+      </div>
+    </QueryClientProvider>
   );
 }
