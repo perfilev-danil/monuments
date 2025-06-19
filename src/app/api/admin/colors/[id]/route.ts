@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { revalidatePath } from "next/cache";
 import { prisma } from "../../../../../../lib/prisma";
 
 export async function DELETE(
@@ -18,7 +17,6 @@ export async function DELETE(
       where: { id: colorId },
     });
 
-    revalidatePath("/api/colors");
     return NextResponse.json({ message: "Удалено" }, { status: 200 });
   } catch (error) {
     console.error("Ошибка при удалении:", error);
@@ -56,7 +54,6 @@ export async function PUT(
       },
     });
 
-    revalidatePath("/api/colors");
     return NextResponse.json(updatedColor, { status: 200 });
   } catch (error) {
     console.error("Ошибка при обновлении:", error);

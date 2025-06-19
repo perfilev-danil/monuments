@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { revalidatePath } from "next/cache";
 import { prisma } from "../../../../../../lib/prisma";
 
 export async function DELETE(
@@ -18,7 +17,6 @@ export async function DELETE(
       where: { id: documentId },
     });
 
-    revalidatePath("/api/documents");
     return NextResponse.json({ message: "Удалено" }, { status: 200 });
   } catch (error) {
     console.error("Ошибка при удалении:", error);
@@ -63,7 +61,6 @@ export async function PUT(
       },
     });
 
-    revalidatePath("/api/documents");
     return NextResponse.json(updatedDocument, { status: 200 });
   } catch (error) {
     console.error("Ошибка при обновлении:", error);
