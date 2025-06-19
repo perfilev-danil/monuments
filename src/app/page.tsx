@@ -4,7 +4,6 @@ import Hero from "./components/Hero";
 import Opening from "./components/Opening";
 
 import Info from "./components/Info";
-import CardsMazeServer from "./components/CardsMazeServer";
 import CardsMaze from "./components/CardsMaze";
 import Footer from "./components/Footer";
 //import StickySection from "./components/StickySection";
@@ -77,9 +76,7 @@ export default function Home() {
     <div className="relative scroll-smooth">
       <Hero />
       <Opening />
-      <CardsMaze>
-        <CardsMazeServer />
-      </CardsMaze>
+      <CardsMaze />
       <Info />
       <Footer />
     </div>

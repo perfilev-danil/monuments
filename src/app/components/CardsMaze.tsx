@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-export default function CardsMaze({ children }: { children: React.ReactNode }) {
+export default function CardsMaze() {
   const [monuments, setMonuments] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isDesktop, setIsDesktop] = useState(false);
