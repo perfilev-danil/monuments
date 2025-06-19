@@ -1,9 +1,3 @@
-"use client";
-
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { useParams } from "next/navigation";
-
 import { notFound } from "next/navigation";
 
 import Image from "next/image";
@@ -11,41 +5,31 @@ import Link from "next/link";
 
 import Header from "@/app/components/Header";
 import { CardsScroller } from "@/app/components/CardsScroller";
-import CollectionSkeleton from "@/app/components/CollectionSkeleton";
 import Footer from "@/app/components/Footer";
 
-export default function MonumentPage() {
-  const { id } = useParams();
-  const router = useRouter();
-  const [monument, setMonument] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
+export default async function MonumentPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
 
-  useEffect(() => {
-    if (!id) return;
+  let monument: any = null;
 
-    const fetchMonument = async () => {
-      try {
-        const res = await fetch(`/api/monuments/${id}`);
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_URL}/api/monuments/${id}`
+    );
 
-        if (!res.ok) {
-          router.replace("/not-found");
-          return;
-        }
+    if (!response.ok) {
+      return notFound();
+    }
 
-        const data = await res.json();
-        setMonument(data);
-      } catch (err) {
-        console.error("Ошибка при загрузке памятника:", err);
-        router.replace("/not-found");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchMonument();
-  }, [id, router]);
-
-  if (loading) return <CollectionSkeleton />;
+    monument = await response.json();
+  } catch (error) {
+    console.error("Ошибка при загрузке памятника:", error);
+    return notFound();
+  }
 
   if (!monument) {
     return notFound();
@@ -73,7 +57,8 @@ export default function MonumentPage() {
               />
             </Link>
             <h1 className="truncate">
-              {monument?.appellation_monument?.value}
+              {monument?.appellation_monument?.value} ({monument?.year?.value}{" "}
+              г.)
             </h1>
           </div>
 
