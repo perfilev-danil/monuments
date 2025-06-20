@@ -158,7 +158,10 @@ export default function CollectionContent() {
       };
     },
     staleTime: 24 * 60 * 60 * 1000,
-    refetchInterval: 30 * 60 * 1000,
+    refetchInterval: 2 * 60 * 60 * 1000,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
   });
 
   // Обновляем состояния фильтров после успешной загрузки
@@ -547,6 +550,7 @@ export default function CollectionContent() {
                   className="p-2"
                   fill
                   sizes="(max-width: 768px) 60vw"
+                  priority
                 />
               </button>
             </div>

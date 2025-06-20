@@ -36,7 +36,10 @@ export default function CardsMaze() {
       return response.json();
     },
     staleTime: 24 * 60 * 60 * 1000,
-    refetchInterval: 30 * 60 * 1000,
+    refetchInterval: 2 * 60 * 60 * 1000,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
   });
 
   /*
@@ -125,7 +128,7 @@ export default function CardsMaze() {
           </span>
         </div>
       )}
-      {showHint && isDesktop && (
+      {showHint && isDesktop && !isLoading && (
         <div
           className="fixed z-50 flex items-center pointer-events-none"
           style={{
@@ -142,6 +145,7 @@ export default function CardsMaze() {
               className="p-2"
               fill
               sizes="(max-width: 768px) 60vw"
+              loading="lazy"
             />
           </div>
           <div

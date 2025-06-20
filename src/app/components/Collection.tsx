@@ -21,9 +21,9 @@ export default function Collection({ monuments }: { monuments: any }) {
                   src={`/api/images/${monument?.images[0]?.id}`}
                   alt=""
                   fill
-                  priority
                   sizes="(max-width: 300px) 40vw, (max-width: 1200px) 60vw, 50vw"
                   className="object-cover hover:scale-110 transition-transform object-top duration-500"
+                  loading="lazy"
                 />
               )}
               <div className="absolute bottom-0 left-0 right-0 w-full bg-[var(--dark)] flex justify-between p-2 ">

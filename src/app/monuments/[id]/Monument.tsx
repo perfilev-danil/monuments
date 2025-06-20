@@ -34,7 +34,10 @@ export default function Monument() {
       return res.json();
     },
     staleTime: 24 * 60 * 60 * 1000,
-    refetchInterval: 30 * 60 * 1000,
+    refetchInterval: 2 * 60 * 60 * 1000,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
     enabled: !!id,
   });
 
@@ -56,10 +59,10 @@ export default function Monument() {
 
         {/* Info */}
         <div className="h-full flex flex-col gap-4 lg:gap-8">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between gap-4 lg:gap-8">
             <Link
               href={"/collection"}
-              className="relative w-10 h-10 rounded-full cursor-pointer hover:scale-110 transition-transform duration-300"
+              className="relative w-10 h-10 rounded-full cursor-pointer hover:scale-110 transition-transform duration-300 shrink-0"
               style={{ border: "1px solid black" }}
             >
               <Image
@@ -68,6 +71,7 @@ export default function Monument() {
                 fill
                 sizes="(max-width: 768px) 60vw"
                 className="p-2"
+                priority
               />
             </Link>
             <h1 className="truncate">

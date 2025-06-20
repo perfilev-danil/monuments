@@ -140,6 +140,7 @@ export const CardsScroller: React.FC<Props> = ({ images }) => {
                 sizes="(max-width: 300px) 60vw, (max-width: 1200px) 40vw, 50vw"
                 draggable={false}
                 className="object-cover object-top hover:scale-110 transition-transform duration-300"
+                loading="lazy"
               />
             </div>
           </div>
