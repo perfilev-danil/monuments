@@ -33,6 +33,8 @@ export default function Monument() {
       }
       return res.json();
     },
+    staleTime: 24 * 60 * 60 * 1000,
+    refetchInterval: 30 * 60 * 1000,
     enabled: !!id,
   });
 

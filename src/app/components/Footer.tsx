@@ -78,6 +78,7 @@ export default function Footer() {
             className="p-2"
             fill
             sizes="(max-width: 768px) 60vw"
+            priority
           />
         </button>
         <div className="w-[1px] h-10 bg-white "></div>
@@ -94,6 +95,7 @@ export default function Footer() {
             fill
             sizes="(max-width: 768px) 60vw"
             style={{ transform: "rotate(90deg)" }}
+            priority
           />
         </button>
       </div>

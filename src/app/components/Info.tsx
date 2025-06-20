@@ -22,6 +22,7 @@ export default function Info() {
             alt=""
             className="object-cover"
             fill
+            priority
             sizes="(max-width: 300px) 40vw, (max-width: 1200px) 60vw, 50vw"
           />
         </div>

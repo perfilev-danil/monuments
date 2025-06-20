@@ -23,6 +23,7 @@ export default function Hero() {
         fill
         sizes="(max-width: 300px) 40vw, (max-width: 1200px) 60vw, 50vw"
         className="block lg:hidden w-full h-full object-cover"
+        priority
       />
 
       <div
@@ -60,6 +61,7 @@ export default function Hero() {
               className="p-2"
               fill
               sizes="(max-width: 768px) 60vw"
+              priority
             />
           </Link>
         </div>

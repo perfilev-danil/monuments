@@ -7,7 +7,12 @@ export async function GET() {
       include: {
         appellation_monument: true,
         year: true,
-        images: true,
+        images: {
+          take: 1,
+          orderBy: {
+            id: "asc",
+          },
+        },
       },
     });
 

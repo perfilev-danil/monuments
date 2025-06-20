@@ -107,22 +107,27 @@ export async function GET(request: NextRequest) {
         personalities: {
           include: {
             appellation_personality: true,
-            role: true,
-            information_object_personality: true,
+            //role: true,
+            //information_object_personality: true,
           },
         },
         place: {
           include: {
             appellation_place: true,
-            appellation_address: {
-              include: {
-                coordinates: true,
-              },
-            },
-            information_object_place: true,
+            appellation_address: true,
+            //include: {
+            //coordinates: true,
+            //},
+
+            //information_object_place: true,
           },
         },
-        images: true,
+        images: {
+          take: 1,
+          orderBy: {
+            id: "asc",
+          },
+        },
       },
     });
 
