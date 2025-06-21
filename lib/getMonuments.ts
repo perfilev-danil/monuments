@@ -27,6 +27,8 @@ export async function getMonuments() {
       },
     });
 
+    console.log("Памятники 1", monuments);
+
     return monuments;
   } catch (error) {
     console.error("Ошибка при получении памятников:", error);

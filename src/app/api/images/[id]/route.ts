@@ -3,7 +3,7 @@ import { NextRequest } from "next/server";
 import { prisma } from "../../../../../lib/prisma";
 
 export async function GET(
-  NextRequest: Request,
+  NextRequest: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
@@ -42,25 +42,26 @@ export async function GET(
       imageBuffer = image.imageData;
     } else if (image.imageData instanceof Uint8Array) {
       imageBuffer = Buffer.from(image.imageData);
+    } else if (typeof image.imageData === "string") {
+      // Если данные хранятся как base64 строка
+      imageBuffer = Buffer.from(image.imageData, "base64");
     } else {
-      return NextResponse.json(
-        { error: "Неподдерживаемый формат изображения" },
-        { status: 400 }
-      );
+      return new NextResponse("Неподдерживаемый формат изображения", {
+        status: 400,
+      });
     }
 
-    const response = new Response(imageBuffer, {
+    const contentType = image.mimeType || "image/jpeg"; // Установите дефолтный тип
+
+    // Создаем и возвращаем ответ
+    return new NextResponse(imageBuffer, {
       status: 200,
       headers: {
-        "Content-Type": image.mimeType || "application/octet-stream",
-        "Content-Disposition": `inline; filename="${encodeURIComponent(
-          image.fileName || "image"
-        )}"`,
+        "Content-Type": contentType,
         "Content-Length": imageBuffer.length.toString(),
+        "Cache-Control": "public, max-age=31536000, immutable", // Кэширование
       },
     });
-
-    return response;
   } catch (error) {
     console.error(error);
     return NextResponse.json(
