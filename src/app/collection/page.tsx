@@ -1,4 +1,5 @@
 import CollectionContent from "../components/CollectionContent";
+import Footer from "../components/Footer";
 
 export default async function CollectionPage({
   searchParams,
@@ -48,11 +49,14 @@ export default async function CollectionPage({
   const monuments = await monumentsRes.json();
 
   return (
-    <CollectionContent
-      filtersData={filtersData}
-      monuments={monuments}
-      initialSearchParams={paramsRecord}
-    />
+    <div>
+      <CollectionContent
+        filtersData={filtersData}
+        monuments={monuments}
+        initialSearchParams={paramsRecord}
+      />
+      <Footer />
+    </div>
   );
 }
 
