@@ -1,55 +1,46 @@
 import { prisma } from "./prisma";
+import fs from "fs/promises";
+import path from "path";
+
+const logFile = path.join("/tmp", "debug.log");
 
 export async function getMonuments() {
   try {
-    // Логирование для отладки
-    console.log("Подключение к базе данных...");
-    console.log("NODE_ENV:", process.env.NODE_ENV);
-
-    // Проверка подключения к Prisma
-    await prisma.$queryRaw`SELECT 1`;
-    console.log("Подключение к БД успешно");
-
+    const where: any = {};
     const monuments = await prisma.e24_Monument.findMany({
+      where,
       select: {
         id: true,
         appellation_monument: {
           select: {
+            id: true,
             value: true,
           },
         },
         year: {
           select: {
+            id: true,
             value: true,
           },
         },
         images: {
           take: 1,
-          orderBy: { id: "asc" },
-          select: { id: true },
+          orderBy: {
+            id: "asc",
+          },
+          select: {
+            id: true,
+          },
         },
       },
-      take: 10, // Ограничиваем для теста
     });
 
-    console.log(`Получено памятников: ${monuments.length}`);
-
-    if (monuments.length === 0) {
-      console.warn("В базе данных нет записей о памятниках");
-    }
-
     return monuments;
-  } catch (error) {
-    console.error("Ошибка при получении памятников:", error);
-
-    // Детализация ошибки Prisma
-    if (error instanceof Error) {
-      console.error("Сообщение об ошибке:", error.message);
-      if (error.stack) {
-        console.error("Стек вызовов:", error.stack);
-      }
-    }
-
+  } catch (error: any) {
+    await fs.appendFile(
+      logFile,
+      `${new Date().toISOString()}: ERROR - ${error.message}\n`
+    );
     return [];
   }
 }
