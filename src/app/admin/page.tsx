@@ -193,7 +193,7 @@ export default function AdminPage() {
 
         <button
           onClick={() => setActiveSection("locations")}
-          className={`p-2 rounded-full hover:scale-110 transition-transform duration-300 ${
+          className={`p-2 rounded-full hover:scale-110 transition-transform duration-300 truncate ${
             activeSection === "locations"
               ? "bg-[var(--dark)] text-white"
               : "text-black"
