@@ -14,6 +14,8 @@ export default async function CardsMazeServer() {
     search: "",
   });
 
+  console.log("rawMonuments:", rawMonuments);
+
   const monuments = JSON.parse(JSON.stringify(rawMonuments));
 
   if (!monuments || monuments.length === 0) {
