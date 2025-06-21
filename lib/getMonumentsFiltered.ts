@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
 import { prisma } from "./prisma";
 
-export async function getMonumentsFiltered(filters: any | undefined) {
+export async function getMonumentsFiltered(filters: any) {
   try {
     const {
       periodId = [],
@@ -13,7 +13,7 @@ export async function getMonumentsFiltered(filters: any | undefined) {
       placeId = [],
       personId = [],
       search,
-    } = filters || {};
+    } = filters;
 
     const where: any = {};
 

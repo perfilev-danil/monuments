@@ -3,7 +3,16 @@ import CardsMaze from "./CardsMaze";
 import { getMonumentsFiltered } from "../../../lib/getMonumentsFiltered";
 
 export default async function CardsMazeServer() {
-  const monuments = await getMonumentsFiltered(undefined);
+  const monuments = await getMonumentsFiltered({
+    periodId: [],
+    materialId: [],
+    colorId: [],
+    techniqueId: [],
+    markId: [],
+    placeId: [],
+    personId: [],
+    search: "",
+  });
   if (!monuments || monuments.length === 0) {
     return (
       <div className="h-[620px] md:h-[900px] lg:h-screen flex justify-center items-center text-black text-center">
