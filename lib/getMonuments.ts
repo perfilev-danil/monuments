@@ -1,8 +1,4 @@
 import { prisma } from "./prisma";
-import fs from "fs/promises";
-import path from "path";
-
-const logFile = path.join("/tmp", "debug.log");
 
 export async function getMonuments() {
   try {
@@ -12,15 +8,41 @@ export async function getMonuments() {
       select: {
         id: true,
         appellation_monument: {
-          select: {
-            id: true,
-            value: true,
-          },
+          select: { value: true },
         },
         year: {
+          select: { value: true },
+        },
+        materials: {
+          select: { value: true },
+        },
+        colors: {
+          select: { value: true },
+        },
+        techniques: {
+          select: { value: true },
+        },
+        marks: {
+          select: { value: true },
+        },
+        period: {
+          select: { value: true },
+        },
+        personalities: {
           select: {
-            id: true,
-            value: true,
+            appellation_personality: {
+              select: { value: true },
+            },
+          },
+        },
+        place: {
+          select: {
+            appellation_place: {
+              select: { value: true },
+            },
+            appellation_address: {
+              select: { value: true },
+            },
           },
         },
         images: {
@@ -37,10 +59,6 @@ export async function getMonuments() {
 
     return monuments;
   } catch (error: any) {
-    await fs.appendFile(
-      logFile,
-      `${new Date().toISOString()}: ERROR - ${error.message}\n`
-    );
     return [];
   }
 }
