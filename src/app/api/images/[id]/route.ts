@@ -41,17 +41,13 @@ export async function GET(
     if (image.imageData instanceof Buffer) {
       imageBuffer = image.imageData;
     } else if (typeof image.imageData === "string") {
-      // Если данные хранятся как base64 строка
       imageBuffer = Buffer.from(image.imageData, "base64");
     } else {
-      // Для Uint8Array и других типов
       imageBuffer = Buffer.from(image.imageData as any);
     }
 
-    // Определяем Content-Type
     const contentType = image.mimeType || "image/jpeg";
 
-    // Возвращаем изображение
     return new NextResponse(imageBuffer, {
       status: 200,
       headers: {

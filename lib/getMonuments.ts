@@ -27,7 +27,7 @@ export async function getMonuments() {
       },
     });
 
-    console.log("Памятники 1", monuments);
+    process.stderr.write(`Памятники 1: ${JSON.stringify(monuments)}\n`);
 
     return monuments;
   } catch (error) {

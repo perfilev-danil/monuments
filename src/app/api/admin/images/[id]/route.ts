@@ -1,8 +1,8 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import { prisma } from "../../../../../../lib/prisma";
 
 export async function GET(
-  request: Request,
+  NextRequest: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
@@ -39,19 +39,24 @@ export async function GET(
     let imageBuffer: Buffer;
     if (image.imageData instanceof Buffer) {
       imageBuffer = image.imageData;
-    } else if (image.imageData instanceof Uint8Array) {
-      imageBuffer = Buffer.from(image.imageData);
+    } else if (typeof image.imageData === "string") {
+      imageBuffer = Buffer.from(image.imageData, "base64");
     } else {
-      return NextResponse.json(
-        { error: "Неподдерживаемый формат изображения" },
-        { status: 400 }
-      );
+      imageBuffer = Buffer.from(image.imageData as any);
     }
+
+    const contentType = image.mimeType || "image/jpeg";
 
     return new NextResponse(imageBuffer, {
       status: 200,
       headers: {
-        "Content-Type": image.mimeType || "application/octet-stream",
+        "Content-Type": contentType,
+        "Content-Length": imageBuffer.length.toString(),
+        "Cache-Control": "public, max-age=31536000, immutable",
+        "Content-Disposition": `inline; filename="${encodeURIComponent(
+          image.fileName ||
+            `image-${imageId}.${contentType.split("/")[1] || "jpg"}`
+        )}"`,
       },
     });
   } catch (error) {
