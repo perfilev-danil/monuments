@@ -3,6 +3,12 @@ import { getMonuments } from "../../../lib/getMonuments";
 
 export async function CardsMazeServer() {
   const monuments = await getMonuments();
-  process.stderr.write(`Памятники 2: ${JSON.stringify(monuments)}\n`);
+  if (!monuments || monuments.length === 0) {
+    return (
+      <div className="text-white text-center py-20">
+        Нет данных о памятниках. Проверьте подключение к базе.
+      </div>
+    );
+  }
   return <CardsMaze monuments={monuments} />;
 }

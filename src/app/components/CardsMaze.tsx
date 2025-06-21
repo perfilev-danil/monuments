@@ -124,11 +124,7 @@ export default function CardsMaze({ monuments }: { monuments: any[] }) {
               style={{ border: "1px solid black" }}
             >
               <Image
-                src={
-                  monument?.images.length === 0
-                    ? `/images/contents/noimage.jpg`
-                    : `/api/images/${monument?.images[0]?.id}`
-                }
+                src={"/images/contents/noimage.jpg"}
                 alt=""
                 fill
                 sizes="(max-width: 300px) 40vw, (max-width: 1200px) 60vw, 50vw"

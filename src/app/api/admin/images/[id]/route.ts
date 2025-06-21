@@ -50,6 +50,9 @@ export async function GET(
     return new NextResponse(imageBuffer, {
       status: 200,
       headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type",
         "Content-Type": contentType,
         "Content-Length": imageBuffer.length.toString(),
         "Cache-Control": "public, max-age=31536000, immutable",
@@ -57,6 +60,7 @@ export async function GET(
           image.fileName ||
             `image-${imageId}.${contentType.split("/")[1] || "jpg"}`
         )}"`,
+        "Cross-Origin-Resource-Policy": "cross-origin",
       },
     });
   } catch (error) {

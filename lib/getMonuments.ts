@@ -31,7 +31,6 @@ export async function getMonuments() {
 
     return monuments;
   } catch (error) {
-    console.error("Ошибка при получении памятников:", error);
     return [];
   }
 }
