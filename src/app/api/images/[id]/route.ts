@@ -40,26 +40,28 @@ export async function GET(
     let imageBuffer: Buffer;
     if (image.imageData instanceof Buffer) {
       imageBuffer = image.imageData;
-    } else if (image.imageData instanceof Uint8Array) {
-      imageBuffer = Buffer.from(image.imageData);
     } else if (typeof image.imageData === "string") {
       // Если данные хранятся как base64 строка
       imageBuffer = Buffer.from(image.imageData, "base64");
     } else {
-      return new NextResponse("Неподдерживаемый формат изображения", {
-        status: 400,
-      });
+      // Для Uint8Array и других типов
+      imageBuffer = Buffer.from(image.imageData as any);
     }
 
-    const contentType = image.mimeType || "image/jpeg"; // Установите дефолтный тип
+    // Определяем Content-Type
+    const contentType = image.mimeType || "image/jpeg";
 
-    // Создаем и возвращаем ответ
+    // Возвращаем изображение
     return new NextResponse(imageBuffer, {
       status: 200,
       headers: {
         "Content-Type": contentType,
         "Content-Length": imageBuffer.length.toString(),
-        "Cache-Control": "public, max-age=31536000, immutable", // Кэширование
+        "Cache-Control": "public, max-age=31536000, immutable",
+        "Content-Disposition": `inline; filename="${encodeURIComponent(
+          image.fileName ||
+            `image-${imageId}.${contentType.split("/")[1] || "jpg"}`
+        )}"`,
       },
     });
   } catch (error) {
