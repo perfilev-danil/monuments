@@ -80,7 +80,7 @@ export const CardsScroller: React.FC<Props> = ({ images }) => {
   }, []);
 
   return (
-    <div className="relative h-[620px] md:h-[900px] lg:h-screen w-full p-4 lg:p-8 select-none">
+    <div className="relative h-[620px] md:h-[900px] lg:h-screen w-full select-none">
       {showHint && isDesktop && images.length > 2 && (
         <div
           className="fixed z-50 flex items-center pointer-events-none"

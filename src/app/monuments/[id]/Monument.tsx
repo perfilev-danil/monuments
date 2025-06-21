@@ -10,7 +10,7 @@ import Footer from "@/app/components/Footer";
 export default function Monument({ monument }: { monument: any }) {
   return (
     <div>
-      <div className=" lg:h-[calc(100vh-32px)] p-4 lg:p-8 pb-0 lg:pb-0 flex flex-col gap-4 lg:gap-8">
+      <div className="h-full p-4 lg:p-8 flex flex-col gap-4 lg:gap-8">
         <Header />
 
         {/* Info */}
@@ -259,19 +259,12 @@ export default function Monument({ monument }: { monument: any }) {
             </div>
           </div>
         </div>
+        {/* Images */}
+        {monument?.images?.length !== 0 && (
+          <CardsScroller images={monument?.images} />
+        )}
       </div>
-      {/* Images */}
-      {monument?.images?.length !== 0 && (
-        <CardsScroller images={monument?.images} />
 
-        /*
-        <div className="relative lg:h-[140vh]">
-          <div className="sticky top-0">
-            <CardsScroller images={monument?.images} />
-          </div>
-        </div>
-       */
-      )}
       <Footer />
     </div>
   );

@@ -1,4 +1,5 @@
 import Monument from "./Monument";
+import { getMonument } from "../../../../lib/getMonument";
 import { notFound } from "next/navigation";
 
 export default async function MonumentPage({
@@ -13,23 +14,10 @@ export default async function MonumentPage({
   }
 
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_URL}/api/monuments/${id}`,
-      {
-        next: { revalidate: 3600 },
-      }
-    );
-
-    if (!res.ok) {
-      if (res.status === 404) {
-        return notFound();
-      }
-      throw new Error("Failed to fetch monument data");
-    }
-
-    const monument = await res.json();
+    const monument = await getMonument(id);
     return <Monument monument={monument} />;
   } catch (error) {
+    console.error(error);
     return notFound();
   }
 }

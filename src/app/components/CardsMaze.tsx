@@ -1,30 +1,8 @@
-// pages/cards-maze.tsx
 "use client";
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-
-export async function getServerSideProps() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/monumentsCards`);
-  if (!res.ok) {
-    return {
-      props: {
-        monuments: [],
-        error: true,
-      },
-    };
-  }
-
-  const monuments = await res.json();
-
-  return {
-    props: {
-      monuments,
-      error: false,
-    },
-  };
-}
 
 export default function CardsMaze({ monuments }: { monuments: any[] }) {
   const [isDesktop, setIsDesktop] = useState(false);
