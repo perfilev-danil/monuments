@@ -11,9 +11,6 @@ importers:
       '@prisma/client':
         specifier: ^6.4.1
         version: 6.4.1(prisma@6.4.1(typescript@5.8.2))(typescript@5.8.2)
-      '@tanstack/react-query':
-        specifier: ^5.80.10
-        version: 5.80.10(react@19.0.0)
       cookie:
         specifier: ^1.0.2
         version: 1.0.2

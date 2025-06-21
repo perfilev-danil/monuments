@@ -27,10 +27,9 @@ export async function getMonuments() {
       },
     });
 
-    process.stderr.write(`Памятники 1: ${JSON.stringify(monuments)}\n`);
-
     return monuments;
   } catch (error) {
+    console.error("Ошибка в getMonuments:", error);
     return [];
   }
 }

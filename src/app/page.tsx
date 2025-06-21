@@ -4,7 +4,7 @@ import Opening from "./components/Opening";
 import Info from "./components/Info";
 
 import Footer from "./components/Footer";
-import { CardsMazeServer } from "./components/CardsMazeServer";
+import CardsMazeServer from "./components/CardsMazeServer";
 
 export default async function Home() {
   return (
