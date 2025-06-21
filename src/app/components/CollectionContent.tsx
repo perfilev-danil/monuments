@@ -172,7 +172,8 @@ export default function CollectionContent({
     setActiveSearchQuery("");
     setToFilter(false);
 
-    router.replace(pathname);
+    const params = new URLSearchParams();
+    router.replace(`${pathname}?${params.toString()}`);
   };
 
   const ResetInput = () => {

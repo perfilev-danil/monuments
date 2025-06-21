@@ -1,18 +1,14 @@
-// app/collection/page.tsx
 import CollectionContent from "../components/CollectionContent";
 
-export default async function Page({
+export default async function CollectionPage({
   searchParams,
 }: {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
-  // Ожидаем получения searchParams
   const paramsRecord = await searchParams;
 
-  // Преобразуем searchParams в URLSearchParams вручную
   const params = new URLSearchParams();
 
-  // Вместо прямого обращения searchParams[key], перебираем ключи и добавляем в params
   const keys = [
     "periodId",
     "materialId",

@@ -1,57 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { useParams } from "next/navigation";
-
-import { useQuery } from "@tanstack/react-query";
-
-import { notFound } from "next/navigation";
-
 import Image from "next/image";
 import Link from "next/link";
 
 import Header from "@/app/components/Header";
 import { CardsScroller } from "@/app/components/CardsScroller";
-import CollectionSkeleton from "@/app/components/CollectionSkeleton";
 import Footer from "@/app/components/Footer";
 
-export default function Monument() {
-  const { id } = useParams();
-  const router = useRouter();
-
-  const {
-    data: monument,
-    error,
-    isLoading,
-  } = useQuery({
-    queryKey: ["monument", id],
-    queryFn: async () => {
-      const res = await fetch(`/api/monuments/${id}`);
-      if (!res.ok) {
-        throw new Error("Монумент не найден");
-      }
-      return res.json();
-    },
-    staleTime: 24 * 60 * 60 * 1000,
-    refetchInterval: 2 * 60 * 60 * 1000,
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
-    refetchOnReconnect: false,
-    enabled: !!id,
-  });
-
-  if (isLoading) return <CollectionSkeleton />;
-
-  if (error) {
-    router.replace("/not-found");
-    return null;
-  }
-
-  if (!monument) {
-    return notFound();
-  }
-
+export default function Monument({ monument }: { monument: any }) {
   return (
     <div>
       <div className=" lg:h-[calc(100vh-32px)] p-4 lg:p-8 pb-0 lg:pb-0 flex flex-col gap-4 lg:gap-8">
