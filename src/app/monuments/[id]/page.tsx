@@ -4,9 +4,9 @@ import { notFound } from "next/navigation";
 export default async function MonumentPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  const { id } = params;
+  const { id } = await params;
 
   if (!id || typeof id !== "string") {
     return notFound();
