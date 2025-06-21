@@ -7,21 +7,23 @@ export async function getMonuments() {
         id: true,
         appellation_monument: {
           select: {
+            id: true,
             value: true,
           },
         },
         year: {
           select: {
+            id: true,
             value: true,
           },
         },
         images: {
+          select: {
+            id: true,
+          },
           take: 1,
           orderBy: {
             id: "asc",
-          },
-          select: {
-            id: true,
           },
         },
       },
