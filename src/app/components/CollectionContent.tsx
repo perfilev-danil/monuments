@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { useQuery } from "@tanstack/react-query";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 
 import Image from "next/image";
@@ -12,39 +11,44 @@ import MapView from "./MapView";
 
 import Filter from "./Filter";
 
-export default function CollectionContent() {
+export default function CollectionContent({
+  monuments,
+  filtersData,
+  initialSearchParams,
+}: any) {
   const [isMobile, setIsMobile] = useState(false);
   const [clickToFilter, setClickToFilter] = useState(false);
 
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
 
   const [isFirst, setFirst] = useState(true);
 
-  //const [loading, setLoading] = useState(false);
-
-  //const [monuments, setMonuments] = useState<number[]>([]);
-
-  const [periods, setPeriods] = useState<any[]>([]);
+  const [periods, setPeriods] = useState<any[]>(filtersData.periods || []);
   const [selectedPeriods, setSelectedPeriods] = useState<number[]>([]);
 
-  const [materials, setMaterials] = useState<any[]>([]);
+  const [materials, setMaterials] = useState<any[]>(
+    filtersData.materials || []
+  );
   const [selectedMaterials, setSelectedMaterials] = useState<number[]>([]);
 
-  const [colors, setColors] = useState<any[]>([]);
+  const [colors, setColors] = useState<any[]>(filtersData.colors || []);
   const [selectedColors, setSelectedColors] = useState<number[]>([]);
 
-  const [places, setPlaces] = useState<any[]>([]);
+  const [places, setPlaces] = useState<any[]>(filtersData.places || []);
   const [selectedPlaces, setSelectedPlaces] = useState<number[]>([]);
 
-  const [techniques, setTechniques] = useState<any[]>([]);
+  const [techniques, setTechniques] = useState<any[]>(
+    filtersData.techniques || []
+  );
   const [selectedTechniques, setSelectedTechniques] = useState<number[]>([]);
 
-  const [marks, setMarks] = useState<any[]>([]);
+  const [marks, setMarks] = useState<any[]>(filtersData.marks || []);
   const [selectedMarks, setSelectedMarks] = useState<number[]>([]);
 
-  const [personalities, setPersonalities] = useState<any[]>([]);
+  const [personalities, setPersonalities] = useState<any[]>(
+    filtersData.personalities || []
+  );
   const [selectedPersonalities, setSelectedPersonalities] = useState<number[]>(
     []
   );
@@ -68,308 +72,82 @@ export default function CollectionContent() {
   }, []);
 
   useEffect(() => {
+    const initialParams = new URLSearchParams(
+      Array.isArray(initialSearchParams)
+        ? undefined
+        : Object.entries(initialSearchParams).flatMap(([key, value]) =>
+            Array.isArray(value) ? value.map((v) => [key, v]) : [[key, value]]
+          )
+    );
+
     setSelectedPeriods(
-      searchParams
+      initialParams
         .getAll("periodId")
         .map((id) => parseInt(id))
         .filter((id) => !isNaN(id))
     );
     setSelectedMaterials(
-      searchParams.getAll("materialId").map((id) => parseInt(id))
+      initialParams
+        .getAll("materialId")
+        .map((id) => parseInt(id))
+        .filter((id) => !isNaN(id))
     );
-    setSelectedColors(searchParams.getAll("colorId").map((id) => parseInt(id)));
-
+    setSelectedColors(
+      initialParams
+        .getAll("colorId")
+        .map((id) => parseInt(id))
+        .filter((id) => !isNaN(id))
+    );
     setSelectedTechniques(
-      searchParams.getAll("techniqueId").map((id) => parseInt(id))
+      initialParams
+        .getAll("techniqueId")
+        .map((id) => parseInt(id))
+        .filter((id) => !isNaN(id))
     );
-
-    setSelectedMarks(searchParams.getAll("markId").map((id) => parseInt(id)));
-
-    setSelectedPlaces(searchParams.getAll("placeId").map((id) => parseInt(id)));
-
+    setSelectedMarks(
+      initialParams
+        .getAll("markId")
+        .map((id) => parseInt(id))
+        .filter((id) => !isNaN(id))
+    );
+    setSelectedPlaces(
+      initialParams
+        .getAll("placeId")
+        .map((id) => parseInt(id))
+        .filter((id) => !isNaN(id))
+    );
     setSelectedPersonalities(
-      searchParams.getAll("personId").map((id) => parseInt(id))
+      initialParams
+        .getAll("personId")
+        .map((id) => parseInt(id))
+        .filter((id) => !isNaN(id))
     );
-  }, [searchParams]);
+    setActiveSearchQuery(initialParams.get("search") || "");
+  }, [initialSearchParams]);
 
-  const {
-    data: filtersData,
-    isLoading: isLoadingFilters,
-    error: filtersError,
-  } = useQuery({
-    queryKey: ["filters"],
-    queryFn: async () => {
-      const [
-        periodsRes,
-        materialsRes,
-        colorsRes,
-        techniquesRes,
-        marksRes,
-        placesRes,
-        personalitiesRes,
-      ] = await Promise.all([
-        fetch("/api/periods"),
-        fetch("/api/materials"),
-        fetch("/api/colors"),
-        fetch("/api/techniques"),
-        fetch("/api/marks"),
-        fetch("/api/places"),
-        fetch("/api/personalities"),
-      ]);
-
-      if (
-        !periodsRes.ok ||
-        !materialsRes.ok ||
-        !colorsRes.ok ||
-        !techniquesRes.ok ||
-        !marksRes.ok ||
-        !placesRes.ok ||
-        !personalitiesRes.ok
-      ) {
-        throw new Error("Ошибка при загрузке фильтров");
-      }
-
-      const [
-        periods,
-        materials,
-        colors,
-        techniques,
-        marks,
-        places,
-        personalities,
-      ] = await Promise.all([
-        periodsRes.json(),
-        materialsRes.json(),
-        colorsRes.json(),
-        techniquesRes.json(),
-        marksRes.json(),
-        placesRes.json(),
-        personalitiesRes.json(),
-      ]);
-
-      return {
-        periods,
-        materials,
-        colors,
-        techniques,
-        marks,
-        places,
-        personalities,
-      };
-    },
-    staleTime: 24 * 60 * 60 * 1000,
-    refetchInterval: 2 * 60 * 60 * 1000,
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
-    refetchOnReconnect: false,
-  });
-
-  // Обновляем состояния фильтров после успешной загрузки
-  useEffect(() => {
-    if (filtersData) {
-      setPeriods(filtersData.periods);
-      setMaterials(filtersData.materials);
-      setColors(filtersData.colors);
-      setTechniques(filtersData.techniques);
-      setMarks(filtersData.marks);
-      setPlaces(filtersData.places);
-      setPersonalities(filtersData.personalities);
-    }
-  }, [filtersData]);
-
-  /*
-  useEffect(() => {
-    const fetchFilters = async () => {
-      try {
-        const [
-          periodsRes,
-          materialsRes,
-          colorsRes,
-          techniquesRes,
-          marksRes,
-          placesRes,
-          personalitiesRes,
-        ] = await Promise.all([
-          fetch("/api/periods"),
-          fetch("/api/materials"),
-          fetch("/api/colors"),
-          fetch("api/techniques"),
-          fetch("api/marks"),
-          fetch("api/places"),
-          fetch("api/personalities"),
-        ]);
-
-        const [
-          periodsData,
-          materialsData,
-          colorsData,
-          techniquesData,
-          marksData,
-          placesData,
-          personalitiesData,
-        ] = await Promise.all([
-          periodsRes.json(),
-          materialsRes.json(),
-          colorsRes.json(),
-          techniquesRes.json(),
-          marksRes.json(),
-          placesRes.json(),
-          personalitiesRes.json(),
-        ]);
-
-        setPeriods(periodsData);
-        setMaterials(materialsData);
-        setColors(colorsData);
-        setTechniques(techniquesData);
-        setMarks(marksData);
-        setPlaces(placesData);
-        setPersonalities(personalitiesData);
-      } catch (error) {
-        console.error("Ошибка при загрузке фильтров:", error);
-      }
-    };
-
-    fetchFilters();
-  }, []);
-  */
-
-  /*
-  useEffect(() => {
-    const fetchMonuments = async () => {
-      try {
-        setLoading(true);
-        const params = new URLSearchParams();
-
-        if (activeSearchQuery) {
-          params.append("search", activeSearchQuery);
-        } else {
-          selectedPeriods.forEach((id) =>
-            params.append("periodId", id.toString())
-          );
-          selectedMaterials.forEach((id) =>
-            params.append("materialId", id.toString())
-          );
-          selectedColors.forEach((id) =>
-            params.append("colorId", id.toString())
-          );
-          selectedTechniques.forEach((id) =>
-            params.append("techniqueId", id.toString())
-          );
-          selectedMarks.forEach((id) => params.append("markId", id.toString()));
-          selectedPlaces.forEach((id) =>
-            params.append("placeId", id.toString())
-          );
-          selectedPersonalities.forEach((id) =>
-            params.append("personId", id.toString())
-          );
-        }
-        const res = await fetch(`/api/monuments?${params.toString()}`);
-        const monuments = await res.json();
-        setMonuments(monuments);
-      } catch (error) {
-        console.error("Ошибка при загрузке памятников:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchMonuments();
-  }, [toFilter, activeSearchQuery]);
-  */
-
-  const {
-    data: monuments,
-    isLoading,
-    error,
-  } = useQuery({
-    queryKey: [
-      "monuments",
-      {
-        activeSearchQuery,
-        selectedPeriods,
-        selectedMaterials,
-        selectedColors,
-        selectedTechniques,
-        selectedMarks,
-        selectedPlaces,
-        selectedPersonalities,
-      },
-    ],
-    queryFn: async () => {
-      const params = new URLSearchParams();
-
-      if (activeSearchQuery) {
-        params.append("search", activeSearchQuery);
-      } else {
-        selectedPeriods.forEach((id) =>
-          params.append("periodId", id.toString())
-        );
-        selectedMaterials.forEach((id) =>
-          params.append("materialId", id.toString())
-        );
-        selectedColors.forEach((id) => params.append("colorId", id.toString()));
-        selectedTechniques.forEach((id) =>
-          params.append("techniqueId", id.toString())
-        );
-        selectedMarks.forEach((id) => params.append("markId", id.toString()));
-        selectedPlaces.forEach((id) => params.append("placeId", id.toString()));
-        selectedPersonalities.forEach((id) =>
-          params.append("personId", id.toString())
-        );
-      }
-
-      const res = await fetch(`/api/monuments?${params.toString()}`);
-
-      if (!res.ok) {
-        throw new Error("Ошибка при загрузке памятников");
-      }
-
-      return res.json();
-    },
-    staleTime: 24 * 60 * 60 * 1000,
-    refetchInterval: 30 * 60 * 1000,
-  });
-
-  useEffect(() => {
+  const applyFilters = () => {
     const params = new URLSearchParams();
 
     if (activeSearchQuery) {
       params.append("search", activeSearchQuery);
     } else {
       selectedPeriods.forEach((id) => params.append("periodId", id.toString()));
-
       selectedMaterials.forEach((id) =>
         params.append("materialId", id.toString())
       );
-
       selectedColors.forEach((id) => params.append("colorId", id.toString()));
-
       selectedTechniques.forEach((id) =>
         params.append("techniqueId", id.toString())
       );
-
       selectedMarks.forEach((id) => params.append("markId", id.toString()));
-
       selectedPlaces.forEach((id) => params.append("placeId", id.toString()));
-
       selectedPersonalities.forEach((id) =>
         params.append("personId", id.toString())
       );
     }
 
     router.replace(`${pathname}?${params.toString()}`);
-  }, [
-    selectedPeriods,
-    selectedMaterials,
-    selectedColors,
-    selectedTechniques,
-    selectedMarks,
-    selectedPlaces,
-    selectedPersonalities,
-    activeSearchQuery,
-    pathname,
-    router,
-  ]);
+  };
 
   const handleFilterChange = (
     id: number,
@@ -382,7 +160,7 @@ export default function CollectionContent() {
     setActiveSearchQuery("");
   };
 
-  const ResetFilters = () => {
+  const resetFilters = () => {
     setSelectedPeriods([]);
     setSelectedMaterials([]);
     setSelectedColors([]);
@@ -390,11 +168,11 @@ export default function CollectionContent() {
     setSelectedMarks([]);
     setSelectedPlaces([]);
     setSelectedPersonalities([]);
-
     setSearchQuery("");
     setActiveSearchQuery("");
     setToFilter(false);
-    router.replace(pathname, undefined);
+
+    router.replace(pathname);
   };
 
   const ResetInput = () => {
@@ -410,6 +188,12 @@ export default function CollectionContent() {
     if (searchQuery.trim()) {
       setActiveSearchQuery(searchQuery.trim());
       setSelectedPeriods([]);
+      setSelectedMaterials([]);
+      setSelectedColors([]);
+      setSelectedTechniques([]);
+      setSelectedMarks([]);
+      setSelectedPlaces([]);
+      setSelectedPersonalities([]);
     } else {
       setActiveSearchQuery("");
     }
@@ -461,7 +245,8 @@ export default function CollectionContent() {
               setToFilter,
               handleFilterChange,
               handleScrollUp,
-              ResetFilters,
+              resetFilters,
+              applyFilters,
             }}
           />
         )}
@@ -472,7 +257,14 @@ export default function CollectionContent() {
             <div className="flex gap-4 lg:gap-8 order-2 md:order-1">
               {isMobile && (
                 <button
-                  onClick={() => setClickToFilter((prev) => !prev)}
+                  onClick={() => {
+                    if (clickToFilter) {
+                      applyFilters(); // применяем фильтры
+                      setClickToFilter(false); // закрываем панель
+                    } else {
+                      setClickToFilter(true); // просто открываем панель
+                    }
+                  }}
                   className={`h-10 truncate ${
                     clickToFilter ? `bg-[var(--dark)] text-white` : `text-black`
                   } rounded-full p-2 cursor-pointer hover:scale-110 transition-transform duration-300`}
@@ -585,27 +377,19 @@ export default function CollectionContent() {
                 setToFilter,
                 handleFilterChange,
                 handleScrollUp,
-                ResetFilters,
+                resetFilters,
+                applyFilters,
               }}
             />
           )}
 
-          {isLoading ? (
-            <div
-              className="h-full w-full flex items-center p-4 lg:p-8 "
-              style={{ border: "1px solid black" }}
-            >
-              <p className="mx-auto font-american">Загрузка ...</p>
-            </div>
-          ) : (
-            <div className="h-full">
-              {isFirst ? (
-                <Collection monuments={monuments} />
-              ) : (
-                <MapView monuments={monuments} />
-              )}
-            </div>
-          )}
+          <div className="h-full">
+            {isFirst ? (
+              <Collection monuments={monuments} />
+            ) : (
+              <MapView monuments={monuments} />
+            )}
+          </div>
         </div>
       </div>
     </div>

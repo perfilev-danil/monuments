@@ -28,7 +28,8 @@ interface FilterProps {
   setToFilter: (v: boolean) => void;
   handleFilterChange: any;
   handleScrollUp: () => void;
-  ResetFilters: () => void;
+  resetFilters: () => void;
+  applyFilters: () => void;
 }
 
 export default function Filter({ FilterProps }: { FilterProps: FilterProps }) {
@@ -59,7 +60,8 @@ export default function Filter({ FilterProps }: { FilterProps: FilterProps }) {
     setToFilter,
     handleFilterChange,
     handleScrollUp,
-    ResetFilters,
+    resetFilters,
+    applyFilters,
   } = FilterProps;
   return (
     <div
@@ -300,14 +302,17 @@ export default function Filter({ FilterProps }: { FilterProps: FilterProps }) {
             />
           </button>
           <button
-            onClick={() => ResetFilters()}
+            onClick={() => resetFilters()}
             className="p-2 truncate  broder-black rounded-full hover:scale-110 transition-transform duration-300"
             style={{ border: "1px solid black" }}
           >
             Сбросить
           </button>
           <button
-            onClick={() => setToFilter(true)}
+            onClick={() => {
+              applyFilters();
+              setToFilter(true);
+            }}
             className={`p-2 truncate rounded-full shrink-0 hover:scale-110 transition-transform duration-300 ${
               toFilter ? `text-white bg-[var(--dark)]` : `text-black`
             }`}

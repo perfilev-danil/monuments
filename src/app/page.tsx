@@ -1,4 +1,4 @@
-"use client";
+//"use client";
 
 import Hero from "./components/Hero";
 import Opening from "./components/Opening";
@@ -7,9 +7,9 @@ import Info from "./components/Info";
 import CardsMaze from "./components/CardsMaze";
 import Footer from "./components/Footer";
 
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+//import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-const queryClient = new QueryClient();
+//const queryClient = new QueryClient();
 
 //import StickySection from "./components/StickySection";
 
@@ -19,7 +19,18 @@ const queryClient = new QueryClient();
 
 //gsap.registerPlugin(ScrollTrigger);
 
-export default function Home() {
+async function getMonuments() {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/monumentsCards`, {
+    cache: "no-cache", // или "force-cache" для SSG
+  });
+
+  if (!res.ok) return [];
+
+  return res.json();
+}
+
+export default async function Home() {
+  const monuments = await getMonuments();
   //const [isDesktop, setIsDesktop] = useState(false);
 
   /*
@@ -78,14 +89,14 @@ export default function Home() {
       </div>
     </div>
     */
-    <QueryClientProvider client={queryClient}>
-      <div className="relative scroll-smooth">
-        <Hero />
-        <Opening />
-        <CardsMaze />
-        <Info />
-        <Footer />
-      </div>
-    </QueryClientProvider>
+    //<QueryClientProvider client={queryClient}>
+    <div className="relative scroll-smooth">
+      <Hero />
+      <Opening />
+      <CardsMaze monuments={monuments} />
+      <Info />
+      <Footer />
+    </div>
+    //</QueryClientProvider>
   );
 }
