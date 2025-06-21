@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
 import { prisma } from "./prisma";
 
-export async function getMonumentsFiltered(filters: any) {
+export async function getMonumentsFiltered(filters: any | undefined) {
   try {
     const {
       periodId = [],
@@ -13,7 +13,7 @@ export async function getMonumentsFiltered(filters: any) {
       placeId = [],
       personId = [],
       search,
-    } = filters;
+    } = filters || {};
 
     const where: any = {};
 
@@ -151,9 +151,6 @@ export async function getMonumentsFiltered(filters: any) {
     return monuments;
   } catch (error) {
     console.error(error);
-    return NextResponse.json(
-      { error: "Ошибка при получении памятников" },
-      { status: 500 }
-    );
+    return [];
   }
 }
