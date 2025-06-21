@@ -44,9 +44,10 @@ model E24_Monument {
   appellation_info E41_Appellation_info ? @relation(fields: [appellation_infoId], references: [id], onDelete: Cascade, onUpdate: Cascade) // 1:1
   appellation_infoId Int? @unique
 
-  documents  E31_Document[] // 1:N
+  document E31_Document ? @relation(fields: [documentId], references: [id], onDelete: Cascade, onUpdate: Cascade) // 1:1
+  documentId Int? @unique
 
-  dimensions  E54_Dimension[] // M:N
+  //dimensions  E54_Dimension[] // M:N
 
   place E53_Place? @relation(fields: [placeId], references: [id], onDelete: Cascade, onUpdate: Cascade) // 1:1
   placeId Int? @unique
@@ -146,7 +147,6 @@ model E28_Conceptual_object {
   e24_Monument E24_Monument[]
 }
 
-
 model E41_Appellation_info {
   id Int @id @default(autoincrement())
   value String
@@ -168,11 +168,10 @@ model E31_Document {
   id Int @id @default(autoincrement())
   value String
 
-  information_object_document E73_Information_object_document? @relation(fields: [Information_object_documentId], references: [id], onDelete: Cascade, onUpdate: Cascade) // 1:1
-  Information_object_documentId Int? @unique
+  information_object_document E73_Information_object_document? @relation(fields: [information_object_documentId], references: [id], onDelete: Cascade, onUpdate: Cascade) // 1:1
+  information_object_documentId Int? @unique
 
-  monument   E24_Monument?    @relation(fields: [monumentId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  monumentId Int?          
+  e24_Monument E24_Monument? 
 }
 
 model E73_Information_object_document{
@@ -182,6 +181,7 @@ model E73_Information_object_document{
   e31_Document  E31_Document ?
 }
 
+/*
 model E54_Dimension {
   id             Int               @id @default(autoincrement())
   value          Float  
@@ -200,6 +200,8 @@ model E55_Dimension_type{
   e54_Dimension E54_Dimension[] // 1:N
 }
 
+*/
+
 model E53_Place {
   id           Int              @id @default(autoincrement())
 
@@ -210,9 +212,6 @@ model E53_Place {
 
   appellation_address E41_Appellation_address? @relation(fields: [appellation_addressId], references: [id], onDelete: Cascade, onUpdate: Cascade) // 1:1
   appellation_addressId Int? @unique
-
-  information_object_place E73_Information_object_place? @relation(fields: [information_object_placeId], references: [id], onDelete: Cascade, onUpdate: Cascade) // 1:1
-  information_object_placeId Int? @unique
 }
 
 model E41_Appellation_place {
@@ -230,13 +229,6 @@ model E41_Appellation_address {
 
   coordinates E94_Coordinates? @relation(fields: [coordinatesId], references: [id], onDelete: Cascade, onUpdate: Cascade) // 1:1
   coordinatesId Int? @unique
-}
-
-model E73_Information_object_place{
-  id           Int              @id @default(autoincrement())
-  value String
-
-  e53_Place E53_Place?
 }
 
 model E94_Coordinates {

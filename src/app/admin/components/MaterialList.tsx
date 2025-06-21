@@ -131,8 +131,6 @@ export default function MaterialsList() {
               &times;
             </button>
 
-            <h2 className="text-xl font-semibold mb-4">Новый материал</h2>
-
             <form
               onSubmit={isEditing ? handleUpdate : handleCreate}
               className="space-y-4"
@@ -146,7 +144,7 @@ export default function MaterialsList() {
                   onChange={(e) =>
                     setFormData({ ...formData, name: e.target.value })
                   }
-                  className="w-full p-2 border rounded"
+                  className="w-full p-2 border"
                   required
                 />
               </div>
@@ -155,18 +153,17 @@ export default function MaterialsList() {
                 <button
                   type="button"
                   onClick={() => setShowFormModal(false)}
-                  className="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400"
+                  className="p-2 rounded-full hover:scale-110 transition-transform duration-300"
+                  style={{ border: "1px solid black" }}
                 >
                   Отмена
                 </button>
-                <h2 className="text-xl font-semibold mb-4">
-                  {isEditing ? "Редактировать" : "Новый"}
-                </h2>
 
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 disabled:bg-gray-400"
+                  className="p-2 rounded-full hover:scale-110 transition-transform duration-300"
+                  style={{ border: "1px solid black" }}
                 >
                   {isLoading
                     ? isEditing
@@ -182,56 +179,63 @@ export default function MaterialsList() {
         </div>
       )}
 
-      <table className="w-full table-auto border-collapse border border-gray-300">
-        <thead>
-          <tr className="bg-gray-100">
-            <th className="border border-gray-300 px-4 py-2">ID</th>
-            <th className="border border-gray-300 px-4 py-2">Название</th>
-            {/* Добавь другие заголовки */}
-          </tr>
-        </thead>
-        <tbody>
-          {materials.map((material: any) => (
-            <tr
-              key={material.id}
-              onClick={() => setSelectedId(material.id)}
-              className={`cursor-pointer ${
-                selectedId === material.id ? "bg-blue-100" : ""
-              }`}
-            >
-              <td className="border border-gray-300 px-4 py-2">
-                {material?.id}
-              </td>
-              <td className="border border-gray-300 px-4 py-2">
-                {material?.value}
-              </td>
+      <div className="flex flex-col gap-8">
+        <table className="w-full table-auto">
+          <thead>
+            <tr className="border-[var(--dark)]">
+              <th className="border border-[var(--dark)] px-4 py-2">ID</th>
+              <th className="border border-[var(--dark)] px-4 py-2">
+                Название
+              </th>
+              {/* Добавь другие заголовки */}
             </tr>
-          ))}
-        </tbody>
-      </table>
-      <div className="flex mt-4">
-        {selectedId && (
-          <button
-            onClick={() => handleDelete(selectedId)}
-            className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-            disabled={isLoading}
-          >
-            {isLoading ? "Удаление..." : `Удалить ID ${selectedId}`}
-          </button>
-        )}
+          </thead>
+          <tbody>
+            {materials.map((material: any) => (
+              <tr
+                key={material.id}
+                onClick={() => setSelectedId(material.id)}
+                className={`cursor-pointer ${
+                  selectedId === material.id ? "bg-blue-100" : ""
+                }`}
+              >
+                <td className="border border-[var(--dark)] px-4 py-2">
+                  {material?.id}
+                </td>
+                <td className="border border-[var(--dark)] px-4 py-2">
+                  {material?.value}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <div className="flex gap-8">
+          {selectedId && (
+            <button
+              onClick={() => handleDelete(selectedId)}
+              className="p-2 rounded-full hover:scale-110 transition-transform duration-300"
+              style={{ border: "1px solid black" }}
+              disabled={isLoading}
+            >
+              {isLoading ? "Удаление..." : `Удалить ID ${selectedId}`}
+            </button>
+          )}
 
-        <button
-          onClick={() => setShowFormModal(true)}
-          className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
-        >
-          Добавить
-        </button>
-        <button
-          onClick={handleEditClick}
-          className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 mr-2"
-        >
-          Изменить
-        </button>
+          <button
+            onClick={() => setShowFormModal(true)}
+            className="p-2 rounded-full hover:scale-110 transition-transform duration-300"
+            style={{ border: "1px solid black" }}
+          >
+            Добавить
+          </button>
+          <button
+            onClick={handleEditClick}
+            className="p-2 rounded-full hover:scale-110 transition-transform duration-300"
+            style={{ border: "1px solid black" }}
+          >
+            Изменить
+          </button>
+        </div>
       </div>
     </div>
   );

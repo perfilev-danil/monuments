@@ -27,14 +27,9 @@ export async function GET(request: Request) {
             information_object_info: true,
           },
         },
-        documents: {
+        document: {
           include: {
             information_object_document: true,
-          },
-        },
-        dimensions: {
-          include: {
-            dimension_type: true,
           },
         },
         personalities: {
@@ -52,7 +47,6 @@ export async function GET(request: Request) {
                 coordinates: true,
               },
             },
-            information_object_place: true,
           },
         },
         events: {
@@ -88,6 +82,8 @@ export async function POST(request: NextRequest) {
     const registry_link = formData.get("registry_link") as string;
     const info = formData.get("info") as string;
     const info_link = formData.get("info_link") as string;
+    const document = formData.get("document") as string;
+    const document_link = formData.get("document_link") as string;
 
     const period = formData.get("period") as string;
     const location = formData.get("location") as string;
@@ -103,6 +99,26 @@ export async function POST(request: NextRequest) {
     const eventsIds = (formData.getAll("events") as string[]).map((id) => ({
       id: parseInt(id),
     }));
+
+    const marksIds = (formData.getAll("marks") as string[]).map((id) => ({
+      id: parseInt(id),
+    }));
+
+    const techniquesIds = (formData.getAll("techniques") as string[]).map(
+      (id) => ({
+        id: parseInt(id),
+      })
+    );
+
+    const colorsIds = (formData.getAll("colors") as string[]).map((id) => ({
+      id: parseInt(id),
+    }));
+
+    const materialsIds = (formData.getAll("materials") as string[]).map(
+      (id) => ({
+        id: parseInt(id),
+      })
+    );
 
     const images = formData.getAll("images") as File[];
 
@@ -153,6 +169,16 @@ export async function POST(request: NextRequest) {
             },
           },
         },
+        document: {
+          create: {
+            value: document,
+            information_object_document: {
+              create: {
+                value: document_link,
+              },
+            },
+          },
+        },
         period: period ? { connect: { id: parseInt(period) } } : undefined,
         place: {
           create: {
@@ -172,6 +198,18 @@ export async function POST(request: NextRequest) {
         },
         events: {
           connect: eventsIds,
+        },
+        marks: {
+          connect: marksIds,
+        },
+        techniques: {
+          connect: techniquesIds,
+        },
+        colors: {
+          connect: colorsIds,
+        },
+        materials: {
+          connect: materialsIds,
         },
         images: {
           create: await Promise.all(
@@ -202,6 +240,11 @@ export async function POST(request: NextRequest) {
             information_object_info: true,
           },
         },
+        document: {
+          include: {
+            information_object_document: true,
+          },
+        },
         period: true,
         place: {
           include: {
@@ -224,6 +267,10 @@ export async function POST(request: NextRequest) {
             time_span: true,
           },
         },
+        marks: true,
+        techniques: true,
+        colors: true,
+        materials: true,
         images: true,
       },
     });

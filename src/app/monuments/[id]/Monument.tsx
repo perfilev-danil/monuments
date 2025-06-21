@@ -130,16 +130,6 @@ export default function Monument() {
                   ))}
                 </div>
               </div>
-              <div className="grid grid-cols-6">
-                <span className="col-span-2 lg:col-span-1">Размеры</span>
-                <div className="col-span-4 lg:col-span-5">
-                  {monument?.dimensions?.map((dimension: any) => (
-                    <p key={dimension?.id}>
-                      {dimension?.dimension_type?.value} - {dimension?.value}
-                    </p>
-                  ))}
-                </div>
-              </div>
               <div className="grid grid-cols-6 items-end">
                 <span className="col-span-2 lg:col-span-1">
                   Населённый пункт
@@ -154,19 +144,6 @@ export default function Monument() {
                   <p className="">
                     {monument?.place?.appellation_address?.value}
                   </p>
-                  {monument?.place?.information_object_place?.value && (
-                    <Link
-                      href={monument?.place?.information_object_place?.value}
-                      className="relative w-4 h-4 cursor-pointer shrink-0 hover:scale-110 transition-transform duration-300"
-                    >
-                      <Image
-                        src="/images/icons/link.png"
-                        alt=""
-                        fill
-                        sizes="(max-width: 768px) 60vw"
-                      />
-                    </Link>
-                  )}
                 </div>
               </div>
               <div className="grid grid-cols-6">

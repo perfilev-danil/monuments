@@ -125,15 +125,13 @@ export default function ColorsList() {
       {/* Модальное окно */}
       {showFormModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 max-w-lg w-full relative">
+          <div className="bg-white p-8 max-w-lg w-full relative">
             <button
               className="absolute top-2 right-2 text-gray-500 hover:text-gray-800 text-xl"
               onClick={() => setShowFormModal(false)}
             >
               &times;
             </button>
-
-            <h2 className="text-xl font-semibold mb-4">Новый цвет</h2>
 
             <form
               onSubmit={isEditing ? handleUpdate : handleCreate}
@@ -148,19 +146,19 @@ export default function ColorsList() {
                   onChange={(e) =>
                     setFormData({ ...formData, name: e.target.value })
                   }
-                  className="w-full p-2 border rounded"
+                  className="w-full p-2 border"
                   required
                 />
               </div>
               <div>
                 <label className="block mb-1">Код</label>
-                <textarea
+                <input
                   value={formData.code}
                   onChange={(e) =>
                     setFormData({ ...formData, code: e.target.value })
                   }
-                  className="w-full p-2 border rounded"
-                  rows={3}
+                  className="w-full p-2 border"
+                  required
                 />
               </div>
 
@@ -168,18 +166,17 @@ export default function ColorsList() {
                 <button
                   type="button"
                   onClick={() => setShowFormModal(false)}
-                  className="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400"
+                  className="p-2 rounded-full hover:scale-110 transition-transform duration-300"
+                  style={{ border: "1px solid black" }}
                 >
                   Отмена
                 </button>
-                <h2 className="text-xl font-semibold mb-4">
-                  {isEditing ? "Редактировать памятник" : "Новый памятник"}
-                </h2>
 
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 disabled:bg-gray-400"
+                  className="p-2 rounded-full hover:scale-110 transition-transform duration-300"
+                  style={{ border: "1px solid black" }}
                 >
                   {isLoading
                     ? isEditing
@@ -195,58 +192,67 @@ export default function ColorsList() {
         </div>
       )}
 
-      <table className="w-full table-auto border-collapse border border-gray-300">
-        <thead>
-          <tr className="bg-gray-100">
-            <th className="border border-gray-300 px-4 py-2">ID</th>
-            <th className="border border-gray-300 px-4 py-2">Название</th>
-            <th className="border border-gray-300 px-4 py-2">Код</th>
-            {/* Добавь другие заголовки */}
-          </tr>
-        </thead>
-        <tbody>
-          {colors.map((color: any) => (
-            <tr
-              key={color.id}
-              onClick={() => setSelectedId(color.id)}
-              className={`cursor-pointer ${
-                selectedId === color.id ? "bg-blue-100" : ""
-              }`}
-            >
-              <td className="border border-gray-300 px-4 py-2">{color?.id}</td>
-              <td className="border border-gray-300 px-4 py-2">
-                {color?.value}
-              </td>
-              <td className="border border-gray-300 px-4 py-2">
-                {color?.code}
-              </td>
+      <div className="flex flex-col gap-8">
+        <table className="w-full table-auto">
+          <thead>
+            <tr className="border-[var(--dark)]">
+              <th className="border border-[var(--dark)] px-4 py-2">ID</th>
+              <th className="border border-[var(--dark)] px-4 py-2">
+                Название
+              </th>
+              <th className="border border-[var(--dark)] px-4 py-2">Код</th>
+              {/* Добавь другие заголовки */}
             </tr>
-          ))}
-        </tbody>
-      </table>
-      <div className="flex mt-4">
-        {selectedId && (
-          <button
-            onClick={() => handleDelete(selectedId)}
-            className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-            disabled={isLoading}
-          >
-            {isLoading ? "Удаление..." : `Удалить цвет ID ${selectedId}`}
-          </button>
-        )}
+          </thead>
+          <tbody>
+            {colors.map((color: any) => (
+              <tr
+                key={color.id}
+                onClick={() => setSelectedId(color.id)}
+                className={`cursor-pointer ${
+                  selectedId === color.id ? "bg-blue-100" : ""
+                }`}
+              >
+                <td className="border border-[var(--dark)] px-4 py-2">
+                  {color?.id}
+                </td>
+                <td className="border border-[var(--dark)] px-4 py-2">
+                  {color?.value}
+                </td>
+                <td className="border border-[var(--dark)] px-4 py-2">
+                  {color?.code}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <div className="flex gap-8">
+          {selectedId && (
+            <button
+              onClick={() => handleDelete(selectedId)}
+              className="p-2 rounded-full hover:scale-110 transition-transform duration-300"
+              style={{ border: "1px solid black" }}
+              disabled={isLoading}
+            >
+              {isLoading ? "Удаление..." : `Удалить ID ${selectedId}`}
+            </button>
+          )}
 
-        <button
-          onClick={() => setShowFormModal(true)}
-          className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
-        >
-          Добавить цвет
-        </button>
-        <button
-          onClick={handleEditClick}
-          className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 mr-2"
-        >
-          Изменить
-        </button>
+          <button
+            onClick={() => setShowFormModal(true)}
+            className="p-2 rounded-full hover:scale-110 transition-transform duration-300"
+            style={{ border: "1px solid black" }}
+          >
+            Добавить
+          </button>
+          <button
+            onClick={handleEditClick}
+            className="p-2 rounded-full hover:scale-110 transition-transform duration-300"
+            style={{ border: "1px solid black" }}
+          >
+            Изменить
+          </button>
+        </div>
       </div>
     </div>
   );

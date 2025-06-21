@@ -41,14 +41,9 @@ export async function GET(
             information_object_info: true,
           },
         },
-        documents: {
+        document: {
           include: {
             information_object_document: true,
-          },
-        },
-        dimensions: {
-          include: {
-            dimension_type: true,
           },
         },
         personalities: {
@@ -66,7 +61,6 @@ export async function GET(
                 coordinates: true,
               },
             },
-            information_object_place: true,
           },
         },
         events: {

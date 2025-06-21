@@ -10,6 +10,10 @@ export default function MonumentsList() {
   const [locations, setLocations] = useState<any>([]);
   const [periods, setPeriods] = useState<any>([]);
   const [events, setEvents] = useState<any>([]);
+  const [marks, setMarks] = useState<any>([]);
+  const [techniques, setTechniques] = useState<any>([]);
+  const [colors, setColors] = useState<any>([]);
+  const [materials, setMaterials] = useState<any>([]);
 
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [showFormModal, setShowFormModal] = useState(false);
@@ -25,6 +29,8 @@ export default function MonumentsList() {
     registry_link: "",
     info: "",
     info_link: "",
+    document: "",
+    document_link: "",
 
     period: "",
     location: "",
@@ -34,6 +40,10 @@ export default function MonumentsList() {
 
     personalities: [] as string[],
     events: [] as string[],
+    marks: [] as string[],
+    techniques: [] as string[],
+    colors: [] as string[],
+    materials: [] as string[],
 
     images: [] as File[],
   });
@@ -90,6 +100,58 @@ export default function MonumentsList() {
       }
     };
 
+    const fetchMarks = async () => {
+      try {
+        const response = await fetch("/api/admin/marks");
+        if (!response.ok) throw new Error("Ошибка загрузки");
+        const data = await response.json();
+        setMarks(data);
+      } catch (error: any) {
+        console.error(error.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    const fetchTechniques = async () => {
+      try {
+        const response = await fetch("/api/admin/techniques");
+        if (!response.ok) throw new Error("Ошибка загрузки");
+        const data = await response.json();
+        setTechniques(data);
+      } catch (error: any) {
+        console.error(error.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    const fetchColors = async () => {
+      try {
+        const response = await fetch("/api/admin/colors");
+        if (!response.ok) throw new Error("Ошибка загрузки");
+        const data = await response.json();
+        setColors(data);
+      } catch (error: any) {
+        console.error(error.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    const fetchMaterials = async () => {
+      try {
+        const response = await fetch("/api/admin/materials");
+        if (!response.ok) throw new Error("Ошибка загрузки");
+        const data = await response.json();
+        setMaterials(data);
+      } catch (error: any) {
+        console.error(error.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
     const fetchMonuments = async () => {
       try {
         const response = await fetch("/api/admin/monuments");
@@ -107,6 +169,10 @@ export default function MonumentsList() {
     fetchLocations();
     fetchPersonalities();
     fetchEvents();
+    fetchMarks();
+    fetchTechniques();
+    fetchColors();
+    fetchMaterials();
     fetchMonuments();
   }, []);
 
@@ -124,6 +190,8 @@ export default function MonumentsList() {
     form.append("registry_link", formData.registry_link);
     form.append("info", formData.info);
     form.append("info_link", formData.info_link);
+    form.append("document", formData.document);
+    form.append("document_link", formData.document_link);
 
     form.append("period", formData.period);
     form.append("location", formData.location);
@@ -138,6 +206,22 @@ export default function MonumentsList() {
 
     for (const eventId of formData.events) {
       form.append("events", eventId);
+    }
+
+    for (const markId of formData.marks) {
+      form.append("marks", markId);
+    }
+
+    for (const techniqueId of formData.techniques) {
+      form.append("techniques", techniqueId);
+    }
+
+    for (const colorId of formData.colors) {
+      form.append("colors", colorId);
+    }
+
+    for (const materialId of formData.materials) {
+      form.append("materials", materialId);
     }
 
     for (const file of formData.images) {
@@ -163,6 +247,8 @@ export default function MonumentsList() {
         registry_link: "",
         info: "",
         info_link: "",
+        document: "",
+        document_link: "",
         period: "",
         location: "",
         address: "",
@@ -170,6 +256,10 @@ export default function MonumentsList() {
         lat: "",
         personalities: [],
         events: [],
+        marks: [],
+        techniques: [],
+        colors: [],
+        materials: [],
         images: [],
       });
       setShowFormModal(false);
@@ -197,6 +287,9 @@ export default function MonumentsList() {
       info: monument?.appellation_info?.value || "",
       info_link:
         monument?.appellation_info?.information_object_info?.value || "",
+      document: monument?.document?.value || "",
+      document_link:
+        monument?.document?.information_object_document?.value || "",
 
       period: monument?.periodId?.toString() || "",
       location: monument?.place?.appellation_place?.id.toString() || "",
@@ -209,7 +302,10 @@ export default function MonumentsList() {
         monument?.personalities?.map((p: any) => p.id.toString()) || [],
 
       events: monument?.events?.map((p: any) => p.id.toString()) || [],
-
+      marks: monument?.marks?.map((p: any) => p.id.toString()) || [],
+      techniques: monument?.techniques?.map((p: any) => p.id.toString()) || [],
+      colors: monument?.colors?.map((p: any) => p.id.toString()) || [],
+      materials: monument?.materials?.map((p: any) => p.id.toString()) || [],
       images: [],
     });
 
@@ -233,6 +329,8 @@ export default function MonumentsList() {
     form.append("registry_link", formData.registry_link);
     form.append("info", formData.info);
     form.append("info_link", formData.info_link);
+    form.append("document", formData.document);
+    form.append("document_link", formData.document_link);
     form.append("period", formData.period);
     form.append("location", formData.location);
 
@@ -246,6 +344,22 @@ export default function MonumentsList() {
 
     for (const eventId of formData.events) {
       form.append("events", eventId);
+    }
+
+    for (const markId of formData.marks) {
+      form.append("marks", markId);
+    }
+
+    for (const techniqueId of formData.techniques) {
+      form.append("techniques", techniqueId);
+    }
+
+    for (const colorId of formData.colors) {
+      form.append("colors", colorId);
+    }
+
+    for (const materialId of formData.materials) {
+      form.append("techniques", materialId);
     }
 
     for (const file of formData.images) {
@@ -275,6 +389,8 @@ export default function MonumentsList() {
         registry_link: "",
         info: "",
         info_link: "",
+        document: "",
+        document_link: "",
         period: "",
         location: "",
         address: "",
@@ -282,6 +398,10 @@ export default function MonumentsList() {
         lat: "",
         personalities: [],
         events: [],
+        marks: [],
+        techniques: [],
+        colors: [],
+        materials: [],
         images: [],
       });
       setShowFormModal(false);
@@ -333,7 +453,7 @@ export default function MonumentsList() {
               encType="multipart/form-data"
             >
               <div className="flex gap-8">
-                <div className="flex flex-col gap-8">
+                <div className="w-1/5 flex flex-col gap-8">
                   <div>
                     <label className="block mb-1">Название:</label>
                     <input
@@ -342,13 +462,14 @@ export default function MonumentsList() {
                       onChange={(e) =>
                         setFormData({ ...formData, name: e.target.value })
                       }
-                      className="w-full p-2 border rounded"
+                      className="w-full p-2 border"
                       required
                     />
                   </div>
                   <div>
                     <label className="block mb-1">Описание:</label>
-                    <textarea
+                    <input
+                      type="text"
                       value={formData.description}
                       onChange={(e) =>
                         setFormData({
@@ -356,8 +477,8 @@ export default function MonumentsList() {
                           description: e.target.value,
                         })
                       }
-                      className="w-full p-2 border rounded"
-                      rows={3}
+                      className="w-full p-2 border"
+                      required
                     />
                   </div>
 
@@ -369,7 +490,7 @@ export default function MonumentsList() {
                       onChange={(e) =>
                         setFormData({ ...formData, year: e.target.value })
                       }
-                      className="w-full p-2 border rounded"
+                      className="w-full p-2 border"
                       required
                     />
                   </div>
@@ -382,7 +503,7 @@ export default function MonumentsList() {
                       onChange={(e) =>
                         setFormData({ ...formData, concept: e.target.value })
                       }
-                      className="w-full p-2 border rounded"
+                      className="w-full p-2 border"
                     />
                   </div>
 
@@ -397,12 +518,10 @@ export default function MonumentsList() {
                           inscription: e.target.value,
                         })
                       }
-                      className="w-full p-2 border rounded"
+                      className="w-full p-2 border"
                     />
                   </div>
-                </div>
 
-                <div className="flex flex-col gap-8">
                   <div>
                     <label className="block mb-1">
                       Номер в гос. реестре ОКН:
@@ -413,10 +532,12 @@ export default function MonumentsList() {
                       onChange={(e) =>
                         setFormData({ ...formData, registry: e.target.value })
                       }
-                      className="w-full p-2 border rounded"
+                      className="w-full p-2 border"
                     />
                   </div>
+                </div>
 
+                <div className="w-1/5 flex flex-col gap-8">
                   <div>
                     <label className="block mb-1">
                       Ссылка на гос. реестр ОКН:
@@ -430,7 +551,7 @@ export default function MonumentsList() {
                           registry_link: e.target.value,
                         })
                       }
-                      className="w-full p-2 border rounded"
+                      className="w-full p-2 border"
                     />
                   </div>
 
@@ -442,7 +563,7 @@ export default function MonumentsList() {
                       onChange={(e) =>
                         setFormData({ ...formData, info: e.target.value })
                       }
-                      className="w-full p-2 border rounded"
+                      className="w-full p-2 border"
                     />
                   </div>
 
@@ -457,56 +578,8 @@ export default function MonumentsList() {
                           info_link: e.target.value,
                         })
                       }
-                      className="w-full p-2 border rounded"
+                      className="w-full p-2 border"
                     />
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-8">
-                  <div>
-                    <label className="block mb-1">Период</label>
-                    <select
-                      name="period"
-                      value={formData.period || ""}
-                      onChange={(e) => {
-                        setFormData({
-                          ...formData,
-                          period: e.target.value,
-                        });
-                      }}
-                      className="w-full p-2 border rounded"
-                    >
-                      <option value="">Выберите период</option>
-                      {periods.map((period: any) => (
-                        <option key={period.id} value={period.id}>
-                          {period?.value}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-8">
-                  <div>
-                    <label className="block mb-1">Населённый пункт</label>
-                    <select
-                      name="location"
-                      value={formData.location || ""}
-                      onChange={(e) => {
-                        setFormData({
-                          ...formData,
-                          location: e.target.value,
-                        });
-                      }}
-                      className="w-full p-2 border rounded"
-                    >
-                      <option value="">Выберите населённый пункт</option>
-                      {locations.map((location: any) => (
-                        <option key={location.id} value={location.id}>
-                          {location?.value}
-                        </option>
-                      ))}
-                    </select>
                   </div>
 
                   <div>
@@ -520,7 +593,7 @@ export default function MonumentsList() {
                           address: e.target.value,
                         })
                       }
-                      className="w-full p-2 border rounded"
+                      className="w-full p-2 border"
                     />
                   </div>
 
@@ -535,7 +608,7 @@ export default function MonumentsList() {
                           lon: e.target.value,
                         })
                       }
-                      className="w-full p-2 border rounded"
+                      className="w-full p-2 border"
                     />
                   </div>
 
@@ -550,32 +623,81 @@ export default function MonumentsList() {
                           lat: e.target.value,
                         })
                       }
-                      className="w-full p-2 border rounded"
+                      className="w-full p-2 border"
                     />
                   </div>
                 </div>
 
-                <div className="flex flex-col gap-8">
+                <div className="w-1/5 flex flex-col gap-8">
                   <div>
-                    <label className="block mb-1">Личности</label>
-                    <select
-                      name="personalities"
-                      multiple
-                      value={formData.personalities}
-                      onChange={(e) => {
-                        const selectedOptions = Array.from(
-                          e.target.selectedOptions
-                        ).map((option) => option.value);
+                    <label className="block mb-1">Документ(ы)</label>
+                    <input
+                      type="text"
+                      value={formData.document}
+                      onChange={(e) =>
                         setFormData({
                           ...formData,
-                          personalities: selectedOptions,
+                          document: e.target.value,
+                        })
+                      }
+                      className="w-full p-2 border"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block mb-1">Ссылка на документ(ы)</label>
+                    <input
+                      type="text"
+                      value={formData.document_link}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          document_link: e.target.value,
+                        })
+                      }
+                      className="w-full p-2 border"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block mb-1">Период</label>
+                    <select
+                      name="period"
+                      value={formData.period || ""}
+                      onChange={(e) => {
+                        setFormData({
+                          ...formData,
+                          period: e.target.value,
                         });
                       }}
-                      className="w-full p-2 border rounded h-40"
+                      className="w-full p-2 border"
                     >
-                      {personalities.map((personality: any) => (
-                        <option key={personality.id} value={personality.id}>
-                          {personality?.appellation_personality?.value}
+                      <option value="">Выберите период</option>
+                      {periods.map((period: any) => (
+                        <option key={period.id} value={period.id}>
+                          {period?.value}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block mb-1">Населённый пункт</label>
+                    <select
+                      name="location"
+                      value={formData.location || ""}
+                      onChange={(e) => {
+                        setFormData({
+                          ...formData,
+                          location: e.target.value,
+                        });
+                      }}
+                      className="w-full p-2 border"
+                    >
+                      <option value="">Выберите населённый пункт</option>
+                      {locations.map((location: any) => (
+                        <option key={location.id} value={location.id}>
+                          {location?.value}
                         </option>
                       ))}
                     </select>
@@ -596,7 +718,7 @@ export default function MonumentsList() {
                           events: selectedOptions,
                         });
                       }}
-                      className="w-full p-2 border rounded h-40"
+                      className="w-full p-2 border h-36"
                     >
                       {events.map((event: any) => (
                         <option key={event.id} value={event.id}>
@@ -605,6 +727,135 @@ export default function MonumentsList() {
                             ? ` -  ${event?.time_span?.end}`
                             : ""}{" "}
                           - {event?.appellation_event?.value}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+
+                <div className="w-1/5 flex flex-col gap-8">
+                  <div className="">
+                    <label className="block mb-1">Символы</label>
+                    <select
+                      name="marks"
+                      multiple
+                      value={formData.marks}
+                      onChange={(e) => {
+                        const selectedOptions = Array.from(
+                          e.target.selectedOptions
+                        ).map((option) => option.value);
+                        setFormData({
+                          ...formData,
+                          marks: selectedOptions,
+                        });
+                      }}
+                      className="w-full p-2 border h-36"
+                    >
+                      {marks.map((mark: any) => (
+                        <option key={mark.id} value={mark.id}>
+                          {mark?.value}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div className="">
+                    <label className="block mb-1">Техники</label>
+                    <select
+                      name="techniques"
+                      multiple
+                      value={formData.techniques}
+                      onChange={(e) => {
+                        const selectedOptions = Array.from(
+                          e.target.selectedOptions
+                        ).map((option) => option.value);
+                        setFormData({
+                          ...formData,
+                          techniques: selectedOptions,
+                        });
+                      }}
+                      className="w-full p-2 border h-36"
+                    >
+                      {techniques.map((technique: any) => (
+                        <option key={technique.id} value={technique.id}>
+                          {technique?.value}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div className="">
+                    <label className="block mb-1">Цвета</label>
+                    <select
+                      name="colors"
+                      multiple
+                      value={formData.colors}
+                      onChange={(e) => {
+                        const selectedOptions = Array.from(
+                          e.target.selectedOptions
+                        ).map((option) => option.value);
+                        setFormData({
+                          ...formData,
+                          colors: selectedOptions,
+                        });
+                      }}
+                      className="w-full p-2 border h-36"
+                    >
+                      {colors.map((color: any) => (
+                        <option key={color.id} value={color.id}>
+                          {color?.value}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+
+                <div className="w-1/5 flex flex-col gap-8">
+                  <div className="">
+                    <label className="block mb-1">Материалы</label>
+                    <select
+                      name="materials"
+                      multiple
+                      value={formData.materials}
+                      onChange={(e) => {
+                        const selectedOptions = Array.from(
+                          e.target.selectedOptions
+                        ).map((option) => option.value);
+                        setFormData({
+                          ...formData,
+                          materials: selectedOptions,
+                        });
+                      }}
+                      className="w-full p-2 border h-36"
+                    >
+                      {materials.map((material: any) => (
+                        <option key={material.id} value={material.id}>
+                          {material?.value}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block mb-1">Личности</label>
+                    <select
+                      name="personalities"
+                      multiple
+                      value={formData.personalities}
+                      onChange={(e) => {
+                        const selectedOptions = Array.from(
+                          e.target.selectedOptions
+                        ).map((option) => option.value);
+                        setFormData({
+                          ...formData,
+                          personalities: selectedOptions,
+                        });
+                      }}
+                      className="w-full p-2 border h-36"
+                    >
+                      {personalities.map((personality: any) => (
+                        <option key={personality.id} value={personality.id}>
+                          {personality?.appellation_personality?.value}
                         </option>
                       ))}
                     </select>
@@ -622,7 +873,7 @@ export default function MonumentsList() {
                           images: Array.from(e.target.files || []),
                         })
                       }
-                      className="w-full p-2 border rounded"
+                      className="w-full p-2 border"
                     />
                   </div>
                 </div>
@@ -633,7 +884,8 @@ export default function MonumentsList() {
                   <button
                     type="button"
                     onClick={() => setShowFormModal(false)}
-                    className="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400"
+                    className="p-2 rounded-full hover:scale-110 transition-transform duration-300"
+                    style={{ border: "1px solid black" }}
                   >
                     Отмена
                   </button>
@@ -641,7 +893,8 @@ export default function MonumentsList() {
                   <button
                     type="submit"
                     disabled={isLoading}
-                    className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 disabled:bg-gray-400"
+                    className="p-2 rounded-full hover:scale-110 transition-transform duration-300"
+                    style={{ border: "1px solid black" }}
                   >
                     {isLoading
                       ? isEditing
@@ -658,144 +911,213 @@ export default function MonumentsList() {
         </div>
       )}
 
-      <table className="w-full table-auto border-collapse border border-gray-300">
-        <thead>
-          <tr className="bg-gray-100">
-            <th className="border border-gray-300 px-4 py-2">ID</th>
-            <th className="border border-gray-300 px-4 py-2">Название</th>
-            <th className="border border-gray-300 px-4 py-2">Описание</th>
-            <th className="border border-gray-300 px-4 py-2">Год</th>
-            <th className="border border-gray-300 px-4 py-2">
-              Мемориальное значение
-            </th>
-            <th className="border border-gray-300 px-4 py-2">
-              Надпись на табличке
-            </th>
-            <th className="border border-gray-300 px-4 py-2">
-              Номер в гос. реестре ОКН
-            </th>
-            <th className="border border-gray-300 px-4 py-2">
-              Ссылка на гос. реестр ОКН
-            </th>
-            <th className="border border-gray-300 px-4 py-2">Источник</th>
-            <th className="border border-gray-300 px-4 py-2">
-              Ссылка на источник
-            </th>
-            <th className="border border-gray-300 px-4 py-2">Период</th>
-            <th className="border border-gray-300 px-4 py-2">
-              Населённый пункт
-            </th>
-            <th className="border border-gray-300 px-4 py-2">Адрес</th>
-            <th className="border border-gray-300 px-4 py-2">Широта</th>
-            <th className="border border-gray-300 px-4 py-2">Долгота</th>
-            <th className="border border-gray-300 px-4 py-2">Личности</th>
-            <th className="border border-gray-300 px-4 py-2">События</th>
-          </tr>
-        </thead>
-        <tbody>
-          {monuments.map((monument: any) => (
-            <tr
-              key={monument.id}
-              onClick={() => setSelectedId(monument.id)}
-              className={`cursor-pointer ${
-                selectedId === monument.id ? "bg-blue-100" : ""
-              }`}
+      <div className="flex flex-col gap-8">
+        <div className="overflow-x-auto pretty-scrollbar">
+          <table className="w-full table-auto">
+            <thead>
+              <tr className="">
+                <th className="border border-[var(--dark)] px-4 py-2">ID</th>
+                <th className="border border-[var(--dark)] px-4 py-2">
+                  Название
+                </th>
+                <th className="border border-[var(--dark)] px-4 py-2">
+                  Описание
+                </th>
+                <th className="border border-[var(--dark)] px-4 py-2">Год</th>
+                <th className="border border-[var(--dark)] px-4 py-2">
+                  Мемориальное значение
+                </th>
+                <th className="border border-[var(--dark)] px-4 py-2">
+                  Надпись на табличке
+                </th>
+                <th className="border border-[var(--dark)] px-4 py-2">
+                  Номер в гос. реестре ОКН
+                </th>
+                <th className="border border-[var(--dark)] px-4 py-2">
+                  Ссылка на гос. реестр ОКН
+                </th>
+                <th className="border border-[var(--dark)] px-4 py-2">
+                  Источник
+                </th>
+                <th className="border border-[var(--dark)] px-4 py-2">
+                  Ссылка на источник
+                </th>
+                <th className="border border-[var(--dark)] px-4 py-2">
+                  Документ(ы)
+                </th>
+                <th className="border border-[var(--dark)] px-4 py-2">
+                  Ссылка на документ(ы)
+                </th>
+                <th className="border border-[var(--dark)] px-4 py-2">
+                  Период
+                </th>
+                <th className="border border-[var(--dark)] px-4 py-2">
+                  Населённый пункт
+                </th>
+                <th className="border border-[var(--dark)] px-4 py-2">Адрес</th>
+                <th className="border border-[var(--dark)] px-4 py-2">
+                  Широта
+                </th>
+                <th className="border border-[var(--dark)] px-4 py-2">
+                  Долгота
+                </th>
+                <th className="border border-[var(--dark)] px-4 py-2">
+                  Личности
+                </th>
+                <th className="border border-[var(--dark)] px-4 py-2">
+                  События
+                </th>
+                <th className="border border-[var(--dark)] px-4 py-2">
+                  Символы
+                </th>
+                <th className="border border-[var(--dark)] px-4 py-2">
+                  Техники
+                </th>
+                <th className="border border-[var(--dark)] px-4 py-2">Цвета</th>
+                <th className="border border-[var(--dark)] px-4 py-2">
+                  Материалы
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {monuments.map((monument: any) => (
+                <tr
+                  key={monument.id}
+                  onClick={() => setSelectedId(monument.id)}
+                  className={`cursor-pointer ${
+                    selectedId === monument.id ? "bg-blue-100" : ""
+                  }`}
+                >
+                  <td className="border border-[var(--dark)] px-4 py-2">
+                    {monument?.id}
+                  </td>
+                  <td className="border border-[var(--dark)] px-4 py-2">
+                    {monument?.appellation_monument?.value}
+                  </td>
+                  <td className="border border-[var(--dark)] px-4 py-2">
+                    {monument?.description_monument?.value}
+                  </td>
+                  <td className="border border-[var(--dark)] px-4 py-2">
+                    {monument?.year?.value}
+                  </td>
+                  <td className="border border-[var(--dark)] px-4 py-2">
+                    {monument?.conceptual_object?.value}
+                  </td>
+                  <td className="border border-[var(--dark)] px-4 py-2">
+                    {monument?.inscription?.value}
+                  </td>
+                  <td className="border border-[var(--dark)] px-4 py-2">
+                    {monument?.appellation_registry?.value}
+                  </td>
+                  <td className="border border-[var(--dark)] px-4 py-2">
+                    {
+                      monument?.appellation_registry
+                        ?.information_object_registry?.value
+                    }
+                  </td>
+                  <td className="border border-[var(--dark)] px-4 py-2">
+                    {monument?.appellation_info?.value}
+                  </td>
+                  <td className="border border-[var(--dark)] px-4 py-2">
+                    {monument?.appellation_info?.information_object_info?.value}
+                  </td>
+                  <td className="border border-[var(--dark)] px-4 py-2">
+                    {monument?.document?.value}
+                  </td>
+                  <td className="border border-[var(--dark)] px-4 py-2">
+                    {monument?.document?.information_object_document?.value}
+                  </td>
+                  <td className="border border-[var(--dark)] px-4 py-2">
+                    {monument?.period?.value}
+                  </td>
+                  <td className="border border-[var(--dark)] px-4 py-2">
+                    {monument?.place?.appellation_place?.value}
+                  </td>
+                  <td className="border border-[var(--dark)] px-4 py-2">
+                    {monument?.place?.appellation_address?.value}
+                  </td>
+                  <td className="border border-[var(--dark)] px-4 py-2">
+                    {monument?.place?.appellation_address?.coordinates?.lon}
+                  </td>
+                  <td className="border border-[var(--dark)] px-4 py-2">
+                    {monument?.place?.appellation_address?.coordinates?.lat}
+                  </td>
+                  <td className="border border-[var(--dark)] px-4 py-2">
+                    {monument?.personalities?.map(
+                      (personality: any, index: number) => (
+                        <div key={index}>
+                          {personality.appellation_personality?.value}
+                        </div>
+                      )
+                    )}
+                  </td>
+                  <td className="border border-[var(--dark)] px-4 py-2">
+                    {monument?.events?.map((event: any, index: number) => (
+                      <div key={index}>
+                        {event?.time_span?.beginning}{" "}
+                        {event?.time_span?.end
+                          ? ` -  ${event?.time_span?.end}`
+                          : ""}{" "}
+                        - {event?.appellation_event?.value}
+                      </div>
+                    ))}
+                  </td>
+                  <td className="border border-[var(--dark)] px-4 py-2">
+                    {monument?.marks?.map((mark: any, index: number) => (
+                      <div key={index}>{mark?.value}</div>
+                    ))}
+                  </td>
+                  <td className="border border-[var(--dark)] px-4 py-2">
+                    {monument?.techniques?.map(
+                      (technique: any, index: number) => (
+                        <div key={index}>{technique?.value}</div>
+                      )
+                    )}
+                  </td>
+                  <td className="border border-[var(--dark)] px-4 py-2">
+                    {monument?.colors?.map((color: any, index: number) => (
+                      <div key={index}>{color?.value}</div>
+                    ))}
+                  </td>
+                  <td className="border border-[var(--dark)] px-4 py-2">
+                    {monument?.materials?.map(
+                      (material: any, index: number) => (
+                        <div key={index}>{material?.value}</div>
+                      )
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <div className="flex gap-8">
+          {selectedId && (
+            <button
+              onClick={() => handleDelete(selectedId)}
+              className="p-2 rounded-full hover:scale-110 transition-transform duration-300"
+              style={{ border: "1px solid black" }}
+              disabled={isLoading}
             >
-              <td className="border border-gray-300 px-4 py-2">
-                {monument?.id}
-              </td>
-              <td className="border border-gray-300 px-4 py-2">
-                {monument?.appellation_monument?.value}
-              </td>
-              <td className="border border-gray-300 px-4 py-2">
-                {monument?.description_monument?.value}
-              </td>
-              <td className="border border-gray-300 px-4 py-2">
-                {monument?.year?.value}
-              </td>
-              <td className="border border-gray-300 px-4 py-2">
-                {monument?.conceptual_object?.value}
-              </td>
-              <td className="border border-gray-300 px-4 py-2">
-                {monument?.inscription?.value}
-              </td>
-              <td className="border border-gray-300 px-4 py-2">
-                {monument?.appellation_registry?.value}
-              </td>
-              <td className="border border-gray-300 px-4 py-2">
-                {
-                  monument?.appellation_registry?.information_object_registry
-                    ?.value
-                }
-              </td>
-              <td className="border border-gray-300 px-4 py-2">
-                {monument?.appellation_info?.value}
-              </td>
-              <td className="border border-gray-300 px-4 py-2">
-                {monument?.appellation_info?.information_object_info?.value}
-              </td>
-              <td className="border border-gray-300 px-4 py-2">
-                {monument?.period?.value}
-              </td>
-              <td className="border border-gray-300 px-4 py-2">
-                {monument?.place?.appellation_place?.value}
-              </td>
-              <td className="border border-gray-300 px-4 py-2">
-                {monument?.place?.appellation_address?.value}
-              </td>
-              <td className="border border-gray-300 px-4 py-2">
-                {monument?.place?.appellation_address?.coordinates?.lon}
-              </td>
-              <td className="border border-gray-300 px-4 py-2">
-                {monument?.place?.appellation_address?.coordinates?.lat}
-              </td>
-              <td className="border border-gray-300 px-4 py-2">
-                {monument?.personalities?.map(
-                  (personality: any, index: number) => (
-                    <div key={index}>
-                      {personality.appellation_personality?.value}
-                    </div>
-                  )
-                )}
-              </td>
-              <td className="border border-gray-300 px-4 py-2">
-                {monument?.events?.map((event: any, index: number) => (
-                  <div key={index}>
-                    {event?.time_span?.beginning}{" "}
-                    {event?.time_span?.end
-                      ? ` -  ${event?.time_span?.end}`
-                      : ""}{" "}
-                    - {event?.appellation_event?.value}
-                  </div>
-                ))}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <div className="flex mt-4">
-        {selectedId && (
-          <button
-            onClick={() => handleDelete(selectedId)}
-            className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-            disabled={isLoading}
-          >
-            {isLoading ? "Удаление..." : `Удалить памятник ID ${selectedId}`}
-          </button>
-        )}
+              {isLoading ? "Удаление..." : `Удалить ID ${selectedId}`}
+            </button>
+          )}
 
-        <button
-          onClick={() => setShowFormModal(true)}
-          className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
-        >
-          Добавить памятник
-        </button>
-        <button
-          onClick={handleEditClick}
-          className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 mr-2"
-        >
-          Изменить
-        </button>
+          <button
+            onClick={() => setShowFormModal(true)}
+            className="p-2 rounded-full hover:scale-110 transition-transform duration-300"
+            style={{ border: "1px solid black" }}
+          >
+            Добавить
+          </button>
+          <button
+            onClick={handleEditClick}
+            className="p-2 rounded-full hover:scale-110 transition-transform duration-300"
+            style={{ border: "1px solid black" }}
+          >
+            Изменить
+          </button>
+        </div>
       </div>
     </div>
   );

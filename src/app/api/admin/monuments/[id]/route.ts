@@ -59,6 +59,8 @@ export async function PUT(
     const registry_link = formData.get("registry_link") as string;
     const info = formData.get("info") as string;
     const info_link = formData.get("info_link") as string;
+    const document = formData.get("document") as string;
+    const document_link = formData.get("document_link") as string;
 
     const period = formData.get("period") as string;
     const location = formData.get("location") as string;
@@ -76,6 +78,26 @@ export async function PUT(
     const eventsIds = (formData.getAll("events") as string[]).map((id) => ({
       id: parseInt(id),
     }));
+
+    const marksIds = (formData.getAll("marks") as string[]).map((id) => ({
+      id: parseInt(id),
+    }));
+
+    const techniquesIds = (formData.getAll("techniques") as string[]).map(
+      (id) => ({
+        id: parseInt(id),
+      })
+    );
+
+    const colorsIds = (formData.getAll("colors") as string[]).map((id) => ({
+      id: parseInt(id),
+    }));
+
+    const materialsIds = (formData.getAll("materials") as string[]).map(
+      (id) => ({
+        id: parseInt(id),
+      })
+    );
 
     async function saveImages(files: File[]) {
       const savedImages = await Promise.all(
@@ -137,6 +159,16 @@ export async function PUT(
             },
           },
         },
+        document: {
+          update: {
+            value: document,
+            information_object_document: {
+              update: {
+                value: document_link,
+              },
+            },
+          },
+        },
         period: period ? { connect: { id: parseInt(period) } } : undefined,
         place: {
           upsert: {
@@ -191,6 +223,18 @@ export async function PUT(
         events: {
           connect: eventsIds,
         },
+        marks: {
+          connect: marksIds,
+        },
+        techniques: {
+          connect: techniquesIds,
+        },
+        colors: {
+          connect: colorsIds,
+        },
+        materials: {
+          connect: materialsIds,
+        },
         images: {
           createMany: {
             data: savedImagesData.map((img) => ({
@@ -217,6 +261,11 @@ export async function PUT(
             information_object_info: true,
           },
         },
+        document: {
+          include: {
+            information_object_document: true,
+          },
+        },
         period: true,
         place: {
           include: {
@@ -239,6 +288,10 @@ export async function PUT(
             time_span: true,
           },
         },
+        marks: true,
+        techniques: true,
+        colors: true,
+        materials: true,
         images: true,
       },
     });

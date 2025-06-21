@@ -41,14 +41,12 @@ export default function AdminLogin() {
   return (
     <div className="h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-        <h1 className="text-2xl font-bold mb-6 text-center">
-          Вход в админ-панель
+        <h1 className="text-2xl mb-6 text-center font-american">
+          Панель администратора
         </h1>
 
         {error && (
-          <div className="mb-4 p-2 bg-red-100 text-red-700 rounded">
-            {error}
-          </div>
+          <div className="mb-4 p-2 bg-red-100 text-red-700">{error}</div>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -58,7 +56,7 @@ export default function AdminLogin() {
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="w-full px-3 py-2 border rounded"
+              className="w-full px-3 py-2 border"
               required
             />
           </div>
@@ -68,16 +66,15 @@ export default function AdminLogin() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-3 py-2 border rounded"
+              className="w-full px-3 py-2 border"
               required
             />
           </div>
           <button
             type="submit"
             disabled={loading}
-            className={`w-full py-2 px-4 rounded text-white ${
-              loading ? "bg-blue-400" : "bg-blue-600 hover:bg-blue-700"
-            }`}
+            className="w-full p-2 rounded-full hover:scale-110 transition-transform duration-300"
+            style={{ border: "1px solid black" }}
           >
             {loading ? "Вход..." : "Войти"}
           </button>
