@@ -1,5 +1,3 @@
-export const runtime = "nodejs";
-
 import Hero from "./components/Hero";
 import Opening from "./components/Opening";
 

@@ -1,23 +1,8 @@
 import CardsMaze from "./CardsMaze";
-//import { getMonuments } from "../../../lib/getMonuments";
-import { getMonumentsFiltered } from "../../../lib/getMonumentsFiltered";
 
 export default async function CardsMazeServer() {
-  const rawMonuments = await getMonumentsFiltered({
-    periodId: [],
-    materialId: [],
-    colorId: [],
-    techniqueId: [],
-    markId: [],
-    placeId: [],
-    personId: [],
-    search: "",
-  });
-
-  console.log("rawMonuments:", rawMonuments);
-
-  const monuments = JSON.parse(JSON.stringify(rawMonuments));
-
+  const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/monumentsCards`);
+  const monuments = await res.json();
   if (!monuments || monuments.length === 0) {
     return (
       <div className="h-[620px] md:h-[900px] lg:h-screen flex justify-center items-center text-black text-center">

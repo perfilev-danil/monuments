@@ -8,41 +8,15 @@ export async function getMonuments() {
       select: {
         id: true,
         appellation_monument: {
-          select: { value: true },
-        },
-        year: {
-          select: { value: true },
-        },
-        materials: {
-          select: { value: true },
-        },
-        colors: {
-          select: { value: true },
-        },
-        techniques: {
-          select: { value: true },
-        },
-        marks: {
-          select: { value: true },
-        },
-        period: {
-          select: { value: true },
-        },
-        personalities: {
           select: {
-            appellation_personality: {
-              select: { value: true },
-            },
+            id: true,
+            value: true,
           },
         },
-        place: {
+        year: {
           select: {
-            appellation_place: {
-              select: { value: true },
-            },
-            appellation_address: {
-              select: { value: true },
-            },
+            id: true,
+            value: true,
           },
         },
         images: {

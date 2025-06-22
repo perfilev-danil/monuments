@@ -1,3 +1,13 @@
+import { getMonuments } from "../../../../lib/getMonuments";
+import { NextResponse } from "next/server";
+
+export async function GET() {
+  const data = await getMonuments();
+
+  return NextResponse.json(data);
+}
+
+/*
 import { NextResponse } from "next/server";
 import { prisma } from "../../../../lib/prisma";
 
@@ -27,3 +37,5 @@ export async function GET() {
     );
   }
 }
+
+*/
