@@ -15,8 +15,7 @@ export default function Opening() {
             </h2>
             <p className=" leading-relaxed">
               Проект представляет цифровое собрание <br /> памятников
-              приенисейских земель: <br /> Красноярского края, <br /> Хакасии и
-              Тывы
+              Красноярского края, <br /> Хакасии и Тывы
             </p>
           </div>
           <p className=" leading-relaxed">
@@ -30,7 +29,7 @@ export default function Opening() {
         <span className="absolute bottom-0 left-0 right-0 inset-0 font-american text-center text-[20px]">
           ensib-monuments
         </span>
-        <div className="hidden lg:block hover:scale-110 transition-transform duration-300">
+        <div className="hidden lg:block">
           <Link
             href={"https://dashi-art.com/gallery/monuments/trans"}
             className="text-white text-right"
