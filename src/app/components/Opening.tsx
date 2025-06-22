@@ -1,6 +1,6 @@
-import Image from "next/image";
-
 import Header from "./Header";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function Opening() {
   return (
@@ -30,8 +30,13 @@ export default function Opening() {
         <span className="absolute bottom-0 left-0 right-0 inset-0 font-american text-center text-[20px]">
           ensib-monuments
         </span>
-        <div className="hidden lg:block">
-          <p className="text-white text-right">Трансформация</p>
+        <div className="hidden lg:block hover:scale-110 transition-transform duration-300">
+          <Link
+            href={"https://dashi-art.com/gallery/monuments/trans"}
+            className="text-white text-right"
+          >
+            Трансформация <br /> Даши Намдаков
+          </Link>
         </div>
       </div>
 
