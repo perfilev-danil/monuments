@@ -132,7 +132,15 @@ export async function getMonumentsFiltered(filters: any) {
               select: { value: true },
             },
             appellation_address: {
-              select: { value: true },
+              select: {
+                value: true,
+                coordinates: {
+                  select: {
+                    lat: true,
+                    lon: true,
+                  },
+                },
+              },
             },
           },
         },

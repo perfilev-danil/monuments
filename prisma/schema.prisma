@@ -233,8 +233,8 @@ model E41_Appellation_address {
 
 model E94_Coordinates {
   id           Int              @id @default(autoincrement())
-  lon Float?
   lat Float?
+  lon Float?
 
   e41_Appellation_address E41_Appellation_address?
 }

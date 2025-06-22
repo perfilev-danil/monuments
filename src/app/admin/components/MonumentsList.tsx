@@ -35,8 +35,8 @@ export default function MonumentsList() {
     period: "",
     location: "",
     address: "",
-    lon: "",
     lat: "",
+    lon: "",
 
     personalities: [] as string[],
     events: [] as string[],
@@ -215,8 +215,8 @@ export default function MonumentsList() {
     form.append("location", formData.location);
 
     form.append("address", formData.address);
-    form.append("lon", formData.lon);
     form.append("lat", formData.lat);
+    form.append("lon", formData.lon);
 
     for (const personalityId of formData.personalities) {
       form.append("personalities", personalityId);
@@ -273,8 +273,8 @@ export default function MonumentsList() {
         period: "",
         location: "",
         address: "",
-        lon: "",
         lat: "",
+        lon: "",
         personalities: [],
         events: [],
         marks: [],
@@ -316,8 +316,8 @@ export default function MonumentsList() {
       location: monument?.place?.appellation_place?.id.toString() || "",
 
       address: monument?.place?.appellation_address?.value || "",
-      lon: monument?.place?.appellation_address?.coordinates?.lon || "",
       lat: monument?.place?.appellation_address?.coordinates?.lat || "",
+      lon: monument?.place?.appellation_address?.coordinates?.lon || "",
 
       personalities:
         monument?.personalities?.map((p: any) => p.id.toString()) || [],
@@ -356,8 +356,8 @@ export default function MonumentsList() {
     form.append("location", formData.location);
 
     form.append("address", formData.address);
-    form.append("lon", formData.lon);
     form.append("lat", formData.lat);
+    form.append("lon", formData.lon);
 
     for (const personalityId of formData.personalities) {
       form.append("personalities", personalityId);
@@ -418,8 +418,8 @@ export default function MonumentsList() {
         period: "",
         location: "",
         address: "",
-        lon: "",
         lat: "",
+        lon: "",
         personalities: [],
         events: [],
         marks: [],
@@ -628,11 +628,11 @@ export default function MonumentsList() {
                     <label className="block mb-1">Широта:</label>
                     <input
                       type="text"
-                      value={formData.lon}
+                      value={formData.lat}
                       onChange={(e) =>
                         setFormData({
                           ...formData,
-                          lon: e.target.value,
+                          lat: e.target.value,
                         })
                       }
                       className="w-full p-2 border"
@@ -643,11 +643,11 @@ export default function MonumentsList() {
                     <label className="block mb-1">Долгота:</label>
                     <input
                       type="text"
-                      value={formData.lat}
+                      value={formData.lon}
                       onChange={(e) =>
                         setFormData({
                           ...formData,
-                          lat: e.target.value,
+                          lon: e.target.value,
                         })
                       }
                       className="w-full p-2 border"
@@ -1064,10 +1064,10 @@ export default function MonumentsList() {
                     {monument?.place?.appellation_address?.value}
                   </td>
                   <td className="border border-[var(--dark)] px-4 py-2">
-                    {monument?.place?.appellation_address?.coordinates?.lon}
+                    {monument?.place?.appellation_address?.coordinates?.lat}
                   </td>
                   <td className="border border-[var(--dark)] px-4 py-2">
-                    {monument?.place?.appellation_address?.coordinates?.lat}
+                    {monument?.place?.appellation_address?.coordinates?.lon}
                   </td>
                   <td className="border border-[var(--dark)] px-4 py-2">
                     {monument?.personalities?.map(
