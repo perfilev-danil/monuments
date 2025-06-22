@@ -21,7 +21,7 @@ export default function Footer() {
 
         <div className="w-[1px] h-10 bg-white "></div>
         <p>
-          Copyright <br />
+          Copyright ©<br />
           <Link href="https://sfu.ru/ru">
             Сибирский федеральный университет
           </Link>
