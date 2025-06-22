@@ -24,19 +24,22 @@ export default function Opening() {
           </p>
         </div>
       </div>
-      <div className="relative h-[20px] flex items-center lg:justify-between z-20">
-        <span className="hidden lg:block">ensib</span>
+      <div className="relative h-[20px] flex items-center lg:justify-between">
+        <Link
+          href={"https://siberiana.online/"}
+          className="hidden lg:block z-10"
+        >
+          Сибириана
+        </Link>
         <span className="absolute bottom-0 left-0 right-0 inset-0 font-american text-center text-[20px]">
           ensib-monuments
         </span>
-        <div className="hidden lg:block">
-          <Link
-            href={"https://dashi-art.com/gallery/monuments/trans"}
-            className="text-white text-right"
-          >
-            Трансформация <br /> Даши Намдаков
-          </Link>
-        </div>
+        <Link
+          href={"https://dashi-art.com/gallery/monuments/trans"}
+          className="hidden lg:block text-white text-right z-10"
+        >
+          Трансформация <br /> Даши Намдаков
+        </Link>
       </div>
 
       <div className="absolute bottom-0 right-0 w-[60%] lg:w-[30%] h-full">
