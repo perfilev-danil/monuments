@@ -33,10 +33,12 @@ export default function Info() {
                 <h2 className="text-[26px] lg:text-4xl leading-normal text-center lg:text-left">
                   Коллекция памятников
                 </h2>
-                <p className=" text-center lg:text-left text-balance">
+                <p className=" text-center lg:text-left">
                   Откройте Енисейскую Сибирь через её скульптурный эпос, где
-                  формаобретает голос —  о суровом быте, замысле художника и
-                  вековой истории.
+                  каждый <br className="hidden lg:block" /> монумент — голос
+                  прошлого, рассказывающий о закалённых временем{" "}
+                  <br className="hidden lg:block" />
+                  традициях, мастерстве художника и многовековой истории.
                 </p>
                 <Link
                   href={"/collection"}
@@ -48,15 +50,16 @@ export default function Info() {
               </div>
 
               <div className="flex flex-col gap-4 lg:gap-8">
-                <p className=" text-center lg:text-left text-balance">
-                  Откройте Енисейскую Сибирь, где формаобретает голос ысле ху
+                <p className=" text-center lg:text-left ">
+                  "Скульптурная летопись Енисейской Сибири" <br /> Три региона —
+                  одна история.
                 </p>
                 <Link
                   href={"/about"}
                   className="w-max mx-auto lg:mx-0 rounded-full cursor-pointer p-2  hover:scale-110 transition-transform duration-300"
                   style={{ border: "1px solid black" }}
                 >
-                  О проекте
+                  Узнать о проекте
                 </Link>
               </div>
 
