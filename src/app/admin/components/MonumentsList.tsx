@@ -50,7 +50,9 @@ export default function MonumentsList() {
   useEffect(() => {
     const fetchPeriods = async () => {
       try {
-        const response = await fetch("/api/admin/periods");
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_URL}/api/admin/periods`
+        );
         if (!response.ok) throw new Error("Ошибка загрузки");
         const data = await response.json();
         setPeriods(data);
@@ -63,7 +65,9 @@ export default function MonumentsList() {
 
     const fetchLocations = async () => {
       try {
-        const response = await fetch("/api/admin/locations");
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_URL}/api/admin/locations`
+        );
         if (!response.ok) throw new Error("Ошибка загрузки");
         const data = await response.json();
         setLocations(data);
@@ -76,7 +80,9 @@ export default function MonumentsList() {
 
     const fetchPersonalities = async () => {
       try {
-        const response = await fetch("/api/admin/personalities");
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_URL}/api/admin/personalities`
+        );
         if (!response.ok) throw new Error("Ошибка загрузки");
         const data = await response.json();
         setPersonalities(data);
@@ -89,7 +95,9 @@ export default function MonumentsList() {
 
     const fetchEvents = async () => {
       try {
-        const response = await fetch("/api/admin/events");
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_URL}/api/admin/events`
+        );
         if (!response.ok) throw new Error("Ошибка загрузки");
         const data = await response.json();
         setEvents(data);
@@ -102,7 +110,9 @@ export default function MonumentsList() {
 
     const fetchMarks = async () => {
       try {
-        const response = await fetch("/api/admin/marks");
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_URL}/api/admin/marks`
+        );
         if (!response.ok) throw new Error("Ошибка загрузки");
         const data = await response.json();
         setMarks(data);
@@ -115,7 +125,9 @@ export default function MonumentsList() {
 
     const fetchTechniques = async () => {
       try {
-        const response = await fetch("/api/admin/techniques");
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_URL}/api/admin/techniques`
+        );
         if (!response.ok) throw new Error("Ошибка загрузки");
         const data = await response.json();
         setTechniques(data);
@@ -128,7 +140,9 @@ export default function MonumentsList() {
 
     const fetchColors = async () => {
       try {
-        const response = await fetch("/api/admin/colors");
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_URL}/api/admin/colors`
+        );
         if (!response.ok) throw new Error("Ошибка загрузки");
         const data = await response.json();
         setColors(data);
@@ -141,7 +155,9 @@ export default function MonumentsList() {
 
     const fetchMaterials = async () => {
       try {
-        const response = await fetch("/api/admin/materials");
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_URL}/api/admin/materials`
+        );
         if (!response.ok) throw new Error("Ошибка загрузки");
         const data = await response.json();
         setMaterials(data);
@@ -154,7 +170,9 @@ export default function MonumentsList() {
 
     const fetchMonuments = async () => {
       try {
-        const response = await fetch("/api/admin/monuments");
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_URL}/api/admin/monuments`
+        );
         if (!response.ok) throw new Error("Ошибка загрузки");
         const data = await response.json();
         setMonuments(data);
@@ -229,10 +247,13 @@ export default function MonumentsList() {
     }
 
     try {
-      const response = await fetch("/api/admin/monuments", {
-        method: "POST",
-        body: form,
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_URL}/api/admin/monuments`,
+        {
+          method: "POST",
+          body: form,
+        }
+      );
 
       if (!response.ok) throw new Error("Ошибка при создании памятника");
       const created = await response.json();
@@ -367,10 +388,13 @@ export default function MonumentsList() {
     }
 
     try {
-      const response = await fetch(`/api/admin/monuments/${selectedId}`, {
-        method: "PUT",
-        body: form,
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_URL}/api/admin/monuments/${selectedId}`,
+        {
+          method: "PUT",
+          body: form,
+        }
+      );
 
       if (!response.ok) throw new Error("Ошибка при обновлении");
 
@@ -419,9 +443,12 @@ export default function MonumentsList() {
 
     setIsLoading(true);
     try {
-      const response = await fetch(`/api/admin/monuments/${id}`, {
-        method: "DELETE",
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_URL}/api/admin/monuments/${id}`,
+        {
+          method: "DELETE",
+        }
+      );
 
       if (!response.ok) throw new Error("Ошибка удаления");
 

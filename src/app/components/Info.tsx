@@ -52,11 +52,11 @@ export default function Info() {
                   Откройте Енисейскую Сибирь, где формаобретает голос ысле ху
                 </p>
                 <Link
-                  href={"/collection"}
+                  href={"/about"}
                   className="w-max mx-auto lg:mx-0 rounded-full cursor-pointer p-2  hover:scale-110 transition-transform duration-300"
                   style={{ border: "1px solid black" }}
                 >
-                  Изучить карту
+                  О проекте
                 </Link>
               </div>
 
