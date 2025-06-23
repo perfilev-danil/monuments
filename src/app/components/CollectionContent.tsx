@@ -186,7 +186,9 @@ export default function CollectionContent({
   };
 
   const handleSearchSubmit = () => {
+    const params = new URLSearchParams();
     if (searchQuery.trim()) {
+      params.append("search", searchQuery.trim());
       setActiveSearchQuery(searchQuery.trim());
       setSelectedPeriods([]);
       setSelectedMaterials([]);
@@ -197,7 +199,21 @@ export default function CollectionContent({
       setSelectedPersonalities([]);
     } else {
       setActiveSearchQuery("");
+      selectedPeriods.forEach((id) => params.append("periodId", id.toString()));
+      selectedMaterials.forEach((id) =>
+        params.append("materialId", id.toString())
+      );
+      selectedColors.forEach((id) => params.append("colorId", id.toString()));
+      selectedTechniques.forEach((id) =>
+        params.append("techniqueId", id.toString())
+      );
+      selectedMarks.forEach((id) => params.append("markId", id.toString()));
+      selectedPlaces.forEach((id) => params.append("placeId", id.toString()));
+      selectedPersonalities.forEach((id) =>
+        params.append("personId", id.toString())
+      );
     }
+    router.replace(`${pathname}?${params.toString()}`);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
