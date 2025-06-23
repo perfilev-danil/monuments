@@ -289,5 +289,9 @@ export async function POST(request: NextRequest) {
 }
 
 export const config = {
-  runtime: "nodejs",
+  api: {
+    bodyParser: {
+      sizeLimit: "10mb",
+    },
+  },
 };

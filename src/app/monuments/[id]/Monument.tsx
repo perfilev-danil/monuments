@@ -183,8 +183,8 @@ export default function Monument({ monument }: { monument: any }) {
               {monument?.appellation_info?.value && (
                 <div className="grid grid-cols-6 items-end">
                   <span className="col-span-2 lg:col-span-1">Источник</span>
-                  <div className="flex items-center gap-2">
-                    <p className="col-span-4 lg:col-span-5 text-justify">
+                  <div className="col-span-4 lg:col-span-5 flex items-center gap-2">
+                    <p className="text-justify">
                       {monument?.appellation_info?.value}
                     </p>
                     {monument?.appellation_info?.information_object_info
