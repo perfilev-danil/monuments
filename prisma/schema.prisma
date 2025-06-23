@@ -192,26 +192,7 @@ model E73_Information_object_document{
   e31_Document  E31_Document ? @relation(fields: [documentId], references: [id], onDelete: Cascade, onUpdate: Cascade) // 1:1
 }
 
-/*
-model E54_Dimension {
-  id             Int               @id @default(autoincrement())
-  value          Float  
 
-  dimension_type E55_Dimension_type? @relation(fields: [dimension_typeId], references: [id], onDelete: Cascade, onUpdate: Cascade) // 1:N
-  dimension_typeId Int? 
-
-  monuments E24_Monument[]       
-}
-
-
-model E55_Dimension_type{
-  id           Int              @id @default(autoincrement())
-  value        String         
-
-  e54_Dimension E54_Dimension[] // 1:N
-}
-
-*/
 
 model E53_Place {
   id           Int              @id @default(autoincrement())
@@ -282,8 +263,8 @@ model E41_Appellation_personality {
   id Int @id @default(autoincrement())
   value String
 
-  e21_Personality E21_Personality @relation(fields: [e21_PersonalityId], references: [id], onDelete: Cascade)
-  e21_PersonalityId Int @unique
+  e21_PersonalityId Int? @unique
+  e21_Personality E21_Personality? @relation(fields: [e21_PersonalityId], references: [id], onDelete: Cascade)
 }
 
 model E55_Role_personality {
@@ -297,8 +278,8 @@ model E73_Information_object_personality{
   id           Int              @id @default(autoincrement())
   value String @unique
 
-  e21_Personality E21_Personality @relation(fields: [e21_PersonalityId], references: [id], onDelete: Cascade)
-  e21_PersonalityId Int @unique
+  e21_PersonalityId Int? @unique
+  e21_Personality E21_Personality? @relation(fields: [e21_PersonalityId], references: [id], onDelete: Cascade)
 }
 
 model E5_Event {
