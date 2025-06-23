@@ -18,7 +18,6 @@ services:
       ADMIN_USERNAME: ${ADMIN_USERNAME}
       ADMIN_PASSWORD: ${ADMIN_PASSWORD}
       JWT_SECRET: ${JWT_SECRET}
-      NODE_OPTIONS: "--max-old-space-size=4096"
     ports:
       - "3000:3000"
     volumes:

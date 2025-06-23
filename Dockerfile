@@ -63,6 +63,7 @@ USER nextjs
 EXPOSE 3000
 
 
-CMD ["sh", "-c", "pnpm db:deploy && pnpm start"]
+#CMD ["sh", "-c", "pnpm db:deploy && pnpm start"]
+CMD ["sh", "-c", "pnpm db:deploy && node --max-old-space-size=4096 node_modules/.bin/next start"]
 
 
