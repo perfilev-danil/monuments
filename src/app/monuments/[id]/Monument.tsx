@@ -102,9 +102,7 @@ export default function Monument({ monument }: { monument: any }) {
               )}
               {monument?.place?.appellation_place?.value && (
                 <div className="grid grid-cols-6 items-end">
-                  <span className="col-span-2 lg:col-span-1">
-                    Населённый пункт
-                  </span>
+                  <span className="col-span-2 lg:col-span-1">Нас. пункт</span>
                   <p className="col-span-4 lg:col-span-5">
                     {monument?.place?.appellation_place?.value}
                   </p>
@@ -153,6 +151,14 @@ export default function Monument({ monument }: { monument: any }) {
                   </div>
                 </div>
               )}
+              {monument?.conceptual_object?.value && (
+                <div className="grid grid-cols-6">
+                  <span className="col-span-2 lg:col-span-1">Мемориал</span>
+                  <p className="col-span-4 lg:col-span-5 text-justify">
+                    {monument?.conceptual_object?.value}
+                  </p>
+                </div>
+              )}
             </div>
             {/* 2nd col */}
             <div className="lg:w-1/2 custom-border-top p-4 lg:p-8 flex flex-col gap-4">
@@ -172,14 +178,7 @@ export default function Monument({ monument }: { monument: any }) {
                   </p>
                 </div>
               )}
-              {monument?.conceptual_object?.value && (
-                <div className="grid grid-cols-6">
-                  <span className="col-span-2 lg:col-span-1">Мемориал</span>
-                  <p className="col-span-4 lg:col-span-5 text-justify">
-                    {monument?.conceptual_object?.value}
-                  </p>
-                </div>
-              )}
+
               {monument?.appellation_info?.value && (
                 <div className="grid grid-cols-6 items-end">
                   <span className="col-span-2 lg:col-span-1">Источник</span>

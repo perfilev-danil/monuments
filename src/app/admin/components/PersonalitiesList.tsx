@@ -201,7 +201,6 @@ export default function PersonalitiesList() {
                     setFormData({ ...formData, link: e.target.value })
                   }
                   className="w-full p-2 border"
-                  required
                 />
               </div>
 

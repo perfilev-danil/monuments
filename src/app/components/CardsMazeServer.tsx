@@ -1,7 +1,9 @@
 import CardsMaze from "./CardsMaze";
 
 export default async function CardsMazeServer() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/monumentsCards`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/monumentsCards`, {
+    cache: "no-store",
+  });
   const monuments = await res.json();
   if (!monuments || monuments.length === 0) {
     return (

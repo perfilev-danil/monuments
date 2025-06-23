@@ -308,11 +308,3 @@ export async function PUT(
     );
   }
 }
-
-export const config = {
-  api: {
-    bodyParser: {
-      sizeLimit: "10mb",
-    },
-  },
-};

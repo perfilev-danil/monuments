@@ -1015,61 +1015,61 @@ export default function MonumentsList() {
                     selectedId === monument.id ? "bg-blue-100" : ""
                   }`}
                 >
-                  <td className="border border-[var(--dark)] px-4 py-2">
+                  <td className="border border-[var(--dark)] px-4 py-2 align-top">
                     {monument?.id}
                   </td>
-                  <td className="border border-[var(--dark)] px-4 py-2">
+                  <td className="border border-[var(--dark)] px-4 py-2 align-top">
                     {monument?.appellation_monument?.value}
                   </td>
-                  <td className="border border-[var(--dark)] px-4 py-2">
+                  <td className="border border-[var(--dark)] px-4 py-2 align-top">
                     {monument?.description_monument?.value}
                   </td>
-                  <td className="border border-[var(--dark)] px-4 py-2">
+                  <td className="border border-[var(--dark)] px-4 py-2 align-top">
                     {monument?.year?.value}
                   </td>
-                  <td className="border border-[var(--dark)] px-4 py-2">
+                  <td className="border border-[var(--dark)] px-4 py-2 align-top">
                     {monument?.conceptual_object?.value}
                   </td>
-                  <td className="border border-[var(--dark)] px-4 py-2">
+                  <td className="border border-[var(--dark)] px-4 py-2 align-top">
                     {monument?.inscription?.value}
                   </td>
-                  <td className="border border-[var(--dark)] px-4 py-2">
+                  <td className="border border-[var(--dark)] px-4 py-2 align-top">
                     {monument?.appellation_registry?.value}
                   </td>
-                  <td className="border border-[var(--dark)] px-4 py-2 break-all">
+                  <td className="border border-[var(--dark)] px-4 py-2 break-all align-top">
                     {
                       monument?.appellation_registry
                         ?.information_object_registry?.value
                     }
                   </td>
-                  <td className="border border-[var(--dark)] px-4 py-2">
+                  <td className="border border-[var(--dark)] px-4 py-2 align-top">
                     {monument?.appellation_info?.value}
                   </td>
-                  <td className="border border-[var(--dark)] px-4 py-2 break-all">
+                  <td className="border border-[var(--dark)] px-4 py-2 break-all align-top">
                     {monument?.appellation_info?.information_object_info?.value}
                   </td>
-                  <td className="border border-[var(--dark)] px-4 py-2">
+                  <td className="border border-[var(--dark)] px-4 py-2 align-top">
                     {monument?.document?.value}
                   </td>
-                  <td className="border border-[var(--dark)] px-4 py-2 break-all">
+                  <td className="border border-[var(--dark)] px-4 py-2 break-all align-top">
                     {monument?.document?.information_object_document?.value}
                   </td>
-                  <td className="border border-[var(--dark)] px-4 py-2">
+                  <td className="border border-[var(--dark)] px-4 py-2 align-top">
                     {monument?.period?.value}
                   </td>
-                  <td className="border border-[var(--dark)] px-4 py-2">
+                  <td className="border border-[var(--dark)] px-4 py-2 align-top">
                     {monument?.place?.appellation_place?.value}
                   </td>
-                  <td className="border border-[var(--dark)] px-4 py-2">
+                  <td className="border border-[var(--dark)] px-4 py-2 align-top">
                     {monument?.place?.appellation_address?.value}
                   </td>
-                  <td className="border border-[var(--dark)] px-4 py-2">
+                  <td className="border border-[var(--dark)] px-4 py-2 align-top">
                     {monument?.place?.appellation_address?.coordinates?.lat}
                   </td>
-                  <td className="border border-[var(--dark)] px-4 py-2">
+                  <td className="border border-[var(--dark)] px-4 py-2 align-top">
                     {monument?.place?.appellation_address?.coordinates?.lon}
                   </td>
-                  <td className="border border-[var(--dark)] px-4 py-2">
+                  <td className="border border-[var(--dark)] px-4 py-2 align-top">
                     {monument?.personalities?.map(
                       (personality: any, index: number) => (
                         <div key={index}>
@@ -1078,7 +1078,7 @@ export default function MonumentsList() {
                       )
                     )}
                   </td>
-                  <td className="border border-[var(--dark)] px-4 py-2">
+                  <td className="border border-[var(--dark)] px-4 py-2 align-top">
                     {monument?.events?.map((event: any, index: number) => (
                       <div key={index}>
                         {event?.time_span?.beginning}{" "}
@@ -1089,24 +1089,24 @@ export default function MonumentsList() {
                       </div>
                     ))}
                   </td>
-                  <td className="border border-[var(--dark)] px-4 py-2">
+                  <td className="border border-[var(--dark)] px-4 py-2 align-top">
                     {monument?.marks?.map((mark: any, index: number) => (
                       <div key={index}>{mark?.value}</div>
                     ))}
                   </td>
-                  <td className="border border-[var(--dark)] px-4 py-2">
+                  <td className="border border-[var(--dark)] px-4 py-2 align-top">
                     {monument?.techniques?.map(
                       (technique: any, index: number) => (
                         <div key={index}>{technique?.value}</div>
                       )
                     )}
                   </td>
-                  <td className="border border-[var(--dark)] px-4 py-2">
+                  <td className="border border-[var(--dark)] px-4 py-2 align-top">
                     {monument?.colors?.map((color: any, index: number) => (
                       <div key={index}>{color?.value}</div>
                     ))}
                   </td>
-                  <td className="border border-[var(--dark)] px-4 py-2">
+                  <td className="border border-[var(--dark)] px-4 py-2 align-top">
                     {monument?.materials?.map(
                       (material: any, index: number) => (
                         <div key={index}>{material?.value}</div>

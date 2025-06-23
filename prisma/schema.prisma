@@ -253,7 +253,7 @@ model E21_Personality {
   id           Int              @id @default(autoincrement()) 
 
   role E55_Role_personality? @relation(fields: [roleId], references: [id], onDelete: Cascade, onUpdate: Cascade) // 1:1
-  roleId Int? @unique
+  roleId Int? 
 
   appellation_personality E41_Appellation_personality? @relation(fields: [appellation_personalityId], references: [id], onDelete: Cascade, onUpdate: Cascade) // 1:1
   appellation_personalityId Int? @unique
@@ -275,7 +275,7 @@ model E55_Role_personality {
   id           Int              @id @default(autoincrement()) 
   value String @unique
 
-  e21_Personality E21_Personality? 
+  e21_Personality E21_Personality[] 
 }
 
 model E73_Information_object_personality{
