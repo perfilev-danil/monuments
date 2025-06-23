@@ -11,7 +11,8 @@ export default async function CardsMazeServer() {
   }
   */
 
-  const monuments = await getMonuments();
+  const monumentsRaw = await getMonuments();
+  const monuments = JSON.parse(JSON.stringify(monumentsRaw));
 
   //const monuments = await res.json();
   if (!monuments || monuments.length === 0) {
@@ -21,5 +22,6 @@ export default async function CardsMazeServer() {
       </div>
     );
   }
+  <pre>{JSON.stringify(monuments, null, 2)}</pre>;
   return <CardsMaze monuments={monuments} />;
 }
