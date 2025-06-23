@@ -85,7 +85,7 @@ export default function MapView({ monuments }: { monuments: any[] }) {
               />
               <div class="absolute bottom-0 right-0 z-10 w-full p-2 bg-white flex gap-2 items-center justify-between" style="border-top: 1px solid black">
                 <div class="truncate">${name} (${year} г.)</div>
-                <a href="/monuments/${id}" target="_blank" class="rounded-full w-10 h-10 shrink-0 cursor-pointer hover:scale-110 transition-transform duration-300" style="border: 1px solid black">
+                <a href="/monuments/${id}" class="rounded-full w-10 h-10 shrink-0 cursor-pointer hover:scale-110 transition-transform duration-300" style="border: 1px solid black">
                   <img 
                     src="/images/icons/arrow-b.png"
                     alt="" 
