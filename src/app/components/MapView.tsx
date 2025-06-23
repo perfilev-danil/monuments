@@ -44,7 +44,7 @@ export default function MapView({ monuments }: { monuments: any[] }) {
       layers: [baseLayer],
       view: new View({
         center: start,
-        zoom: 5,
+        zoom: 6,
         constrainResolution: true,
       }),
       pixelRatio: window.devicePixelRatio || 2,
