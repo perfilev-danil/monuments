@@ -217,10 +217,10 @@ model E53_Place {
   id           Int              @id @default(autoincrement())
 
   monumentId Int @unique
-  e24_Monument E24_Monument @relation(fields: [monumentId], references: [id], onDelete: Cascade, onUpdate: Cascade) // 1:1
+  e24_Monument E24_Monument? @relation(fields: [monumentId], references: [id], onDelete: Cascade, onUpdate: Cascade) // 1:1
 
   appellation_place E41_Appellation_place? @relation(fields: [appellation_placeId], references: [id], onDelete: Cascade, onUpdate: Cascade) // N:1
-  appellation_placeId Int? 
+  appellation_placeId Int? @unique
 
   appellation_address E41_Appellation_address? 
   appellation_addressId Int? @unique
