@@ -12,13 +12,13 @@ datasource db {
 model E24_Monument {
   id Int @id @default(autoincrement())
 
-  appellation_monument       E41_Appellation_monument?   @relation(fields: [appellation_monumentId], references: [id], onDelete: Cascade, onUpdate: Cascade) // 1:1
+  appellation_monument       E41_Appellation_monument? 
   appellation_monumentId      Int?    @unique // внешний ключ
 
-  description_monument E33_Description_monument? @relation(fields: [description_monumentId], references: [id], onDelete: Cascade, onUpdate: Cascade) // 1:1
+  description_monument E33_Description_monument?
   description_monumentId Int? @unique 
 
-  year E52_Year? @relation(fields: [yearId], references: [id], onDelete: Cascade, onUpdate: Cascade) // 1:1
+  year E52_Year? 
   yearId Int? @unique
 
   colors E55_Color [] // M:N
@@ -32,24 +32,24 @@ model E24_Monument {
   period  E4_Period? @relation(fields: [periodId], references: [id], onDelete: Cascade, onUpdate: Cascade)  // N:1
   periodId Int?  
 
-  conceptual_object E28_Conceptual_object? @relation(fields: [conceptual_objectId], references: [id], onDelete: Cascade, onUpdate: Cascade) // N:1
-  conceptual_objectId Int?
+  conceptual_object E28_Conceptual_object? 
+  conceptual_objectId Int? @unique
 
-  inscription E34_Inscription? @relation(fields: [inscriptionId], references: [id], onDelete: Cascade, onUpdate: Cascade) // 1:1
+  inscription E34_Inscription? 
   inscriptionId Int? @unique
 
-  appellation_registry E41_Appellation_registry? @relation(fields: [appellation_registryId], references: [id], onDelete: Cascade, onUpdate: Cascade) // 1:1
+  appellation_registry E41_Appellation_registry? 
   appellation_registryId Int? @unique
 
-  appellation_info E41_Appellation_info ? @relation(fields: [appellation_infoId], references: [id], onDelete: Cascade, onUpdate: Cascade) // 1:1
+  appellation_info E41_Appellation_info? 
   appellation_infoId Int? @unique
 
-  document E31_Document ? @relation(fields: [documentId], references: [id], onDelete: Cascade, onUpdate: Cascade) // 1:1
+  document E31_Document? 
   documentId Int? @unique
 
   //dimensions  E54_Dimension[] // M:N
 
-  place E53_Place? @relation(fields: [placeId], references: [id], onDelete: Cascade, onUpdate: Cascade) // 1:1
+  place E53_Place? 
   placeId Int? @unique
 
   personalities E21_Personality[] // M:N
@@ -63,21 +63,24 @@ model E41_Appellation_monument {
   id Int @id @default(autoincrement())
   value String
 
-  e24_Monument E24_Monument?  // Обратная сторона связи 1:1
+monumentId Int @unique 
+  e24_Monument E24_Monument @relation(fields: [monumentId], references: [id], onDelete: Cascade, onUpdate: Cascade)  
 }
 
 model E33_Description_monument {
   id Int @id @default(autoincrement())
   value String
 
-  e24_Monument E24_Monument? 
+  e24_Monument E24_Monument @relation(fields: [monumentId], references: [id], onDelete: Cascade, onUpdate: Cascade) 
+  monumentId Int @unique 
 }
 
 model E52_Year {
   id Int @id @default(autoincrement())
   value String
 
-  e24_Monument E24_Monument? 
+  e24_Monument E24_Monument @relation(fields: [monumentId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  monumentId Int @unique 
 }
 
 model E55_Color {
@@ -120,65 +123,73 @@ model E41_Appellation_registry {
   id Int @id @default(autoincrement())
   value String
 
-  information_object_registry E73_Information_object_registry? @relation(fields: [information_object_registryId], references: [id], onDelete: Cascade, onUpdate: Cascade) // 1:1
+  information_object_registry E73_Information_object_registry? 
   information_object_registryId Int? @unique
 
-  e24_Monument E24_Monument? 
+monumentId Int @unique
+  e24_Monument E24_Monument @relation(fields: [monumentId], references: [id], onDelete: Cascade, onUpdate: Cascade) // 1:1
 }
 
 model E73_Information_object_registry{
   id           Int              @id @default(autoincrement())
   value String
 
-  e41_Appellation_registry  E41_Appellation_registry ?
+  appellation_registryId Int @unique
+  e41_Appellation_registry  E41_Appellation_registry @relation(fields: [appellation_registryId], references: [id], onDelete: Cascade, onUpdate: Cascade) // 1:1
 }
 
 model E34_Inscription {
   id Int @id @default(autoincrement())
   value String
 
-  e24_Monument E24_Monument?
+monumentId Int @unique
+  e24_Monument E24_Monument @relation(fields: [monumentId], references: [id], onDelete: Cascade, onUpdate: Cascade) // 1:1
 }
 
 model E28_Conceptual_object {
   id Int @id @default(autoincrement())
   value String
 
-  e24_Monument E24_Monument[]
+monumentId Int @unique
+  e24_Monument E24_Monument @relation(fields: [monumentId], references: [id], onDelete: Cascade, onUpdate: Cascade) // 1:1
 }
 
 model E41_Appellation_info {
   id Int @id @default(autoincrement())
   value String
 
-  information_object_info E73_Information_object_info? @relation(fields: [information_object_infoId], references: [id], onDelete: Cascade, onUpdate: Cascade) // 1:1
+  information_object_info E73_Information_object_info? 
   information_object_infoId Int? @unique
 
-  e24_Monument E24_Monument? 
+  monumentId Int @unique
+  e24_Monument E24_Monument? @relation(fields: [monumentId], references: [id], onDelete: Cascade, onUpdate: Cascade) // 1:1
 }
 
 model E73_Information_object_info{
   id           Int              @id @default(autoincrement())
   value String
 
-  e41_Appellation_info  E41_Appellation_info ?
+  appellation_infoId Int @unique
+  e41_Appellation_info  E41_Appellation_info @relation(fields: [appellation_infoId], references: [id], onDelete: Cascade, onUpdate: Cascade) // 1:1
 }
 
 model E31_Document {
   id Int @id @default(autoincrement())
   value String
 
-  information_object_document E73_Information_object_document? @relation(fields: [information_object_documentId], references: [id], onDelete: Cascade, onUpdate: Cascade) // 1:1
+  information_object_document E73_Information_object_document? 
   information_object_documentId Int? @unique
 
-  e24_Monument E24_Monument? 
+  monumentId Int @unique
+  e24_Monument E24_Monument @relation(fields: [monumentId], references: [id], onDelete: Cascade, onUpdate: Cascade) // 1:1
 }
 
 model E73_Information_object_document{
   id           Int              @id @default(autoincrement())
   value String
 
-  e31_Document  E31_Document ?
+  documentId Int @unique
+  e31_Document  E31_Document ? @relation(fields: [documentId], references: [id], onDelete: Cascade, onUpdate: Cascade) // 1:1
 }
 
 /*
@@ -205,12 +216,13 @@ model E55_Dimension_type{
 model E53_Place {
   id           Int              @id @default(autoincrement())
 
-  e24_Monument E24_Monument?
+  monumentId Int @unique
+  e24_Monument E24_Monument @relation(fields: [monumentId], references: [id], onDelete: Cascade, onUpdate: Cascade) // 1:1
 
   appellation_place E41_Appellation_place? @relation(fields: [appellation_placeId], references: [id], onDelete: Cascade, onUpdate: Cascade) // N:1
   appellation_placeId Int? 
 
-  appellation_address E41_Appellation_address? @relation(fields: [appellation_addressId], references: [id], onDelete: Cascade, onUpdate: Cascade) // 1:1
+  appellation_address E41_Appellation_address? 
   appellation_addressId Int? @unique
 }
 
@@ -225,9 +237,10 @@ model E41_Appellation_address {
   id           Int              @id @default(autoincrement())
   value String
 
-  e53_Place E53_Place?
+  placeId Int @unique
+  e53_Place E53_Place @relation(fields: [placeId], references: [id], onDelete: Cascade, onUpdate: Cascade) // 1:1
 
-  coordinates E94_Coordinates? @relation(fields: [coordinatesId], references: [id], onDelete: Cascade, onUpdate: Cascade) // 1:1
+  coordinates E94_Coordinates? 
   coordinatesId Int? @unique
 }
 
@@ -236,7 +249,8 @@ model E94_Coordinates {
   lat Float?
   lon Float?
 
-  e41_Appellation_address E41_Appellation_address?
+  appellation_addressId Int @unique
+  e41_Appellation_address E41_Appellation_address @relation(fields: [appellation_addressId], references: [id], onDelete: Cascade, onUpdate: Cascade) // 1:1
 }
 
 model E36_Img_monument {
@@ -253,12 +267,12 @@ model E21_Personality {
   id           Int              @id @default(autoincrement()) 
 
   role E55_Role_personality? @relation(fields: [roleId], references: [id], onDelete: Cascade, onUpdate: Cascade) // 1:1
-  roleId Int? 
+  roleId Int?
 
-  appellation_personality E41_Appellation_personality? @relation(fields: [appellation_personalityId], references: [id], onDelete: Cascade, onUpdate: Cascade) // 1:1
+  appellation_personality E41_Appellation_personality?
   appellation_personalityId Int? @unique
 
-  information_object_personality E73_Information_object_personality? @relation(fields: [information_object_personalityId], references: [id], onDelete: Cascade, onUpdate: Cascade) // 1:1
+  information_object_personality E73_Information_object_personality?
   information_object_personalityId Int? @unique
 
   monuments E24_Monument[]
@@ -268,7 +282,8 @@ model E41_Appellation_personality {
   id Int @id @default(autoincrement())
   value String
 
-  e21_Personality E21_Personality? 
+  e21_Personality E21_Personality @relation(fields: [e21_PersonalityId], references: [id], onDelete: Cascade)
+  e21_PersonalityId Int @unique
 }
 
 model E55_Role_personality {
@@ -282,19 +297,20 @@ model E73_Information_object_personality{
   id           Int              @id @default(autoincrement())
   value String @unique
 
-  e21_Personality E21_Personality? 
+  e21_Personality E21_Personality @relation(fields: [e21_PersonalityId], references: [id], onDelete: Cascade)
+  e21_PersonalityId Int @unique
 }
 
 model E5_Event {
   id           Int              @id @default(autoincrement())
 
-  appellation_event E41_Appellation_event? @relation(fields: [appellation_eventId], references: [id], onDelete: Cascade, onUpdate: Cascade) // 1:1
+  appellation_event E41_Appellation_event? 
   appellation_eventId Int? @unique
 
-  time_span E52_Time_span_event? @relation(fields: [time_spanId], references: [id], onDelete: Cascade, onUpdate: Cascade) // 1:1
+  time_span E52_Time_span_event? 
   time_spanId Int? @unique
 
-  information_object_event E73_Information_object_event? @relation(fields: [information_object_eventId], references: [id], onDelete: Cascade, onUpdate: Cascade) // 1:1
+  information_object_event E73_Information_object_event? 
   information_object_eventId Int? @unique
 
   monument   E24_Monument?    @relation(fields: [monumentId], references: [id], onDelete: Cascade, onUpdate: Cascade)
@@ -305,7 +321,8 @@ model E41_Appellation_event {
   id Int @id @default(autoincrement())
   value String
 
-  e5_Event E5_Event? 
+  eventId Int @unique
+  e5_Event E5_Event @relation(fields: [eventId], references: [id], onDelete: Cascade, onUpdate: Cascade) // 1:1
 }
 
 model E52_Time_span_event {
@@ -315,14 +332,16 @@ model E52_Time_span_event {
 
   @@unique([beginning, end])
 
-  e5_Event E5_Event? 
+  eventId Int @unique
+  e5_Event E5_Event @relation(fields: [eventId], references: [id], onDelete: Cascade, onUpdate: Cascade) // 1:1
 }
 
 model E73_Information_object_event{
   id           Int              @id @default(autoincrement())
   value String
 
-  e5_Event E5_Event?
+  eventId Int @unique
+  e5_Event E5_Event @relation(fields: [eventId], references: [id], onDelete: Cascade, onUpdate: Cascade) // 1:1
 }
 
 
