@@ -200,7 +200,9 @@ export default function ColorsList() {
               <th className="border border-[var(--dark)] px-4 py-2">
                 Название
               </th>
-              <th className="border border-[var(--dark)] px-4 py-2">Код</th>
+              <th className="border border-[var(--dark)] px-4 py-2">
+                HEX-код (без #)
+              </th>
               {/* Добавь другие заголовки */}
             </tr>
           </thead>

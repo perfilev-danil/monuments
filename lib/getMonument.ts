@@ -45,6 +45,7 @@ export async function getMonument(id: string) {
           select: {
             id: true,
             value: true,
+            code: true,
           },
         },
         techniques: {

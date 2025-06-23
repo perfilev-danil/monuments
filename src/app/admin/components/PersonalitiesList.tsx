@@ -265,7 +265,7 @@ export default function PersonalitiesList() {
                 <td className="border border-[var(--dark)] px-4 py-2">
                   {personality?.role?.value}
                 </td>
-                <td className="border border-[var(--dark)] px-4 py-2">
+                <td className="border border-[var(--dark)] px-4 py-2 break-all">
                   {personality?.information_object_personality?.value}
                 </td>
               </tr>

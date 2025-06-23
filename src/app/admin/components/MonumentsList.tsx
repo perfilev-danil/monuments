@@ -380,7 +380,7 @@ export default function MonumentsList() {
     }
 
     for (const materialId of formData.materials) {
-      form.append("techniques", materialId);
+      form.append("materials", materialId);
     }
 
     for (const file of formData.images) {
@@ -479,8 +479,8 @@ export default function MonumentsList() {
               className="w-full h-full flex flex-col justify-between"
               encType="multipart/form-data"
             >
-              <div className="flex gap-8">
-                <div className="w-1/5 flex flex-col gap-8">
+              <div className="flex gap-4">
+                <div className="w-1/5 flex flex-col gap-4">
                   <div>
                     <label className="block mb-1">Название:</label>
                     <input
@@ -564,7 +564,7 @@ export default function MonumentsList() {
                   </div>
                 </div>
 
-                <div className="w-1/5 flex flex-col gap-8">
+                <div className="w-1/5 flex flex-col gap-4">
                   <div>
                     <label className="block mb-1">
                       Ссылка на гос. реестр ОКН:
@@ -655,7 +655,165 @@ export default function MonumentsList() {
                   </div>
                 </div>
 
-                <div className="w-1/5 flex flex-col gap-8">
+                <div className="w-1/5 flex flex-col gap-4">
+                  <div className="">
+                    <label className="block mb-1">Материалы</label>
+                    <select
+                      name="materials"
+                      multiple
+                      value={formData.materials}
+                      onChange={(e) => {
+                        const selectedOptions = Array.from(
+                          e.target.selectedOptions
+                        ).map((option) => option.value);
+                        setFormData({
+                          ...formData,
+                          materials: selectedOptions,
+                        });
+                      }}
+                      className="w-full p-2 border h-32"
+                    >
+                      {materials.map((material: any) => (
+                        <option key={material.id} value={material.id}>
+                          {material?.value}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block mb-1">Личности</label>
+                    <select
+                      name="personalities"
+                      multiple
+                      value={formData.personalities}
+                      onChange={(e) => {
+                        const selectedOptions = Array.from(
+                          e.target.selectedOptions
+                        ).map((option) => option.value);
+                        setFormData({
+                          ...formData,
+                          personalities: selectedOptions,
+                        });
+                      }}
+                      className="w-full p-2 border h-32"
+                    >
+                      {personalities.map((personality: any) => (
+                        <option key={personality.id} value={personality.id}>
+                          {personality?.appellation_personality?.value}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div className="">
+                    <label className="block mb-1">События</label>
+                    <select
+                      name="events"
+                      multiple
+                      value={formData.events}
+                      onChange={(e) => {
+                        const selectedOptions = Array.from(
+                          e.target.selectedOptions
+                        ).map((option) => option.value);
+                        setFormData({
+                          ...formData,
+                          events: selectedOptions,
+                        });
+                      }}
+                      className="w-full p-2 border h-32"
+                    >
+                      {events.map((event: any) => (
+                        <option key={event.id} value={event.id}>
+                          {event?.time_span?.beginning}{" "}
+                          {event?.time_span?.end
+                            ? ` -  ${event?.time_span?.end}`
+                            : ""}{" "}
+                          - {event?.appellation_event?.value}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+
+                <div className="w-1/5 flex flex-col gap-4">
+                  <div className="">
+                    <label className="block mb-1">Символы</label>
+                    <select
+                      name="marks"
+                      multiple
+                      value={formData.marks}
+                      onChange={(e) => {
+                        const selectedOptions = Array.from(
+                          e.target.selectedOptions
+                        ).map((option) => option.value);
+                        setFormData({
+                          ...formData,
+                          marks: selectedOptions,
+                        });
+                      }}
+                      className="w-full p-2 border h-32"
+                    >
+                      {marks.map((mark: any) => (
+                        <option key={mark.id} value={mark.id}>
+                          {mark?.value}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div className="">
+                    <label className="block mb-1">Техники</label>
+                    <select
+                      name="techniques"
+                      multiple
+                      value={formData.techniques}
+                      onChange={(e) => {
+                        const selectedOptions = Array.from(
+                          e.target.selectedOptions
+                        ).map((option) => option.value);
+                        setFormData({
+                          ...formData,
+                          techniques: selectedOptions,
+                        });
+                      }}
+                      className="w-full p-2 border h-32"
+                    >
+                      {techniques.map((technique: any) => (
+                        <option key={technique.id} value={technique.id}>
+                          {technique?.value}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div className="">
+                    <label className="block mb-1">Цвета</label>
+                    <select
+                      name="colors"
+                      multiple
+                      value={formData.colors}
+                      onChange={(e) => {
+                        const selectedOptions = Array.from(
+                          e.target.selectedOptions
+                        ).map((option) => option.value);
+                        setFormData({
+                          ...formData,
+                          colors: selectedOptions,
+                        });
+                      }}
+                      className="w-full p-2 border h-32"
+                    >
+                      {colors.map((color: any) => (
+                        <option key={color.id} value={color.id}>
+                          {color?.value}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+
+                <div className="w-1/5 flex flex-col gap-4">
                   <div>
                     <label className="block mb-1">Документ(ы)</label>
                     <input
@@ -730,164 +888,6 @@ export default function MonumentsList() {
                     </select>
                   </div>
 
-                  <div className="">
-                    <label className="block mb-1">События</label>
-                    <select
-                      name="events"
-                      multiple
-                      value={formData.events}
-                      onChange={(e) => {
-                        const selectedOptions = Array.from(
-                          e.target.selectedOptions
-                        ).map((option) => option.value);
-                        setFormData({
-                          ...formData,
-                          events: selectedOptions,
-                        });
-                      }}
-                      className="w-full p-2 border h-36"
-                    >
-                      {events.map((event: any) => (
-                        <option key={event.id} value={event.id}>
-                          {event?.time_span?.beginning}{" "}
-                          {event?.time_span?.end
-                            ? ` -  ${event?.time_span?.end}`
-                            : ""}{" "}
-                          - {event?.appellation_event?.value}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-
-                <div className="w-1/5 flex flex-col gap-8">
-                  <div className="">
-                    <label className="block mb-1">Символы</label>
-                    <select
-                      name="marks"
-                      multiple
-                      value={formData.marks}
-                      onChange={(e) => {
-                        const selectedOptions = Array.from(
-                          e.target.selectedOptions
-                        ).map((option) => option.value);
-                        setFormData({
-                          ...formData,
-                          marks: selectedOptions,
-                        });
-                      }}
-                      className="w-full p-2 border h-36"
-                    >
-                      {marks.map((mark: any) => (
-                        <option key={mark.id} value={mark.id}>
-                          {mark?.value}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <div className="">
-                    <label className="block mb-1">Техники</label>
-                    <select
-                      name="techniques"
-                      multiple
-                      value={formData.techniques}
-                      onChange={(e) => {
-                        const selectedOptions = Array.from(
-                          e.target.selectedOptions
-                        ).map((option) => option.value);
-                        setFormData({
-                          ...formData,
-                          techniques: selectedOptions,
-                        });
-                      }}
-                      className="w-full p-2 border h-36"
-                    >
-                      {techniques.map((technique: any) => (
-                        <option key={technique.id} value={technique.id}>
-                          {technique?.value}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <div className="">
-                    <label className="block mb-1">Цвета</label>
-                    <select
-                      name="colors"
-                      multiple
-                      value={formData.colors}
-                      onChange={(e) => {
-                        const selectedOptions = Array.from(
-                          e.target.selectedOptions
-                        ).map((option) => option.value);
-                        setFormData({
-                          ...formData,
-                          colors: selectedOptions,
-                        });
-                      }}
-                      className="w-full p-2 border h-36"
-                    >
-                      {colors.map((color: any) => (
-                        <option key={color.id} value={color.id}>
-                          {color?.value}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-
-                <div className="w-1/5 flex flex-col gap-8">
-                  <div className="">
-                    <label className="block mb-1">Материалы</label>
-                    <select
-                      name="materials"
-                      multiple
-                      value={formData.materials}
-                      onChange={(e) => {
-                        const selectedOptions = Array.from(
-                          e.target.selectedOptions
-                        ).map((option) => option.value);
-                        setFormData({
-                          ...formData,
-                          materials: selectedOptions,
-                        });
-                      }}
-                      className="w-full p-2 border h-36"
-                    >
-                      {materials.map((material: any) => (
-                        <option key={material.id} value={material.id}>
-                          {material?.value}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="block mb-1">Личности</label>
-                    <select
-                      name="personalities"
-                      multiple
-                      value={formData.personalities}
-                      onChange={(e) => {
-                        const selectedOptions = Array.from(
-                          e.target.selectedOptions
-                        ).map((option) => option.value);
-                        setFormData({
-                          ...formData,
-                          personalities: selectedOptions,
-                        });
-                      }}
-                      className="w-full p-2 border h-36"
-                    >
-                      {personalities.map((personality: any) => (
-                        <option key={personality.id} value={personality.id}>
-                          {personality?.appellation_personality?.value}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
                   <div>
                     <label className="block mb-1">Изображения:</label>
                     <input
@@ -938,7 +938,7 @@ export default function MonumentsList() {
         </div>
       )}
 
-      <div className="flex flex-col gap-8">
+      <div className="flex flex-col gap-4">
         <div className="overflow-x-auto pretty-scrollbar">
           <table className="w-full table-auto">
             <thead>
@@ -1036,7 +1036,7 @@ export default function MonumentsList() {
                   <td className="border border-[var(--dark)] px-4 py-2">
                     {monument?.appellation_registry?.value}
                   </td>
-                  <td className="border border-[var(--dark)] px-4 py-2">
+                  <td className="border border-[var(--dark)] px-4 py-2 break-all">
                     {
                       monument?.appellation_registry
                         ?.information_object_registry?.value
@@ -1045,13 +1045,13 @@ export default function MonumentsList() {
                   <td className="border border-[var(--dark)] px-4 py-2">
                     {monument?.appellation_info?.value}
                   </td>
-                  <td className="border border-[var(--dark)] px-4 py-2">
+                  <td className="border border-[var(--dark)] px-4 py-2 break-all">
                     {monument?.appellation_info?.information_object_info?.value}
                   </td>
                   <td className="border border-[var(--dark)] px-4 py-2">
                     {monument?.document?.value}
                   </td>
-                  <td className="border border-[var(--dark)] px-4 py-2">
+                  <td className="border border-[var(--dark)] px-4 py-2 break-all">
                     {monument?.document?.information_object_document?.value}
                   </td>
                   <td className="border border-[var(--dark)] px-4 py-2">
@@ -1118,7 +1118,7 @@ export default function MonumentsList() {
             </tbody>
           </table>
         </div>
-        <div className="flex gap-8">
+        <div className="flex gap-4">
           {selectedId && (
             <button
               onClick={() => handleDelete(selectedId)}
