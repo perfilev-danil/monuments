@@ -308,3 +308,7 @@ export async function PUT(
     );
   }
 }
+
+export const config = {
+  runtime: "nodejs",
+};
