@@ -112,7 +112,7 @@ export default function Monument({ monument }: { monument: any }) {
                 <div className="grid grid-cols-6">
                   <span className="col-span-2 lg:col-span-1">Адрес</span>
                   <div className="flex col-span-4 lg:col-span-5 items-center gap-2">
-                    <p className="">
+                    <p className="break-all">
                       {monument?.place?.appellation_address?.value}
                     </p>
                   </div>
@@ -125,7 +125,7 @@ export default function Monument({ monument }: { monument: any }) {
                     {monument?.personalities?.map((personality: any) => (
                       <div
                         key={personality?.id}
-                        className="flex items-center gap-2"
+                        className="flex items-end lg:items-center gap-2"
                       >
                         <p>
                           {personality?.appellation_personality?.value} -{" "}
@@ -154,7 +154,7 @@ export default function Monument({ monument }: { monument: any }) {
               {monument?.conceptual_object?.value && (
                 <div className="grid grid-cols-6">
                   <span className="col-span-2 lg:col-span-1">Мемориал</span>
-                  <p className="col-span-4 lg:col-span-5 text-justify">
+                  <p className="col-span-4 lg:col-span-5 text-justify break-all">
                     {monument?.conceptual_object?.value}
                   </p>
                 </div>
@@ -165,7 +165,7 @@ export default function Monument({ monument }: { monument: any }) {
               {monument?.description_monument?.value && (
                 <div className="grid grid-cols-6">
                   <span className="col-span-2 lg:col-span-1">Описание</span>
-                  <p className="col-span-4 lg:col-span-5 text-justify">
+                  <p className="col-span-4 lg:col-span-5 text-justify break-all">
                     {monument?.description_monument?.value}
                   </p>
                 </div>
@@ -173,7 +173,7 @@ export default function Monument({ monument }: { monument: any }) {
               {monument?.inscription?.value && (
                 <div className="grid grid-cols-6">
                   <span className="col-span-2 lg:col-span-1">Надпись</span>
-                  <p className="col-span-4 lg:col-span-5 text-justify">
+                  <p className="col-span-4 lg:col-span-5 text-justify break-all">
                     {monument?.inscription?.value}
                   </p>
                 </div>
@@ -182,8 +182,8 @@ export default function Monument({ monument }: { monument: any }) {
               {monument?.appellation_info?.value && (
                 <div className="grid grid-cols-6 items-end">
                   <span className="col-span-2 lg:col-span-1">Источник</span>
-                  <div className="col-span-4 lg:col-span-5 flex items-center gap-2">
-                    <p className="text-justify">
+                  <div className="col-span-4 lg:col-span-5 flex items-end lg:items-center gap-2">
+                    <p className="text-justify break-all">
                       {monument?.appellation_info?.value}
                     </p>
                     {monument?.appellation_info?.information_object_info
@@ -209,8 +209,8 @@ export default function Monument({ monument }: { monument: any }) {
               {monument?.appellation_registry?.value && (
                 <div className="grid grid-cols-6 items-end">
                   <span className="col-span-2 lg:col-span-1">Гос. реестр</span>
-                  <div className="flex items-center gap-2">
-                    <p className="col-span-4 lg:col-span-5 text-justify">
+                  <div className="col-span-4 lg:col-span-5 flex items-end lg:items-center gap-2">
+                    <p className="text-justify break-all">
                       {monument?.appellation_registry?.value}
                     </p>
                     {monument?.appellation_registry?.information_object_registry
@@ -236,8 +236,8 @@ export default function Monument({ monument }: { monument: any }) {
               {monument?.document?.value && (
                 <div className="grid grid-cols-6">
                   <span className="col-span-2 lg:col-span-1">Документ</span>
-                  <div className="col-span-4 lg:col-span-5 flex items-center gap-2">
-                    <p>{monument?.document?.value}</p>
+                  <div className="col-span-4 lg:col-span-5 flex items-end lg:items-center gap-2">
+                    <p className="break-all">{monument?.document?.value}</p>
                     {monument?.document?.information_object_document?.value && (
                       <Link
                         href={
@@ -261,13 +261,18 @@ export default function Monument({ monument }: { monument: any }) {
                   <span className="col-span-2 lg:col-span-1">События</span>
                   <div className="col-span-4 lg:col-span-5">
                     {monument?.events?.map((event: any) => (
-                      <div key={event?.id} className="flex items-center gap-2">
-                        <div className="flex items-center gap-2">
+                      <div
+                        key={event?.id}
+                        className="flex items-end lg:items-center gap-2"
+                      >
+                        <div className="flex items-start gap-2">
                           <p>
                             {event?.time_span?.beginning} -{" "}
                             {event?.time_span?.end}
                           </p>
-                          <p>{event?.appellation_event.value}</p>
+                          <p className="break-all">
+                            {event?.appellation_event.value}
+                          </p>
                         </div>
                         {event?.information_object_event?.value && (
                           <Link
