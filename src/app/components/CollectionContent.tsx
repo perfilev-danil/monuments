@@ -179,6 +179,24 @@ export default function CollectionContent({
   const ResetInput = () => {
     setSearchQuery("");
     setActiveSearchQuery("");
+
+    const params = new URLSearchParams();
+
+    selectedPeriods.forEach((id) => params.append("periodId", id.toString()));
+    selectedMaterials.forEach((id) =>
+      params.append("materialId", id.toString())
+    );
+    selectedColors.forEach((id) => params.append("colorId", id.toString()));
+    selectedTechniques.forEach((id) =>
+      params.append("techniqueId", id.toString())
+    );
+    selectedMarks.forEach((id) => params.append("markId", id.toString()));
+    selectedPlaces.forEach((id) => params.append("placeId", id.toString()));
+    selectedPersonalities.forEach((id) =>
+      params.append("personId", id.toString())
+    );
+
+    router.replace(`${pathname}?${params.toString()}`);
   };
 
   const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
