@@ -85,36 +85,36 @@ model E52_Year {
 
 model E55_Color {
   id Int @id @default(autoincrement())
-  value String
-  code String?
+  value String @unique
+  code String? @unique
 
   monuments E24_Monument[] 
 }
 
 model E55_Technique{
   id Int @id @default(autoincrement())
-  value String
+  value String @unique
 
   monuments E24_Monument[]
 }
 
 model E37_Mark{
   id Int @id @default(autoincrement())
-  value String
+  value String @unique
 
   monuments E24_Monument[]
 }
 
 model E57_Material {
   id Int @id @default(autoincrement())
-  value String
+  value String @unique
 
   monuments E24_Monument[]
 }
 
 model E4_Period {
   id Int @id @default(autoincrement())
-  value String
+  value String @unique
 
   monuments E24_Monument[]
 }
@@ -126,7 +126,7 @@ model E41_Appellation_registry {
   information_object_registry E73_Information_object_registry? 
   information_object_registryId Int? @unique
 
-monumentId Int @unique
+  monumentId Int @unique
   e24_Monument E24_Monument @relation(fields: [monumentId], references: [id], onDelete: Cascade, onUpdate: Cascade) // 1:1
 }
 
@@ -201,7 +201,7 @@ model E53_Place {
   e24_Monument E24_Monument? @relation(fields: [monumentId], references: [id], onDelete: Cascade, onUpdate: Cascade) // 1:1
 
   appellation_place E41_Appellation_place? @relation(fields: [appellation_placeId], references: [id], onDelete: Cascade, onUpdate: Cascade) // N:1
-  appellation_placeId Int? @unique
+  appellation_placeId Int? 
 
   appellation_address E41_Appellation_address? 
   appellation_addressId Int? @unique
@@ -295,12 +295,12 @@ model E5_Event {
   information_object_eventId Int? @unique
 
   monument   E24_Monument?    @relation(fields: [monumentId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  monumentId Int?
+  monumentId Int? @unique
 }
 
 model E41_Appellation_event {
   id Int @id @default(autoincrement())
-  value String
+  value String @unique
 
   eventId Int @unique
   e5_Event E5_Event @relation(fields: [eventId], references: [id], onDelete: Cascade, onUpdate: Cascade) // 1:1
@@ -319,7 +319,7 @@ model E52_Time_span_event {
 
 model E73_Information_object_event{
   id           Int              @id @default(autoincrement())
-  value String
+  value String 
 
   eventId Int @unique
   e5_Event E5_Event @relation(fields: [eventId], references: [id], onDelete: Cascade, onUpdate: Cascade) // 1:1

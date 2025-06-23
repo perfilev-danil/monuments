@@ -359,6 +359,24 @@ CREATE UNIQUE INDEX "E33_Description_monument_monumentId_key" ON "E33_Descriptio
 CREATE UNIQUE INDEX "E52_Year_monumentId_key" ON "E52_Year"("monumentId");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "E55_Color_value_key" ON "E55_Color"("value");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "E55_Color_code_key" ON "E55_Color"("code");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "E55_Technique_value_key" ON "E55_Technique"("value");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "E37_Mark_value_key" ON "E37_Mark"("value");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "E57_Material_value_key" ON "E57_Material"("value");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "E4_Period_value_key" ON "E4_Period"("value");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "E41_Appellation_registry_information_object_registryId_key" ON "E41_Appellation_registry"("information_object_registryId");
 
 -- CreateIndex
@@ -393,9 +411,6 @@ CREATE UNIQUE INDEX "E73_Information_object_document_documentId_key" ON "E73_Inf
 
 -- CreateIndex
 CREATE UNIQUE INDEX "E53_Place_monumentId_key" ON "E53_Place"("monumentId");
-
--- CreateIndex
-CREATE UNIQUE INDEX "E53_Place_appellation_placeId_key" ON "E53_Place"("appellation_placeId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "E53_Place_appellation_addressId_key" ON "E53_Place"("appellation_addressId");
@@ -438,6 +453,12 @@ CREATE UNIQUE INDEX "E5_Event_time_spanId_key" ON "E5_Event"("time_spanId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "E5_Event_information_object_eventId_key" ON "E5_Event"("information_object_eventId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "E5_Event_monumentId_key" ON "E5_Event"("monumentId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "E41_Appellation_event_value_key" ON "E41_Appellation_event"("value");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "E41_Appellation_event_eventId_key" ON "E41_Appellation_event"("eventId");
