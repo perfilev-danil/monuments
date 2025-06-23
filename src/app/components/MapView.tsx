@@ -83,25 +83,27 @@ export default function MapView({ monuments }: { monuments: any[] }) {
                 alt="" 
                 class="w-full h-full object-cover object-top hover:scale-110 transition-transform duration-500"
               />
-              <div class="absolute bottom-0 right-0 z-10 w-full p-2 bg-white flex items-center justify-between" style="border-top: 1px solid black">
+              <div class="absolute bottom-0 right-0 z-10 w-full p-2 bg-white flex gap-2 items-center justify-between" style="border-top: 1px solid black">
                 <div class="truncate">${name} (${year} г.)</div>
-                <button id="popup-button" class="rounded-full w-10 h-10 shrink-0 cursor-pointer hover:scale-110 transition-transform duration-300" style="border: 1px solid black">
+                <a href="/monuments/${id}" target="_blank" class="rounded-full w-10 h-10 shrink-0 cursor-pointer hover:scale-110 transition-transform duration-300" style="border: 1px solid black">
                   <img 
                     src="/images/icons/arrow-b.png"
                     alt="" 
                     class="w-full h-full p-2 rotate-180"
                   />
-                </button>
+                </a>
               </div>
             </div>
           `;
 
+          /*
           const button = popupRef.current?.querySelector("#popup-button");
           if (button) {
             button.addEventListener("click", () => {
               window.open(`/monuments/${id}`, "_blank");
             });
           }
+*/
 
           overlayRef.current?.setPosition(coordinates);
         }
