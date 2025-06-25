@@ -49,7 +49,7 @@ export default function Monument({ monument }: { monument: any }) {
               {monument?.period?.value && (
                 <div className="grid grid-cols-6">
                   <span className="col-span-2 lg:col-span-1">Период</span>
-                  <p className="col-span-4 lg:col-span-5">
+                  <p className="col-span-4 lg:col-span-5 ">
                     {monument?.period?.value}
                   </p>
                 </div>
